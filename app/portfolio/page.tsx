@@ -15,6 +15,12 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     designTone: "Dark Hero + Pastel Section (Toss/LearnOn 톤)",
   },
   {
+    slug: "inquiry",
+    title: "상담 문의형",
+    description: "전문가 서비스의 신뢰를 쌓고 카톡·전화·폼으로 상담 문의를 받는 랜딩",
+    designTone: "Airbnb-ish 미니멀 (화이트 + 코럴 포인트)",
+  },
+  {
     slug: "product",
     title: "상품/서비스 소개형",
     description: "SaaS·앱·서비스 가치를 전달하고 가입·데모로 전환",
