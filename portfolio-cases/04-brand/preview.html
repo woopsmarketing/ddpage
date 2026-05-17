@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>스튜디오 오공 — Studio Ohgong</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Bricolage+Grotesque:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet"/>
+
+<style>
+  /* =================================================================
+     OHGONG · COSMIC DESIGN SYSTEM
+     ================================================================= */
+  :root {
+    /* Surfaces */
+    --bg:        #050510;
+    --bg-2:      #0a0a1a;
+    --card:      rgba(255, 255, 255, 0.035);
+    --card-hi:   rgba(255, 255, 255, 0.06);
+    --line:      rgba(255, 255, 255, 0.08);
+    --line-hi:   rgba(255, 255, 255, 0.14);
+
+    /* Text */
+    --ink:       #ffffff;
+    --ink-2:     #d4d4dc;
+    --muted:     #8a8a9c;
+    --muted-2:   #5a5a6a;
+
+    /* Accent — violet/lavender */
+    --v-50:      #f3e8ff;
+    --v-300:     #d8b4fe;
+    --v-400:     #c084fc;
+    --v-500:     #a855f7;
+    --v-600:     #9333ea;
+    --v-700:     #7c3aed;
+    --v-900:     #4c1d95;
+  }
+
+  html, body { background: var(--bg); color: var(--ink); }
+  body {
+    font-family: 'Pretendard', 'Inter Tight', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* === Type === */
+  .font-display { font-family: 'Bricolage Grotesque', 'Pretendard', 'Inter Tight', ui-sans-serif, sans-serif; letter-spacing: -0.025em; }
+  .font-ko      { font-family: 'Pretendard', 'Inter Tight', ui-sans-serif, sans-serif; letter-spacing: -0.03em; }
+  .font-mono    { font-family: ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace; }
+  .h-display {
+    font-family: 'Pretendard', 'Bricolage Grotesque', ui-sans-serif, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.96;
+  }
+
+  /* Eyebrow label — small tracked uppercase */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* Gradient text — violet */
+  .text-v-gradient {
+    background: linear-gradient(180deg, #f3e8ff 0%, #c084fc 50%, #9333ea 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-v-soft {
+    background: linear-gradient(180deg, #ffffff 0%, #d8b4fe 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* === Star field === */
+  .stars {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.7), transparent 60%),
+      radial-gradient(1px 1px at 86% 14%, rgba(255,255,255,0.55), transparent 60%),
+      radial-gradient(1.2px 1.2px at 24% 78%, rgba(255,255,255,0.8), transparent 60%),
+      radial-gradient(1px 1px at 92% 64%, rgba(255,255,255,0.45), transparent 60%),
+      radial-gradient(1px 1px at 6% 52%, rgba(255,255,255,0.6), transparent 60%),
+      radial-gradient(0.8px 0.8px at 44% 38%, rgba(216,180,254,0.55), transparent 60%),
+      radial-gradient(1px 1px at 68% 84%, rgba(255,255,255,0.45), transparent 60%),
+      radial-gradient(1.2px 1.2px at 34% 8%, rgba(255,255,255,0.5), transparent 60%),
+      radial-gradient(1px 1px at 78% 32%, rgba(255,255,255,0.55), transparent 60%),
+      radial-gradient(0.8px 0.8px at 58% 64%, rgba(216,180,254,0.6), transparent 60%),
+      radial-gradient(1px 1px at 18% 96%, rgba(255,255,255,0.5), transparent 60%),
+      radial-gradient(1px 1px at 96% 90%, rgba(255,255,255,0.4), transparent 60%);
+    background-size: 1200px 1200px;
+    background-repeat: repeat;
+    opacity: 0.85;
+  }
+
+  /* Big sphere — primary hero */
+  .sphere {
+    position: relative;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 38% 28%, rgba(255,255,255,0.85), rgba(255,255,255,0) 28%),
+      radial-gradient(circle at 64% 38%, rgba(244,114,182,0.35), transparent 45%),
+      radial-gradient(circle at 50% 50%, #c084fc 0%, #8b5cf6 30%, #5b21b6 60%, #1e1b4b 92%);
+    box-shadow:
+      0 0 60px 8px rgba(168, 85, 247, 0.55),
+      0 0 160px 40px rgba(124, 58, 237, 0.32),
+      0 0 280px 80px rgba(76, 29, 149, 0.22),
+      inset -32px -32px 80px rgba(0, 0, 0, 0.55),
+      inset 14px 14px 32px rgba(255, 255, 255, 0.06);
+    animation: ohg-breathe 7s ease-in-out infinite;
+  }
+  @keyframes ohg-breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.025); }
+  }
+
+  /* Ringed sphere — bottom hero */
+  .sphere-ring {
+    position: relative;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 40% 32%, rgba(255,255,255,0.75), rgba(255,255,255,0) 30%),
+      radial-gradient(circle at 50% 50%, #a78bfa 0%, #7c3aed 35%, #4c1d95 65%, #1e1b4b 92%);
+    box-shadow:
+      0 0 50px 8px rgba(167, 139, 250, 0.5),
+      0 0 140px 40px rgba(124, 58, 237, 0.28),
+      inset -28px -28px 60px rgba(0, 0, 0, 0.55);
+  }
+  .sphere-ring::after {
+    content: '';
+    position: absolute;
+    inset: -60% -45%;
+    border-radius: 50%;
+    border: 1px solid rgba(216, 180, 254, 0.18);
+    transform: rotate(-14deg);
+    box-shadow:
+      inset 0 0 60px rgba(168, 85, 247, 0.18),
+      0 0 60px rgba(167, 139, 250, 0.06);
+  }
+  .sphere-ring::before {
+    content: '';
+    position: absolute;
+    inset: -38% -22%;
+    border-radius: 50%;
+    border: 1px solid rgba(216, 180, 254, 0.28);
+    transform: rotate(-14deg);
+  }
+
+  /* Sphere wrapper for glow halo behind */
+  .sphere-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  .sphere-wrap::before {
+    content: '';
+    position: absolute;
+    width: 720px; height: 720px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.28), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* === Cards === */
+  .card-ohg {
+    background: linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
+  }
+  .card-ohg:hover { border-color: var(--line-hi); background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%); }
+  .card-soft {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+
+  /* Glowing accent card */
+  .card-glow {
+    position: relative;
+    background: linear-gradient(180deg, rgba(124,58,237,0.18) 0%, rgba(76,29,149,0.05) 100%);
+    border: 1px solid rgba(192, 132, 252, 0.22);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .card-glow::after {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(192,132,252,0.35), transparent 60%);
+    pointer-events: none;
+  }
+
+  /* === Buttons === */
+  .btn-ohg {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+    line-height: 1;
+  }
+  .btn-ohg:active { transform: scale(0.97); }
+  .btn-primary {
+    background: #ffffff;
+    color: #050510;
+  }
+  .btn-primary:hover { background: #e8e6f0; }
+  .btn-outline {
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-2);
+  }
+  .btn-ghost:hover { color: #ffffff; }
+
+  /* Filter chip */
+  .chip {
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: -0.005em;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .chip:hover { color: #ffffff; border-color: var(--line-hi); }
+  .chip[aria-pressed="true"] {
+    background: #ffffff;
+    color: #050510;
+    border-color: #ffffff;
+  }
+
+  /* === Hover lift for work cards === */
+  .work-card { transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .work-card:hover { transform: translateY(-4px); }
+  .work-card .work-img { transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .work-card:hover .work-img { transform: scale(1.05); }
+  .work-card .work-overlay {
+    background: linear-gradient(180deg, rgba(5,5,16,0) 35%, rgba(5,5,16,0.85) 100%);
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .work-card:hover .work-overlay { opacity: 1; }
+
+  /* === Reveal on scroll === */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* === Entrance animations === */
+  @keyframes ohg-rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .rise-1 { animation: ohg-rise 1.0s cubic-bezier(0.22, 0.61, 0.36, 1) 0.05s both; }
+  .rise-2 { animation: ohg-rise 1.0s cubic-bezier(0.22, 0.61, 0.36, 1) 0.20s both; }
+  .rise-3 { animation: ohg-rise 1.0s cubic-bezier(0.22, 0.61, 0.36, 1) 0.40s both; }
+  .rise-4 { animation: ohg-rise 1.0s cubic-bezier(0.22, 0.61, 0.36, 1) 0.55s both; }
+  .rise-5 { animation: ohg-rise 1.0s cubic-bezier(0.22, 0.61, 0.36, 1) 0.70s both; }
+
+  /* === Section background washes === */
+  .wash-tl {
+    position: absolute; top: 0; left: -15%;
+    width: 720px; height: 720px;
+    background: radial-gradient(circle, rgba(124,58,237,0.22), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  .wash-br {
+    position: absolute; bottom: 0; right: -15%;
+    width: 720px; height: 720px;
+    background: radial-gradient(circle, rgba(168,85,247,0.18), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* === Form === */
+  .field {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #ffffff;
+    width: 100%;
+    font-family: inherit; font-size: 14px;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .field::placeholder { color: var(--muted-2); }
+  .field:focus { outline: none; border-color: rgba(192,132,252,0.55); background: rgba(255,255,255,0.05); }
+
+  /* Tiny dot */
+  .dot { width: 6px; height: 6px; border-radius: 999px; }
+
+  /* Rating star */
+  .star-fill { fill: #c084fc; }
+
+  /* Marquee */
+  @keyframes ohg-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: flex; gap: 4rem; width: max-content;
+    animation: ohg-marquee 32s linear infinite;
+  }
+
+  /* Subtle border gradient frame for process card */
+  .frame-violet {
+    position: relative;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)) padding-box,
+      linear-gradient(160deg, rgba(192,132,252,0.5), rgba(255,255,255,0.04) 40%, rgba(192,132,252,0.2)) border-box;
+    border: 1px solid transparent;
+    border-radius: 22px;
+  }
+
+  * { -webkit-tap-highlight-color: transparent; }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-[1200px] mx-auto px-6 lg:px-10 mt-3">
+    <div class="h-12 px-4 flex items-center justify-between rounded-full border border-[var(--line)] bg-black/55 backdrop-blur-xl">
+      <a href="#top" class="flex items-center gap-2 text-[14px] font-medium">
+        <span class="dot bg-[#c084fc]" style="box-shadow: 0 0 8px #c084fc;"></span>
+        Ohgong
+      </a>
+      <nav class="hidden md:flex items-center gap-7 text-[13px] text-[var(--ink-2)]">
+        <a href="#about" class="hover:text-white transition-colors">소개</a>
+        <a href="#work" class="hover:text-white transition-colors">작업</a>
+        <a href="#services" class="hover:text-white transition-colors">분야</a>
+        <a href="#process" class="hover:text-white transition-colors">과정</a>
+        <a href="#voices" class="hover:text-white transition-colors">목소리</a>
+      </nav>
+      <a href="#contact" class="btn-ohg btn-primary !py-1.5 !px-3.5 text-[13px]">의뢰하기</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative pt-28 pb-0 overflow-hidden">
+  <div class="stars"></div>
+
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10 text-center">
+    <div class="rise-1 eyebrow mb-7">— Studio Ohgong is the place to —</div>
+    <h1 class="rise-2 h-display text-[64px] sm:text-[88px] md:text-[112px] lg:text-[136px]">
+      오래 보고 싶은<br/>
+      <span class="text-v-soft">디자인을 만들어요</span>
+    </h1>
+    <p class="rise-3 mt-9 text-[15px] md:text-[16px] text-[var(--ink-2)] max-w-md mx-auto leading-relaxed">
+      작은 브랜드의 작은 목소리에 귀를 기울이는 1인 스튜디오.<br/>
+      빠르게 지나가는 디자인이 아닌, 곁에 두고 오래 바라볼 디자인을 짓습니다.
+    </p>
+    <div class="rise-4 mt-9 flex items-center justify-center gap-3">
+      <a href="#work" class="btn-ohg btn-primary">작업 보기</a>
+      <a href="#contact" class="btn-ohg btn-outline">의뢰하기</a>
+    </div>
+  </div>
+
+  <!-- Sphere -->
+  <div class="rise-5 relative mt-12 lg:mt-16 mb-20 flex justify-center">
+    <div class="sphere-wrap">
+      <div class="sphere"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BELIEF / STATS ============ -->
+<section class="relative py-24 lg:py-32 overflow-hidden">
+  <div class="wash-tl"></div>
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-end">
+      <div class="lg:col-span-7 reveal">
+        <div class="eyebrow mb-5">— At Ohgong we believe that —</div>
+        <h2 class="h-display text-[40px] md:text-[56px] lg:text-[68px]">
+          작품이 주인공이고<br/>
+          디자인은 <span class="text-v-soft">조용히 받쳐</span>줘요.
+        </h2>
+        <p class="mt-7 text-[15px] text-[var(--ink-2)] leading-[1.85] max-w-lg">
+          모든 브랜드에는 자기만의 박자가 있다고 믿어요. 그 박자를 흐트러뜨리지 않고,
+          글자 하나, 색 하나, 여백 하나가 자리를 잡을 때까지 천천히 들여다 봅니다.
+        </p>
+        <a href="#about" class="mt-8 inline-flex btn-ohg btn-outline">스튜디오 이야기</a>
+      </div>
+
+      <div class="lg:col-span-5 grid grid-cols-2 gap-4 reveal">
+        <div class="card-ohg p-7">
+          <div class="font-display text-[44px] md:text-[56px] text-v-gradient leading-none font-bold">7<span class="text-[20px] text-[var(--ink-2)] ml-1 align-middle">년</span></div>
+          <div class="eyebrow mt-3">Practice</div>
+          <div class="mt-2 text-[13px] text-[var(--muted)]">스튜디오를 짓고 다듬어 온 시간</div>
+        </div>
+        <div class="card-ohg p-7">
+          <div class="font-display text-[44px] md:text-[56px] text-v-gradient leading-none font-bold">40<span class="text-[20px] text-[var(--ink-2)] ml-1 align-middle">+</span></div>
+          <div class="eyebrow mt-3">Projects</div>
+          <div class="mt-2 text-[13px] text-[var(--muted)]">함께 만든 브랜드와 책</div>
+        </div>
+        <div class="card-ohg p-7 col-span-2">
+          <div class="flex items-baseline gap-4">
+            <div class="font-display text-[44px] md:text-[56px] text-v-gradient leading-none font-bold">1<span class="text-[20px] text-[var(--ink-2)] ml-1 align-middle">인</span></div>
+            <div class="font-display text-[22px] text-[var(--ink-2)]">스튜디오</div>
+          </div>
+          <div class="eyebrow mt-3">Independent</div>
+          <div class="mt-2 text-[13px] text-[var(--muted)]">기획부터 납품까지 한 사람이 끝까지 책임집니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT (compact) ============ -->
+<section id="about" class="relative py-24 lg:py-32 overflow-hidden border-t border-[var(--line)]">
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+      <div class="md:col-span-5 reveal">
+        <div class="card-soft overflow-hidden aspect-[3/4]">
+          <img src="https://placehold.co/600x800/0a0a1a/8a8a9c?text=portrait" alt="오공 작가" class="w-full h-full object-cover opacity-90"/>
+        </div>
+      </div>
+      <div class="md:col-span-7 reveal">
+        <div class="eyebrow mb-5">— Who is Ohgong —</div>
+        <h3 class="h-display text-[36px] md:text-[44px] max-w-md">
+          작은 것들을<br/>오래 들여다봐요.
+        </h3>
+        <div class="mt-7 space-y-5 max-w-lg text-[15px] leading-[1.85] text-[var(--ink-2)]">
+          <p>
+            안녕하세요, 그래픽 디자이너 오공입니다.
+            홍대에서 시각디자인을 공부했고, 작은 출판사와 패키지 스튜디오를 거쳐 2018년 1인 스튜디오를 열었습니다.
+          </p>
+          <p>
+            저는 큰 목소리로 말하는 디자인보다, 한 박자 늦게 다시 보게 되는 디자인을 좋아해요.
+            지난 7년간 작은 책방, 동네 카페, 독립 출판사들과 함께 로고와 패키지, 책의 모양을 다듬어 왔습니다.
+          </p>
+        </div>
+        <div class="mt-8 flex flex-wrap items-center gap-2 text-[12px] text-[var(--muted)]">
+          <span class="px-2.5 py-1 rounded-full border border-[var(--line)]">Brand Identity</span>
+          <span class="px-2.5 py-1 rounded-full border border-[var(--line)]">Package</span>
+          <span class="px-2.5 py-1 rounded-full border border-[var(--line)]">Editorial</span>
+          <span class="px-2.5 py-1 rounded-full border border-[var(--line)]">Poster</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK ON DISPLAY (showcase preview) ============ -->
+<section class="relative py-24 lg:py-32 overflow-hidden border-t border-[var(--line)]">
+  <div class="wash-br"></div>
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+      <!-- Floating preview card mockup -->
+      <div class="lg:col-span-7 reveal order-2 lg:order-1">
+        <div class="card-glow p-5 md:p-7 max-w-[640px] mx-auto">
+          <div class="rounded-2xl overflow-hidden border border-[var(--line)] bg-[#0a0a1a]">
+            <img src="https://placehold.co/900x520/100828/c084fc?text=Plate+%E2%80%A2+%EA%B3%A0%EC%9A%94%ED%95%9C+%EC%B1%85%EB%B0%A9" alt="고요한 책방 작업 미리보기" class="w-full h-full object-cover"/>
+          </div>
+          <div class="mt-5 flex items-start justify-between gap-4">
+            <div class="min-w-0">
+              <div class="text-[13px] text-[var(--muted)]">Identity · 2024</div>
+              <div class="font-display text-[22px] mt-1">고요한 책방</div>
+              <div class="text-[13px] text-[var(--ink-2)] mt-1">Logo · Stationery · Signage</div>
+            </div>
+            <a href="#work" class="btn-ohg btn-outline shrink-0">자세히</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 reveal order-1 lg:order-2">
+        <div class="eyebrow mb-5">— Shareable with anyone —</div>
+        <h3 class="h-display text-[40px] md:text-[52px]">
+          작업을<br/>진열대 <span class="text-v-soft">위에.</span>
+        </h3>
+        <p class="mt-6 text-[15px] text-[var(--ink-2)] leading-[1.85] max-w-md">
+          모든 프로젝트는 한 장의 사진으로 끝나지 않아요.
+          기획 노트, 색의 선택, 글자의 결까지 함께 정리해 보내드립니다.
+        </p>
+        <a href="#work" class="mt-7 inline-flex btn-ohg btn-primary">전체 작업 보기</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES (Expand the way…) ============ -->
+<section id="services" class="relative py-24 lg:py-32 overflow-hidden border-t border-[var(--line)]">
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="eyebrow mb-4">— What I do · 4 ways to work together —</div>
+      <h3 class="h-display text-[40px] md:text-[56px]">
+        조용히, <span class="text-v-soft">단단하게</span>
+      </h3>
+      <p class="mt-5 text-[15px] text-[var(--ink-2)] leading-[1.8]">
+        4가지 영역에서 작업합니다. 모든 영역이 한 사람의 손으로 시작해 한 사람의 손으로 마무리됩니다.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+
+      <!-- Featured / glow card -->
+      <div class="card-glow p-7 md:p-9 md:col-span-2 reveal">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center relative z-10">
+          <div class="md:col-span-7">
+            <div class="eyebrow mb-3">01 · Most requested</div>
+            <h4 class="font-display text-[28px] md:text-[36px] text-v-soft font-bold">Brand Identity</h4>
+            <p class="mt-3 text-[15px] text-[var(--ink-2)] leading-[1.8] max-w-md">
+              로고, 색, 글자가 한 사람처럼 말하게 만듭니다.
+              작은 브랜드, 작은 가게의 시작에 어울려요.
+            </p>
+          </div>
+          <div class="md:col-span-5 flex md:justify-end">
+            <ul class="text-[13px] text-[var(--ink-2)] space-y-2.5">
+              <li class="flex items-center gap-2"><span class="dot bg-[#c084fc]"></span> 로고 디자인</li>
+              <li class="flex items-center gap-2"><span class="dot bg-[#c084fc]"></span> 컬러 & 타입 시스템</li>
+              <li class="flex items-center gap-2"><span class="dot bg-[#c084fc]"></span> 명함 · 사인 · 보조 그래픽</li>
+              <li class="flex items-center gap-2"><span class="dot bg-[#c084fc]"></span> 브랜드 가이드</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-ohg p-7 reveal">
+        <div class="eyebrow mb-3">02</div>
+        <h4 class="font-display text-[24px] text-white font-bold">Package Design</h4>
+        <p class="mt-3 text-[14px] text-[var(--ink-2)] leading-[1.8]">
+          손에 쥐었을 때 가만히 들여다보게 되는 패키지. 오래 두고 보고 싶은 표정을 함께 찾습니다.
+        </p>
+      </div>
+      <div class="card-ohg p-7 reveal">
+        <div class="eyebrow mb-3">03</div>
+        <h4 class="font-display text-[24px] text-white font-bold">Editorial</h4>
+        <p class="mt-3 text-[14px] text-[var(--ink-2)] leading-[1.8]">
+          책의 모양과 호흡을 짓습니다. 독립 출판물부터 작은 잡지, 전시 도록까지.
+        </p>
+      </div>
+      <div class="card-ohg p-7 reveal md:col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          <div class="md:col-span-8">
+            <div class="eyebrow mb-3">04</div>
+            <h4 class="font-display text-[24px] text-white font-bold">Poster &amp; Print</h4>
+            <p class="mt-3 text-[14px] text-[var(--ink-2)] leading-[1.8] max-w-lg">
+              벽에 붙여 놓고 싶은 한 장. 인쇄와 종이의 결까지 함께 정합니다.
+            </p>
+          </div>
+          <div class="md:col-span-4 flex md:justify-end">
+            <div class="text-[12px] text-[var(--muted)] tracking-wider">printed in seoul · 2018 →</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS (Your time, your rate style) ============ -->
+<section id="process" class="relative py-24 lg:py-32 overflow-hidden border-t border-[var(--line)]">
+  <div class="wash-tl"></div>
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+      <div class="lg:col-span-5 reveal">
+        <div class="eyebrow mb-5">— Take control of —</div>
+        <h3 class="h-display text-[40px] md:text-[56px]">
+          당신의 시간,<br/>당신의 <span class="text-v-soft">속도로.</span>
+        </h3>
+        <p class="mt-6 text-[15px] text-[var(--ink-2)] leading-[1.85] max-w-md">
+          모든 프로젝트는 보통 8–12주를 함께 보내요.
+          처음의 대화부터 마지막의 납품까지, 한 박자 천천히 같이 걷습니다.
+        </p>
+        <a href="#contact" class="mt-7 inline-flex btn-ohg btn-primary">일정 문의</a>
+      </div>
+
+      <!-- Process card mockup -->
+      <div class="lg:col-span-7 reveal">
+        <div class="frame-violet p-6 md:p-7">
+          <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2">
+              <div class="dot bg-[#c084fc]"></div>
+              <div class="text-[13px] text-[var(--ink-2)]">Process — 고요한 책방</div>
+            </div>
+            <div class="text-[12px] text-[var(--muted)] font-mono">DEC · 2024</div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex items-center gap-2 mb-5">
+            <span class="chip" aria-pressed="true">01 기획</span>
+            <span class="chip">02 디자인</span>
+            <span class="chip">03 피드백</span>
+            <span class="chip">04 납품</span>
+          </div>
+
+          <!-- "Invoice" style breakdown -->
+          <div class="card-soft p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div class="text-[13px] text-[var(--ink-2)]">기획 노트</div>
+              <div class="text-[12px] text-[var(--muted)] font-mono">2주</div>
+            </div>
+
+            <div class="space-y-3 text-[14px]">
+              <div class="flex items-baseline justify-between gap-4">
+                <div class="text-[var(--ink-2)]">첫 인터뷰</div>
+                <div class="flex items-center gap-3">
+                  <div class="text-[var(--muted)] font-mono text-[12px]">D-14</div>
+                  <div class="text-white">완료</div>
+                </div>
+              </div>
+              <div class="h-px bg-[var(--line)]"></div>
+              <div class="flex items-baseline justify-between gap-4">
+                <div class="text-[var(--ink-2)]">레퍼런스 큐레이션</div>
+                <div class="flex items-center gap-3">
+                  <div class="text-[var(--muted)] font-mono text-[12px]">D-9</div>
+                  <div class="text-white">완료</div>
+                </div>
+              </div>
+              <div class="h-px bg-[var(--line)]"></div>
+              <div class="flex items-baseline justify-between gap-4">
+                <div class="text-[var(--ink-2)]">방향성 정리</div>
+                <div class="flex items-center gap-3">
+                  <div class="text-[var(--muted)] font-mono text-[12px]">D-3</div>
+                  <div class="text-white">완료</div>
+                </div>
+              </div>
+              <div class="h-px bg-[var(--line)]"></div>
+              <div class="flex items-baseline justify-between gap-4">
+                <div class="text-white">다음 단계 — 디자인</div>
+                <a href="#" class="btn-ohg btn-primary !py-1.5 !px-3 !text-[12px]">시작 →</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-4 gap-2 text-[11px] text-[var(--muted)]">
+            <div class="text-center">기획<br/><span class="text-white font-mono">2주</span></div>
+            <div class="text-center">디자인<br/><span class="text-white font-mono">4–6주</span></div>
+            <div class="text-center">피드백<br/><span class="text-white font-mono">2주</span></div>
+            <div class="text-center">납품<br/><span class="text-white font-mono">1주</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="work" class="relative py-24 lg:py-32 overflow-hidden border-t border-[var(--line)]">
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+
+    <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+      <div class="eyebrow mb-4">— Selected work · 7 plates —</div>
+      <h3 class="h-display text-[44px] md:text-[64px]">
+        함께 만든<br/><span class="text-v-soft">작업들.</span>
+      </h3>
+    </div>
+
+    <div class="flex justify-center gap-2 flex-wrap mb-12 reveal">
+      <button data-filter="all"       class="chip filter-btn" aria-pressed="true">All</button>
+      <button data-filter="identity"  class="chip filter-btn" aria-pressed="false">Identity</button>
+      <button data-filter="package"   class="chip filter-btn" aria-pressed="false">Package</button>
+      <button data-filter="editorial" class="chip filter-btn" aria-pressed="false">Editorial</button>
+    </div>
+
+    <div class="grid grid-cols-12 gap-4 md:gap-5">
+
+      <!-- Card 1 -->
+      <article class="work-card group col-span-12 md:col-span-7 reveal" data-cat="identity">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-[4/3]">
+            <img src="https://placehold.co/900x680/100828/c084fc?text=Plate+%E2%80%A2+01" class="work-img w-full h-full object-cover" alt="고요한 책방 BI"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Identity · 2024</div>
+              <div class="font-display text-[24px] text-white">고요한 책방</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">고요한 책방</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Brand Identity · 2024</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 01</div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="work-card group col-span-12 md:col-span-5 reveal" data-cat="package">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-[3/4]">
+            <img src="https://placehold.co/600x800/0a0a1a/c084fc?text=Plate+%E2%80%A2+02" class="work-img w-full h-full object-cover" alt="달의 차 패키지"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Package · 2023</div>
+              <div class="font-display text-[24px] text-white">달의 차</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">달의 차</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Tea · Package Design</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 02</div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="work-card group col-span-12 md:col-span-4 reveal" data-cat="editorial">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-[4/5]">
+            <img src="https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+03" class="work-img w-full h-full object-cover" alt="여름 산문집"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Editorial · 2024</div>
+              <div class="font-display text-[22px] text-white">여름 산문집</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">여름 산문집</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Book Design</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 03</div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="work-card group col-span-12 md:col-span-4 reveal" data-cat="identity">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-square">
+            <img src="https://placehold.co/600x600/100828/c084fc?text=Plate+%E2%80%A2+04" class="work-img w-full h-full object-cover" alt="늦은 카페"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Identity · 2023</div>
+              <div class="font-display text-[22px] text-white">늦은 카페</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">늦은 카페</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Café · Identity</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 04</div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="work-card group col-span-12 md:col-span-4 reveal" data-cat="package">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-[4/5]">
+            <img src="https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+05" class="work-img w-full h-full object-cover" alt="작은 향초"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Package · 2024</div>
+              <div class="font-display text-[22px] text-white">작은 향초</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">작은 향초</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Candle · Package</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 05</div>
+        </div>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="work-card group col-span-12 md:col-span-8 reveal" data-cat="editorial">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-video">
+            <img src="https://placehold.co/1280x720/100828/c084fc?text=Plate+%E2%80%A2+06" class="work-img w-full h-full object-cover" alt="겨울 전시 포스터"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Editorial · 2024</div>
+              <div class="font-display text-[24px] text-white">겨울 전시 — 흰 종이</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">겨울 전시 — 흰 종이</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Poster · Exhibition</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 06</div>
+        </div>
+      </article>
+
+      <!-- Card 7 -->
+      <article class="work-card group col-span-12 md:col-span-4 reveal" data-cat="identity">
+        <div class="card-soft overflow-hidden relative">
+          <div class="aspect-[4/5]">
+            <img src="https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+07" class="work-img w-full h-full object-cover" alt="조용한 화방"/>
+          </div>
+          <div class="work-overlay absolute inset-0 flex items-end p-6">
+            <div>
+              <div class="eyebrow mb-2">Identity · 2022</div>
+              <div class="font-display text-[22px] text-white">조용한 화방</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-baseline justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="font-display text-[18px] text-white">조용한 화방</div>
+            <div class="text-[12px] text-[var(--muted)] mt-1">Art Supply · Identity</div>
+          </div>
+          <div class="font-mono text-[12px] text-[var(--muted)] flex-none">— 07</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS (Trusted by) ============ -->
+<section id="voices" class="relative py-24 lg:py-32 overflow-hidden border-t border-[var(--line)]">
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+
+    <div class="text-center mb-16 reveal">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--line)] bg-white/5 text-[12px] mb-5">
+        <svg width="14" height="14" viewBox="0 0 24 24" class="star-fill"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <span class="text-[var(--ink)] font-medium">4.9 / 5</span>
+        <span class="text-[var(--muted)]">— 40+ clients</span>
+      </div>
+      <h3 class="h-display text-[40px] md:text-[56px]">
+        그들의 <span class="text-v-soft">말.</span>
+      </h3>
+      <p class="mt-4 text-[15px] text-[var(--ink-2)] max-w-md mx-auto leading-relaxed">
+        지난 7년 동안 함께 작업한 분들이 남겨 주신 이야기들이에요.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+
+      <figure class="card-ohg p-6 reveal">
+        <blockquote class="text-[14px] leading-[1.7] text-[var(--ink)]">
+          "처음 시안을 받았을 때, 우리 가게가 처음부터 이런 모습이었던 것 같았어요. 오공의 디자인은 어색하지 않고, 자리에 가만히 앉아 있어요."
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-300 to-violet-700"></div>
+          <div>
+            <div class="text-[13px] text-white">정 ◯ ◯</div>
+            <div class="text-[12px] text-[var(--muted)]">고요한 책방 · 대표</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="card-ohg p-6 reveal">
+        <blockquote class="text-[14px] leading-[1.7] text-[var(--ink)]">
+          "말로 다 풀어내지 못한 것들을 글자와 색으로 정확히 들어 주셨어요. 오래 함께 작업하고 싶은 분이에요."
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-fuchsia-300 to-purple-700"></div>
+          <div>
+            <div class="text-[13px] text-white">임 ◯ ◯</div>
+            <div class="text-[12px] text-[var(--muted)]">달의 차 · 브랜드 매니저</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="card-ohg p-6 reveal">
+        <blockquote class="text-[14px] leading-[1.7] text-[var(--ink)]">
+          "결과물이 마음에 든 것은 물론이고, 진행 과정에서 한 번도 답답한 적이 없었어요. 다음 책도 부탁드리고 싶어요."
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-300 to-indigo-700"></div>
+          <div>
+            <div class="text-[13px] text-white">박 ◯ ◯</div>
+            <div class="text-[12px] text-[var(--muted)]">paper press · 편집장</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="card-ohg p-6 reveal">
+        <blockquote class="text-[14px] leading-[1.7] text-[var(--ink)]">
+          "작은 가게라서 큰 스튜디오에 맡기기 부담스러웠는데, 오공은 우리 가게의 호흡을 정확히 들어 주셨어요."
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 to-violet-700"></div>
+          <div>
+            <div class="text-[13px] text-white">윤 ◯ ◯</div>
+            <div class="text-[12px] text-[var(--muted)]">늦은 카페 · 대표</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="card-ohg p-6 reveal">
+        <blockquote class="text-[14px] leading-[1.7] text-[var(--ink)]">
+          "포장지가 도착했을 때, 손님들이 받고 한참 들여다 보더라는 이야기를 가장 많이 들어요."
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-300 to-violet-700"></div>
+          <div>
+            <div class="text-[13px] text-white">한 ◯ ◯</div>
+            <div class="text-[12px] text-[var(--muted)]">작은 향초 · 대표</div>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="card-ohg p-6 reveal">
+        <blockquote class="text-[14px] leading-[1.7] text-[var(--ink)]">
+          "디자인 외적인 것까지 신경 써 주셔서 든든했어요. 전시 도록이 작품의 일부처럼 느껴졌어요."
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-200 to-purple-700"></div>
+          <div>
+            <div class="text-[13px] text-white">최 ◯ ◯</div>
+            <div class="text-[12px] text-[var(--muted)]">winter notes · 작가</div>
+          </div>
+        </figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOTTOM HERO + CONTACT ============ -->
+<section id="contact" class="relative pt-24 lg:pt-32 pb-16 overflow-hidden border-t border-[var(--line)]">
+  <div class="stars"></div>
+
+  <div class="relative max-w-[1200px] mx-auto px-6 lg:px-10 text-center">
+    <div class="eyebrow mb-7">— Let&apos;s make something quiet together —</div>
+    <h2 class="h-display text-[56px] sm:text-[80px] md:text-[104px] lg:text-[128px]">
+      함께 만들어<br/><span class="text-v-soft">봐요.</span>
+    </h2>
+    <p class="mt-8 text-[15px] text-[var(--ink-2)] max-w-md mx-auto leading-relaxed">
+      흥미로운 프로젝트는 언제든 환영해요.<br/>
+      편하게 메일을 보내 주세요.
+    </p>
+
+    <div class="mt-9">
+      <a href="/cdn-cgi/l/email-protection#1a727f7676755a696e6f7e73753775727d75747d34797577" class="inline-flex btn-ohg btn-primary !py-3 !px-5 !text-[15px]">
+        <span class="__cf_email__" data-cfemail="91f9f4fdfdfed1e2e5e4f5f8febcfef9f6fefff6bff2fefc">[email&#160;protected]</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Ringed sphere -->
+  <div class="relative mt-16 mb-20 flex justify-center">
+    <div class="sphere-wrap">
+      <div class="sphere-ring"></div>
+    </div>
+  </div>
+
+  <!-- Contact form (compact) -->
+  <div class="relative max-w-[640px] mx-auto px-6 lg:px-10">
+    <div class="frame-violet p-6 md:p-7">
+      <form id="contact-form" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <label class="block">
+          <span class="block text-[11px] text-[var(--muted)] mb-1.5 tracking-[0.18em] uppercase">이름</span>
+          <input type="text" name="name" required class="field" placeholder="홍길동"/>
+        </label>
+        <label class="block">
+          <span class="block text-[11px] text-[var(--muted)] mb-1.5 tracking-[0.18em] uppercase">이메일</span>
+          <input type="email" name="email" required class="field" placeholder="hello@example.com"/>
+        </label>
+        <label class="block md:col-span-2">
+          <span class="block text-[11px] text-[var(--muted)] mb-1.5 tracking-[0.18em] uppercase">메시지</span>
+          <textarea name="message" rows="3" required class="field resize-none" placeholder="어떤 작업을 함께 만들고 싶으신가요?"></textarea>
+        </label>
+        <div class="md:col-span-2 mt-2 flex items-center justify-between">
+          <span id="form-status" class="text-[12px] text-[var(--muted)]">보통 2–3일 안에 답장 드립니다.</span>
+          <button type="submit" class="btn-ohg btn-primary">보내기 →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative border-t border-[var(--line)] py-14">
+  <div class="max-w-[1200px] mx-auto px-6 lg:px-10">
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+      <div class="md:col-span-5">
+        <div class="flex items-center gap-2 text-[14px] font-medium mb-3">
+          <span class="dot bg-[#c084fc]" style="box-shadow: 0 0 8px #c084fc;"></span>
+          Studio Ohgong
+        </div>
+        <p class="text-[13px] text-[var(--muted)] max-w-xs leading-relaxed">
+          서울에서 작은 브랜드를 위한 그래픽 디자인을 하는 1인 스튜디오.
+        </p>
+        <div class="mt-5 flex items-center gap-3">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--ink-2)] hover:text-white hover:border-[var(--line-hi)] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Behance" class="w-9 h-9 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--ink-2)] hover:text-white hover:border-[var(--line-hi)] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h5.5a2.5 2.5 0 0 1 0 5H3z"/><path d="M3 11h6a3 3 0 0 1 0 6H3z"/><path d="M14 13h7a3 3 0 0 0-7 0v3a3 3 0 0 0 6 0"/><path d="M15 7h5"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="w-9 h-9 rounded-full border border-[var(--line)] flex items-center justify-center text-[var(--ink-2)] hover:text-white hover:border-[var(--line-hi)] transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7.5 9.5L4.5 20H7l5.5-5L17 20h3l-7.8-9.9L19.5 4H17l-4.8 4.3L9 4z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <div class="eyebrow mb-4">Studio</div>
+        <ul class="space-y-2 text-[13px]">
+          <li><a href="#about" class="text-[var(--ink-2)] hover:text-white transition-colors">소개</a></li>
+          <li><a href="#work" class="text-[var(--ink-2)] hover:text-white transition-colors">작업</a></li>
+          <li><a href="#services" class="text-[var(--ink-2)] hover:text-white transition-colors">분야</a></li>
+          <li><a href="#process" class="text-[var(--ink-2)] hover:text-white transition-colors">과정</a></li>
+        </ul>
+      </div>
+      <div class="md:col-span-4">
+        <div class="eyebrow mb-4">Get in touch</div>
+        <a href="/cdn-cgi/l/email-protection#c7afa2ababa887b4b3b2a3aea8eaa8afa0a8a9a0e9a4a8aa" class="text-[15px] text-white hover:text-[#c084fc] transition-colors"><span class="__cf_email__" data-cfemail="adc5c8c1c1c2edded9d8c9c4c280c2c5cac2c3ca83cec2c0">[email&#160;protected]</span></a>
+        <div class="mt-2 text-[13px] text-[var(--muted)]">서울특별시 마포구 · 평일 10–18시</div>
+      </div>
+    </div>
+
+    <div class="pt-6 border-t border-[var(--line)] flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-[12px] text-[var(--muted)]">
+      <div>© 2025 Studio Ohgong. All rights reserved.</div>
+      <div class="text-[11px]">포트폴리오용 샘플 작업입니다</div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ---------- Reveal on scroll ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.10, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  /* ---------- Gallery filter ---------- */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('[data-cat]');
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      filterBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach((el) => {
+        const show = f === 'all' || el.dataset.cat === f;
+        el.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  /* ---------- Contact form ---------- */
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    console.log('contact submit', data);
+    status.textContent = '메시지가 도착했어요. 곧 답장 드릴게요. 고맙습니다.';
+    status.style.color = '#d8b4fe';
+    form.reset();
+  });
+
+  /* ---------- Smooth scroll ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) {
+          e.preventDefault();
+          const top = el.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

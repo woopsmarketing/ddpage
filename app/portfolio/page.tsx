@@ -26,6 +26,12 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     description: "SaaS·앱·서비스 가치를 전달하고 가입·데모로 전환",
     designTone: "Contractbook 디자인 시스템",
   },
+  {
+    slug: "brand",
+    title: "브랜드/포트폴리오형",
+    description: "개인·스튜디오의 정체성과 작업을 보여주고 의뢰로 연결하는 다크 무드 랜딩",
+    designTone: "Dark Cosmic + Violet Accent (스튜디오 톤)",
+  },
 ];
 
 export default function PortfolioListPage() {

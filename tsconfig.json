@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "portfolio-cases"]
+  "exclude": ["node_modules", "portfolio-cases", "portfolio2", "portfolio4"]
 }
