@@ -52,10 +52,11 @@ function Logo({ className = '' }: { className?: string }) {
 
 function Nav() {
   const links = [
-    { label: 'Home', href: '#' },
-    { label: 'Product', href: '#product' },
-    { label: 'How it works', href: '#how' },
-    { label: 'Blog', href: '#blog' },
+    { label: '제품', href: '#product' },
+    { label: 'SDK', href: '#how' },
+    { label: '연동', href: '#connections' },
+    { label: '사례', href: '#cases' },
+    { label: 'FAQ', href: '#faq' },
   ];
 
   return (
@@ -250,7 +251,7 @@ function TabsSection() {
   const current = TAB_DATA.find((t) => t.key === active) ?? TAB_DATA[0];
 
   return (
-    <section id="product" className="bg-[#f7f7f3] py-20 lg:py-28 px-6 lg:px-8">
+    <section id="product" className="scroll-mt-20 bg-[#f7f7f3] py-20 lg:py-28 px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px]">
         <div className="text-center mb-12 lg:mb-16">
           <div className="text-[12px] font-bold uppercase tracking-wider text-[#1009f6]">Platform</div>
@@ -421,7 +422,7 @@ function FeaturesGrid() {
   ];
 
   return (
-    <section id="how" className="py-20 lg:py-28 px-6 lg:px-8">
+    <section id="how" className="scroll-mt-20 py-20 lg:py-28 px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px]">
         <div className="max-w-2xl">
           <div className="text-[12px] font-bold uppercase tracking-wider text-[#1009f6]">Integration</div>
@@ -465,7 +466,7 @@ function Connections() {
   ];
 
   return (
-    <section className="bg-[#f7f7f3] py-20 lg:py-28 px-6 lg:px-8">
+    <section id="connections" className="scroll-mt-20 bg-[#f7f7f3] py-20 lg:py-28 px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px] text-center">
         <div className="text-[12px] font-bold uppercase tracking-wider text-[#1009f6]">Connections</div>
         <h2 className="mt-3 text-[32px] sm:text-[44px] font-bold leading-[1.15] tracking-[-0.01em]">
@@ -521,7 +522,7 @@ function UseCases() {
   ];
 
   return (
-    <section className="py-20 lg:py-28 px-6 lg:px-8">
+    <section id="cases" className="scroll-mt-20 py-20 lg:py-28 px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px]">
         <div className="text-center">
           <div className="text-[12px] font-bold uppercase tracking-wider text-[#1009f6]">Use Cases</div>
@@ -623,7 +624,7 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="py-20 lg:py-28 px-6 lg:px-8">
+    <section id="faq" className="scroll-mt-20 py-20 lg:py-28 px-6 lg:px-8">
       <div className="mx-auto max-w-[1200px] grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <div className="text-[12px] font-bold uppercase tracking-wider text-[#1009f6]">Support</div>
