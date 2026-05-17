@@ -32,6 +32,12 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     description: "개인·스튜디오의 정체성과 작업을 보여주고 의뢰로 연결하는 다크 무드 랜딩",
     designTone: "Dark Cosmic + Violet Accent (스튜디오 톤)",
   },
+  {
+    slug: "teaser",
+    title: "사전예약/티저형",
+    description: "행사·런칭 D-day 카운트다운으로 사전예약을 받고 한정 수량을 빠르게 마감하는 랜딩",
+    designTone: "Apple-ish 미니멀 (화이트 + 애저 블루)",
+  },
 ];
 
 export default function PortfolioListPage() {
