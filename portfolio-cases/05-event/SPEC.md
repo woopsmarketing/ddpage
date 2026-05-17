@@ -1,14 +1,15 @@
-# 07 사전예약/티저형 랜딩페이지 SPEC
+# 05 이벤트/예약형 랜딩페이지 SPEC
 
-> 결과물: `app/portfolio/teaser/page.tsx`
-> 케이스 폴더: `portfolio-cases/07-teaser/`
+> 결과물: `app/portfolio/event/page.tsx`
+> 케이스 폴더: `portfolio-cases/05-event/`
 > 작성일: 2026-05-18
+> 재분류: 원래 07-teaser 슬롯으로 만들었으나 실제 시안이 컨퍼런스 D-day 풀세트로 나와 05-event로 재배치됨
 
 ---
 
 ## 1. 기본 정보
 
-- **유형**: 사전예약/티저형 (이벤트·컨퍼런스 D-day 풀세트)
+- **유형**: 이벤트/예약형 (컨퍼런스·세미나·클래스 D-day 풀세트)
 - **목적**: D-day 카운트다운 + 한정 좌석 잔여 카운트로 사전예약 마감 가속
 - **사용 디자인 시스템**: Apple-ish 미니멀 (화이트 + 애저 블루 #0071e3 / 옵시디언 #1d1d1f / 포그 #f5f5f7)
 - **참고 레퍼런스**: 마컨2026 (1인 사업자 마케팅 컨퍼런스 — 샘플 컨셉)
@@ -187,4 +188,4 @@
 - 시안 생성 프롬프트: `PROMPT.md`
 - 결과물 코드: `RESULT.tsx` (page.tsx 동일본)
 - HTML 프리뷰: `preview.html`
-- 라이브 URL: https://ddpage.kr/portfolio/teaser
+- 라이브 URL: https://ddpage.kr/portfolio/event

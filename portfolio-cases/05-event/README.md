@@ -1,7 +1,9 @@
-# 07-teaser 케이스 (사전예약/티저형)
+# 05-event 케이스 (이벤트/예약형)
+
+> 재분류 메모: 원래 07-teaser 슬롯으로 만들었으나 실제 시안이 컨퍼런스·세미나·클래스의 D-day 풀세트로 나와 05-event로 재배치됨. 단순 "Coming Soon" 풀스크린 티저가 필요하면 별도 시안을 07-teaser 슬롯에 다시 만들 것.
 
 ## 사용법
-고객이 "사전예약/티저형" 유형을 선택하면:
+고객이 "이벤트/예약형" 유형을 선택하면:
 
 1. `SPEC.md`의 **6. 고객에게 받을 정보 체크리스트**를 그대로 양식으로 전달
    (D-day 타겟 일시·인포 4셀·티켓 3종·연사·타임테이블이 핵심)
@@ -11,10 +13,10 @@
    - 레퍼런스 이미지 첨부 (행사 분위기 / 톤 레퍼런스)
    - 수정한 프롬프트로 시안 요청 — `preview.html` + `page.tsx` 두 파일 요구
 4. 받은 두 파일을 임의 폴더(예: `portfolio6/`)에 넣고
-   `/portfolio-integrate <폴더명> teaser 사전예약/티저형` 슬래시 커맨드로 통합
+   `/portfolio-integrate <폴더명> event 이벤트/예약형` 슬래시 커맨드로 통합
 
 ## 라이브 URL
-https://ddpage.kr/portfolio/teaser
+https://ddpage.kr/portfolio/event
 
 ## 디자인 시스템
 - 컬러: 옵시디언 `#1d1d1f` / 슬레이트 `#474747` / 그래파이트 `#707070` / 포그 `#f5f5f7` / 스노우 `#ffffff` / 미스트 `#e8e8ed` / 애저 `#0071e3` · `#0066cc` / 코션 `#b64400`
@@ -24,4 +26,4 @@ https://ddpage.kr/portfolio/teaser
 - CSS keyframes: `ddpage-makecon-pulse` (모두 `.ddpage-makecon` 스코핑)
 
 ## 시안 특이점
-루트 PROMPT.md의 "Coming Soon 풀스크린 단순형"보다 한 단계 확장된 **이벤트/컨퍼런스 사전예약 풀세트**로 시안이 나옴. 단순 티저가 필요하면 PROMPT.md 그대로 사용하고, 행사·강의·한정수량 사전예약이면 RESULT.tsx 구조를 참고.
+루트 PROMPT.md의 "Coming Soon 풀스크린 단순형"보다 한 단계 확장된 **이벤트/컨퍼런스 사전예약 풀세트**로 시안이 나옴. 컨퍼런스·세미나·클래스·팝업 행사 신청에 그대로 적용 가능.

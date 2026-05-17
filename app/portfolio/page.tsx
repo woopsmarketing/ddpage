@@ -33,9 +33,9 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     designTone: "Dark Cosmic + Violet Accent (스튜디오 톤)",
   },
   {
-    slug: "teaser",
-    title: "사전예약/티저형",
-    description: "행사·런칭 D-day 카운트다운으로 사전예약을 받고 한정 수량을 빠르게 마감하는 랜딩",
+    slug: "event",
+    title: "이벤트/예약형",
+    description: "컨퍼런스·세미나·클래스 신청 받기",
     designTone: "Apple-ish 미니멀 (화이트 + 애저 블루)",
   },
 ];
