@@ -9,6 +9,12 @@ type PortfolioCard = {
 
 const PORTFOLIO_CARDS: PortfolioCard[] = [
   {
+    slug: "lead",
+    title: "리드/DB 수집형",
+    description: "이메일 한 줄로 사전예약·뉴스레터 가입을 받는 단일 액션 랜딩",
+    designTone: "Dark Hero + Pastel Section (Toss/LearnOn 톤)",
+  },
+  {
     slug: "product",
     title: "상품/서비스 소개형",
     description: "SaaS·앱·서비스 가치를 전달하고 가입·데모로 전환",
