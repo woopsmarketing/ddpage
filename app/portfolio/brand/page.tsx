@@ -229,6 +229,10 @@ const SCOPED_CSS = `
   opacity: 0; transition: opacity 0.4s ease;
 }
 .ddpage-ohgong .work-card:hover .work-overlay { opacity: 1; }
+@media (max-width: 767px) {
+  .ddpage-ohgong .work-overlay { opacity: 1; }
+  .ddpage-ohgong .work-card:hover { transform: none; }
+}
 
 /* Reveal */
 .ddpage-ohgong .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
@@ -290,13 +294,13 @@ type Work = {
 }
 
 const WORKS: Work[] = [
-  { id: 1, title: '고요한 책방',         meta: 'Brand Identity · 2024',  cat: 'identity',  year: '2024', img: 'https://placehold.co/900x680/100828/c084fc?text=Plate+%E2%80%A2+01', span: 'md:col-span-7', aspect: 'aspect-[4/3]' },
-  { id: 2, title: '달의 차',             meta: 'Tea · Package Design',   cat: 'package',   year: '2023', img: 'https://placehold.co/600x800/0a0a1a/c084fc?text=Plate+%E2%80%A2+02', span: 'md:col-span-5', aspect: 'aspect-[3/4]' },
-  { id: 3, title: '여름 산문집',         meta: 'Book Design',            cat: 'editorial', year: '2024', img: 'https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+03', span: 'md:col-span-4', aspect: 'aspect-[4/5]' },
-  { id: 4, title: '늦은 카페',           meta: 'Café · Identity',        cat: 'identity',  year: '2023', img: 'https://placehold.co/600x600/100828/c084fc?text=Plate+%E2%80%A2+04', span: 'md:col-span-4', aspect: 'aspect-square' },
-  { id: 5, title: '작은 향초',           meta: 'Candle · Package',       cat: 'package',   year: '2024', img: 'https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+05', span: 'md:col-span-4', aspect: 'aspect-[4/5]' },
-  { id: 6, title: '겨울 전시 — 흰 종이', meta: 'Poster · Exhibition',    cat: 'editorial', year: '2024', img: 'https://placehold.co/1280x720/100828/c084fc?text=Plate+%E2%80%A2+06', span: 'md:col-span-8', aspect: 'aspect-video' },
-  { id: 7, title: '조용한 화방',         meta: 'Art Supply · Identity',  cat: 'identity',  year: '2022', img: 'https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+07', span: 'md:col-span-4', aspect: 'aspect-[4/5]' },
+  { id: 1, title: '고요한 책방',         meta: 'Brand Identity · 2024',  cat: 'identity',  year: '2024', img: 'https://placehold.co/900x680/100828/c084fc?text=Plate+%E2%80%A2+01', span: 'sm:col-span-12 md:col-span-7', aspect: 'aspect-[4/3]' },
+  { id: 2, title: '달의 차',             meta: 'Tea · Package Design',   cat: 'package',   year: '2023', img: 'https://placehold.co/600x800/0a0a1a/c084fc?text=Plate+%E2%80%A2+02', span: 'sm:col-span-6 md:col-span-5', aspect: 'aspect-[3/4]' },
+  { id: 3, title: '여름 산문집',         meta: 'Book Design',            cat: 'editorial', year: '2024', img: 'https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+03', span: 'sm:col-span-6 md:col-span-4', aspect: 'aspect-[4/5]' },
+  { id: 4, title: '늦은 카페',           meta: 'Café · Identity',        cat: 'identity',  year: '2023', img: 'https://placehold.co/600x600/100828/c084fc?text=Plate+%E2%80%A2+04', span: 'sm:col-span-6 md:col-span-4', aspect: 'aspect-square' },
+  { id: 5, title: '작은 향초',           meta: 'Candle · Package',       cat: 'package',   year: '2024', img: 'https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+05', span: 'sm:col-span-6 md:col-span-4', aspect: 'aspect-[4/5]' },
+  { id: 6, title: '겨울 전시 — 흰 종이', meta: 'Poster · Exhibition',    cat: 'editorial', year: '2024', img: 'https://placehold.co/1280x720/100828/c084fc?text=Plate+%E2%80%A2+06', span: 'sm:col-span-12 md:col-span-8', aspect: 'aspect-video' },
+  { id: 7, title: '조용한 화방',         meta: 'Art Supply · Identity',  cat: 'identity',  year: '2022', img: 'https://placehold.co/600x750/0a0a1a/c084fc?text=Plate+%E2%80%A2+07', span: 'sm:col-span-6 md:col-span-4', aspect: 'aspect-[4/5]' },
 ]
 
 const FILTERS: { id: Category; label: string }[] = [

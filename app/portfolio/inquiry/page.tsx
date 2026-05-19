@@ -456,12 +456,12 @@ export default function Page() {
                 <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.4px] text-[#6a6a6a]">{d.no}</div>
                 <h3 className="text-[28px] font-bold leading-[1.25] tracking-[-0.4px] text-[#222222] break-keep">{d.title}</h3>
                 <p className="mt-4 text-[16px] leading-[1.6] text-[#3f3f3f] break-keep">{d.body}</p>
-                <div className="mt-8 grid grid-cols-2 overflow-hidden rounded-[14px] border border-[#ebebeb]">
-                  <div className="bg-[#f2f2f2] p-6">
+                <div className="mt-8 grid grid-cols-1 divide-y divide-[#ebebeb] overflow-hidden rounded-[14px] border border-[#ebebeb] sm:grid-cols-2 sm:divide-y-0 sm:divide-x">
+                  <div className="bg-[#f2f2f2] p-5 sm:p-6">
                     <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.4px] text-[#6a6a6a]">{d.bad.tag}</div>
                     <div className="text-[16px] font-semibold leading-[1.3] text-[#6a6a6a] break-keep">{d.bad.text}</div>
                   </div>
-                  <div className="bg-white p-6">
+                  <div className="bg-white p-5 sm:p-6">
                     <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.4px] text-[#ff385c]">{d.good.tag}</div>
                     <div className="text-[16px] font-semibold leading-[1.3] text-[#222222] break-keep">{d.good.text}</div>
                   </div>

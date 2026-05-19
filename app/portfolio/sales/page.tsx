@@ -446,6 +446,23 @@ export default function Page() {
                   <div className="ddpage-num font-extrabold text-[26px] ddpage-tighter leading-none">+₩1,180,000</div>
                   <div className="text-[11px] mt-1 opacity-80">3기 수강생 김지원님</div>
                 </div>
+
+                {/* Mobile inline stats (lg 이상에선 floating 카드가 대체) */}
+                <div className="mt-4 grid grid-cols-2 gap-3 lg:hidden">
+                  <div className="rounded-[16px] bg-white text-[#0f161e] p-4">
+                    <div className="text-[11px] text-[#333942] mb-1 break-keep">평균 노출 증가</div>
+                    <div className="ddpage-num font-extrabold text-[24px] ddpage-tighter leading-none">4.8<span className="text-[14px] font-bold">x</span></div>
+                    <div className="text-[10px] text-[#333942] mt-1 break-keep">수강 30일 기준</div>
+                  </div>
+                  <div className="rounded-[16px] bg-[#d5ff4d] text-[#012620] p-4">
+                    <div className="text-[11px] font-bold mb-1 flex items-center gap-1.5">
+                      <TrendingUp className="w-3.5 h-3.5" strokeWidth={1.5} />
+                      월 매출 추가
+                    </div>
+                    <div className="ddpage-num font-extrabold text-[22px] ddpage-tighter leading-none">+₩1,180,000</div>
+                    <div className="text-[10px] mt-1 opacity-80 break-keep">3기 수강생 김지원님</div>
+                  </div>
+                </div>
               </div>
             </div>
 
