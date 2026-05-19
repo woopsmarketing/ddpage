@@ -14,6 +14,8 @@ import {
   Wallet,
   TrendingUp,
   Building2,
+  Menu,
+  X,
 } from 'lucide-react'
 
 const SCOPED_CSS = `
@@ -206,6 +208,15 @@ function BrandMark({ size = 28 }: { size?: number }) {
 export default function Page() {
   const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState({ name: '', phone: '', type: '', msg: '', consent: false })
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const NAV_LINKS = [
+    ['#services', '서비스'],
+    ['#why', '차별점'],
+    ['#reviews', '후기'],
+    ['#process', '진행 절차'],
+    ['#faq', '자주 묻는 질문'],
+  ] as const
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -225,24 +236,73 @@ export default function Page() {
             <span className="text-[20px] font-semibold tracking-tight text-[#222222]">택스메이트</span>
           </Link>
           <div className="hidden items-center gap-1 md:flex">
-            {[
-              ['#services', '서비스'],
-              ['#why', '차별점'],
-              ['#reviews', '후기'],
-              ['#process', '진행 절차'],
-              ['#faq', '자주 묻는 질문'],
-            ].map(([href, label]) => (
+            {NAV_LINKS.map(([href, label]) => (
               <a key={href} href={href} className="rounded-full px-4 py-2 text-[16px] font-semibold text-[#222222] no-underline hover:bg-[#f2f2f2]">
                 {label}
               </a>
             ))}
           </div>
-          <a href="#contact" className="inline-flex items-center gap-2 rounded-xl bg-[#ff385c] px-4 py-2.5 text-[14px] font-medium text-white no-underline transition-colors hover:bg-[#e00b41]">
-            <MessageCircle className="h-[18px] w-[18px]" strokeWidth={1.8} />
-            카톡 상담
-          </a>
+          <div className="flex items-center gap-2">
+            <a href="#contact" className="inline-flex items-center gap-2 rounded-xl bg-[#ff385c] px-3.5 py-2.5 text-[14px] font-medium text-white no-underline transition-colors hover:bg-[#e00b41] sm:px-4">
+              <MessageCircle className="h-[18px] w-[18px]" strokeWidth={1.8} />
+              <span className="hidden sm:inline">카톡 상담</span>
+              <span className="sm:hidden">상담</span>
+            </a>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="메뉴 열기"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-[#ebebeb] text-[#222222] md:hidden"
+            >
+              <Menu className="h-5 w-5" strokeWidth={1.8} />
+            </button>
+          </div>
         </div>
       </nav>
+
+      {/* MOBILE DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] md:hidden">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col gap-6 bg-white px-6 pb-8 pt-5 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <span className="text-[18px] font-semibold tracking-tight text-[#222222]">메뉴</span>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="메뉴 닫기"
+                className="grid h-10 w-10 place-items-center rounded-full text-[#222222] hover:bg-[#f2f2f2]"
+              >
+                <X className="h-5 w-5" strokeWidth={1.8} />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1">
+              {NAV_LINKS.map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-xl px-4 py-3.5 text-[17px] font-semibold text-[#222222] no-underline hover:bg-[#f2f2f2]"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#ff385c] px-5 py-4 text-[16px] font-medium text-white no-underline transition-colors hover:bg-[#e00b41]"
+            >
+              <MessageCircle className="h-5 w-5" strokeWidth={1.8} />
+              카톡으로 상담하기
+            </a>
+          </aside>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="mx-auto max-w-[1280px] px-6 pt-12 pb-16 lg:px-10 lg:pt-20 lg:pb-24">

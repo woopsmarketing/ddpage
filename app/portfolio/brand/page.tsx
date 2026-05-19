@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import Link from 'next/link'
-import { Star, ArrowRight } from 'lucide-react'
+import { Star, ArrowRight, Menu, X } from 'lucide-react'
 
 /* =================================================================
    Scoped page CSS — all selectors prefixed `.ddpage-ohgong`.
@@ -320,7 +320,16 @@ export default function Page() {
   const [filter, setFilter] = useState<Category>('all')
   const [status, setStatus] = useState('보통 2–3일 안에 답장 드립니다.')
   const [submitted, setSubmitted] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const revealRoot = useRef<HTMLElement | null>(null)
+
+  const NAV_LINKS = [
+    ['#about', '소개'],
+    ['#work', '작업'],
+    ['#services', '분야'],
+    ['#process', '과정'],
+    ['#voices', '목소리'],
+  ] as const
 
   useEffect(() => {
     const root = revealRoot.current
@@ -361,16 +370,73 @@ export default function Page() {
               Ohgong
             </a>
             <nav className="hidden md:flex items-center gap-7 text-[13px] text-[var(--ink-2)]">
-              <a href="#about"    className="hover:text-white transition-colors">소개</a>
-              <a href="#work"     className="hover:text-white transition-colors">작업</a>
-              <a href="#services" className="hover:text-white transition-colors">분야</a>
-              <a href="#process"  className="hover:text-white transition-colors">과정</a>
-              <a href="#voices"   className="hover:text-white transition-colors">목소리</a>
+              {NAV_LINKS.map(([href, label]) => (
+                <a key={href} href={href} className="hover:text-white transition-colors">{label}</a>
+              ))}
             </nav>
-            <a href="#contact" className="btn-ohg btn-primary !py-1.5 !px-3.5 !text-[13px]">의뢰하기</a>
+            <div className="flex items-center gap-2">
+              <a href="#contact" className="hidden sm:inline-flex btn-ohg btn-primary !py-1.5 !px-3.5 !text-[13px]">의뢰하기</a>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="메뉴 열기"
+                className="grid h-9 w-9 place-items-center rounded-full border border-[var(--line)] text-white md:hidden"
+              >
+                <Menu className="h-4 w-4" strokeWidth={1.8} />
+              </button>
+            </div>
           </div>
         </div>
       </header>
+
+      {/* MOBILE DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[60] md:hidden">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <aside
+            className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col gap-8 px-7 pb-10 pt-6 border-l border-[var(--line)]"
+            style={{ background: 'rgba(10,8,22,0.96)' }}
+          >
+            <div className="flex items-center justify-between">
+              <a href="#top" className="flex items-center gap-2 text-[14px] font-medium text-white" onClick={() => setMobileMenuOpen(false)}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c084fc]" style={{ boxShadow: '0 0 8px #c084fc' }} />
+                Ohgong
+              </a>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="메뉴 닫기"
+                className="grid h-9 w-9 place-items-center rounded-full border border-[var(--line)] text-white"
+              >
+                <X className="h-4 w-4" strokeWidth={1.8} />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-2 text-[20px] text-[var(--ink-2)]">
+              {NAV_LINKS.map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-3 hover:text-white transition-colors"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-auto btn-ohg btn-primary !py-3 !px-5 !text-[15px] justify-center"
+            >
+              의뢰하기
+            </a>
+          </aside>
+        </div>
+      )}
 
       {/* ============ HERO ============ */}
       <section id="top" className="relative pt-28 pb-0 overflow-hidden">

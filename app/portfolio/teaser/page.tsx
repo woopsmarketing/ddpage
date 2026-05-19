@@ -8,6 +8,7 @@ import {
   Gift,
   DoorOpen,
   Package,
+  Menu as MenuIcon,
 } from 'lucide-react'
 
 function InstagramGlyph({ strokeWidth = 1.6, className }: { strokeWidth?: number; className?: string }) {
@@ -441,7 +442,15 @@ export default function Page() {
   const [email, setEmail] = useState('')
   const [done, setDone] = useState(false)
   const [trustCount, setTrustCount] = useState(2847)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const targetRef = useRef<number>(0)
+
+  const NAV_LINKS = [
+    ['#collection', '컬렉션'],
+    ['#craft', '소재'],
+    ['#journey', '여정'],
+    ['#faq', 'FAQ'],
+  ] as const
 
   useEffect(() => {
     targetRef.current = readOrSeedTarget()
@@ -494,11 +503,18 @@ export default function Page() {
             <span>NOUN</span>
           </Link>
           <nav className="hidden md:flex gap-6 text-[13px] text-white/70">
-            <a href="#collection" className="hover:text-white">컬렉션</a>
-            <a href="#craft" className="hover:text-white">소재</a>
-            <a href="#journey" className="hover:text-white">여정</a>
-            <a href="#faq" className="hover:text-white">FAQ</a>
+            {NAV_LINKS.map(([href, label]) => (
+              <a key={href} href={href} className="hover:text-white">{label}</a>
+            ))}
           </nav>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="메뉴 열기"
+            className="grid size-10 place-items-center rounded-full border border-white/20 text-white md:hidden"
+          >
+            <MenuIcon className="size-4" strokeWidth={1.6} />
+          </button>
         </header>
 
         {/* Centered stack */}
@@ -877,6 +893,53 @@ export default function Page() {
           </div>
         </div>
       </footer>
+
+      {/* MOBILE DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] md:hidden">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <aside
+            className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col gap-8 px-7 pb-10 pt-6 border-l border-white/10"
+            style={{ background: '#21164c' }}
+          >
+            <div className="flex items-center justify-between">
+              <span className="inline-flex items-center gap-2.5 text-white font-bold text-[18px] tracking-[-0.04em] font-[family-name:Montserrat,system-ui,sans-serif]">
+                <span className="ddpage-teaser-brand-mark" aria-hidden="true" />
+                <span>NOUN</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="메뉴 닫기"
+                className="grid size-10 place-items-center rounded-full border border-white/20 text-white"
+              >
+                <XIcon className="size-4" strokeWidth={1.6} />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1 text-[20px] text-white/80 font-[family-name:Montserrat,system-ui,sans-serif]">
+              {NAV_LINKS.map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-3 hover:text-white transition-colors"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <p className="mt-auto text-[13px] text-white/45 break-keep">
+              곧 새로운 무언가가 시작됩니다.
+              <br />
+              사전예약은 메인 화면에서 받습니다.
+            </p>
+          </aside>
+        </div>
+      )}
     </main>
   )
 }

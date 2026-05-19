@@ -18,6 +18,7 @@ import {
   ArrowRight, Check, ChevronDown,
   Bell, Trophy, BarChart3, Code2, Layers, Boxes,
   Mail, MousePointerClick, MessageSquare,
+  Menu, X,
 } from 'lucide-react';
 
 export default function Page() {
@@ -51,6 +52,7 @@ function Logo({ className = '' }: { className?: string }) {
 }
 
 function Nav() {
+  const [isOpen, setIsOpen] = useState(false);
   const links = [
     { label: '제품', href: '#product' },
     { label: 'SDK', href: '#how' },
@@ -89,8 +91,67 @@ function Nav() {
           >
             데모 신청
           </a>
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            aria-label="메뉴 열기"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[#1a1a1a] text-[#1a1a1a] md:hidden"
+          >
+            <Menu className="h-4 w-4" strokeWidth={2} />
+          </button>
         </div>
       </div>
+
+      {isOpen && (
+        <div className="fixed inset-0 z-[60] md:hidden">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col gap-6 bg-white px-6 pb-8 pt-5 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <Logo />
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                aria-label="메뉴 닫기"
+                className="grid h-10 w-10 place-items-center rounded-full text-[#1a1a1a] hover:bg-[#f0f0ec]"
+              >
+                <X className="h-5 w-5" strokeWidth={2} />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1">
+              {links.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-xl px-4 py-3.5 text-[17px] font-bold text-[#1a1a1a] no-underline hover:bg-[#f0f0ec]"
+                >
+                  {l.label}
+                </a>
+              ))}
+            </nav>
+            <div className="mt-auto flex flex-col gap-2">
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); setIsOpen(false); console.log('Take a tour'); }}
+                className="inline-flex w-full items-center justify-center rounded-full border border-[#1a1a1a] px-5 py-3.5 text-sm font-bold hover:bg-[#f0f0ec] transition-colors"
+              >
+                둘러보기
+              </a>
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); setIsOpen(false); console.log('Book a demo'); }}
+                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#ffba09] px-5 py-3.5 text-sm font-bold text-black hover:bg-[#e8a800] active:scale-[0.98] transition"
+              >
+                데모 신청 <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </aside>
+        </div>
+      )}
     </header>
   );
 }

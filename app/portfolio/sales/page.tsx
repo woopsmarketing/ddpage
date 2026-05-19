@@ -10,7 +10,7 @@ import {
   GraduationCap, Briefcase, Award, PenTool, BookOpen, Layers, Lock,
   ChevronDown, FileSpreadsheet, MessageSquare, ArrowDown, Wallet,
   CreditCard, Building, Smartphone, MessageCircleQuestion, AlarmClock, Zap,
-  Target,
+  Target, Menu,
 } from 'lucide-react'
 
 const SCOPED_CSS = `
@@ -163,6 +163,15 @@ function Faq({ q, n, open, children }: FaqProps) {
 
 export default function Page() {
   const [countdown, setCountdown] = useState({ d: 0, h: 0, m: 0, s: 0 })
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const NAV_LINKS = [
+    ['#why', '왜 필요한가'],
+    ['#curriculum', '커리큘럼'],
+    ['#reviews', '수강 후기'],
+    ['#pricing', '가격'],
+    ['#faq', 'FAQ'],
+  ] as const
 
   useEffect(() => {
     const target = new Date('2026-11-28T23:59:59+09:00').getTime()
@@ -214,18 +223,75 @@ export default function Page() {
             <span className="font-bold ddpage-tighter text-[20px]">랭킹메이커</span>
           </a>
           <nav className="hidden md:flex items-center gap-1 text-[15px]">
-            <a href="#why" className="px-3 py-2 rounded-[8px] hover:bg-black/5 no-underline">왜 필요한가</a>
-            <a href="#curriculum" className="px-3 py-2 rounded-[8px] hover:bg-black/5 no-underline">커리큘럼</a>
-            <a href="#reviews" className="px-3 py-2 rounded-[8px] hover:bg-black/5 no-underline">수강 후기</a>
-            <a href="#pricing" className="px-3 py-2 rounded-[8px] hover:bg-black/5 no-underline">가격</a>
-            <a href="#faq" className="px-3 py-2 rounded-[8px] hover:bg-black/5 no-underline">FAQ</a>
+            {NAV_LINKS.map(([href, label]) => (
+              <a key={href} href={href} className="px-3 py-2 rounded-[8px] hover:bg-black/5 no-underline">{label}</a>
+            ))}
           </nav>
-          <a href="#pricing" className="ddpage-btn ddpage-btn-md ddpage-btn-primary">
-            지금 시작하기
-            <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-          </a>
+          <div className="flex items-center gap-2">
+            <a href="#pricing" className="ddpage-btn ddpage-btn-md ddpage-btn-primary hidden sm:inline-flex">
+              지금 시작하기
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </a>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="메뉴 열기"
+              className="grid h-10 w-10 place-items-center rounded-[12px] border border-[rgba(15,22,30,0.12)] text-[#012620] md:hidden"
+            >
+              <Menu className="h-5 w-5" strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </header>
+
+      {/* MOBILE DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] md:hidden">
+          <div
+            className="absolute inset-0 bg-black/45"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col gap-7 bg-[#fff5ee] px-6 pb-8 pt-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-9 h-9 rounded-[12px] bg-[#012620] grid place-items-center text-[#00f5dc]">
+                  <TrendingUp className="w-5 h-5" strokeWidth={1.5} />
+                </span>
+                <span className="font-bold ddpage-tighter text-[20px]">랭킹메이커</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="메뉴 닫기"
+                className="grid h-10 w-10 place-items-center rounded-full text-[#012620] hover:bg-black/5"
+              >
+                <X className="h-5 w-5" strokeWidth={1.5} />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1">
+              {NAV_LINKS.map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-[12px] px-4 py-3.5 text-[18px] font-bold text-[#0f161e] no-underline hover:bg-black/5"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="ddpage-btn ddpage-btn-lg ddpage-btn-primary mt-auto justify-center"
+            >
+              지금 시작하기 (50% 할인)
+              <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
+            </a>
+          </aside>
+        </div>
+      )}
 
       {/* ============================================================
           2. HERO

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import { Check, X, Plus, Search, MapPin, Train, Building2 } from 'lucide-react'
+import { Check, X, Plus, Search, MapPin, Train, Building2, Menu } from 'lucide-react'
 
 /* =========================================================================
    Scoped styles — ddpage-makecon
@@ -369,6 +369,16 @@ export default function Page() {
   const [ticket, setTicket] = useState<'early' | 'regular' | 'group'>('early')
   const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [submitted, setSubmitted] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const NAV_LINKS = [
+    ['#why', '소개'],
+    ['#speakers', '연사'],
+    ['#schedule', '일정'],
+    ['#venue', '장소'],
+    ['#tickets', '티켓'],
+    ['#faq', 'FAQ'],
+  ] as const
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -398,19 +408,74 @@ export default function Page() {
             </svg>
           </a>
           <nav className="hidden md:flex gap-7">
-            <a href="#why">소개</a>
-            <a href="#speakers">연사</a>
-            <a href="#schedule">일정</a>
-            <a href="#venue">장소</a>
-            <a href="#tickets">티켓</a>
-            <a href="#faq">FAQ</a>
+            {NAV_LINKS.map(([href, label]) => (
+              <a key={href} href={href}>{label}</a>
+            ))}
           </nav>
           <div className="flex items-center gap-5">
-            <a href="#" aria-label="검색"><Search size={15} /></a>
-            <a href="#apply">신청</a>
+            <a href="#" aria-label="검색" className="hidden md:inline-flex"><Search size={15} /></a>
+            <a href="#apply" className="hidden md:inline">신청</a>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="메뉴 열기"
+              className="md:hidden text-[#1d1d1f]"
+              style={{ background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }}
+            >
+              <Menu size={18} strokeWidth={1.8} />
+            </button>
           </div>
         </div>
       </header>
+
+      {/* MOBILE DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] md:hidden">
+          <div
+            className="absolute inset-0"
+            style={{ background: 'rgba(0,0,0,0.4)' }}
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <aside
+            className="absolute right-0 top-0 flex h-full w-full max-w-sm flex-col"
+            style={{ background: '#ffffff', padding: '20px 24px 32px', gap: 24, boxShadow: '-12px 0 40px rgba(0,0,0,0.12)' }}
+          >
+            <div className="flex items-center justify-between">
+              <div className="text-[18px] font-semibold tracking-[-0.32px] text-[#1d1d1f]">마컨2026</div>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="메뉴 닫기"
+                style={{ background: 'transparent', border: 'none', padding: 8, cursor: 'pointer', color: '#1d1d1f' }}
+              >
+                <X size={18} strokeWidth={1.8} />
+              </button>
+            </div>
+            <nav className="flex flex-col" style={{ gap: 4 }}>
+              {NAV_LINKS.map(([href, label]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-[17px] font-medium"
+                  style={{ color: '#1d1d1f', padding: '14px 12px', borderRadius: 10, textDecoration: 'none' }}
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#apply"
+              onClick={() => setMobileMenuOpen(false)}
+              className="btn-azure mt-auto"
+              style={{ justifyContent: 'center', padding: '14px 20px', fontSize: 15 }}
+            >
+              지금 신청
+            </a>
+          </aside>
+        </div>
+      )}
 
       {/* ============ Sub nav ============ */}
       <div className="sub-nav">
