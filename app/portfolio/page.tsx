@@ -38,6 +38,12 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     description: "컨퍼런스·세미나·클래스 신청 받기",
     designTone: "Apple-ish 미니멀 (화이트 + 애저 블루)",
   },
+  {
+    slug: "sales",
+    title: "세일즈/구매 전환형",
+    description: "롱폼 스토리텔링으로 정보성 상품·온라인 강의의 구매 전환을 끌어내는 랜딩",
+    designTone: "Peach + Teal/Lime Accent (인프런/클래스101 톤)",
+  },
 ];
 
 export default function PortfolioListPage() {
