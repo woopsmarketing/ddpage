@@ -763,6 +763,17 @@ export default function Page() {
           <p className="mt-4 text-center text-[12px] text-[#929292]">포트폴리오용 샘플 작업입니다</p>
         </div>
       </footer>
+
+      {/* STICKY MOBILE CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#ebebeb] bg-white/95 p-3 backdrop-blur-md md:hidden">
+        <a
+          href="#contact"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#ff385c] px-5 py-4 text-[16px] font-medium text-white no-underline transition-colors hover:bg-[#e00b41]"
+        >
+          <MessageCircle className="h-5 w-5" strokeWidth={1.8} />
+          카톡 상담하기 · 평균 3분 답변
+        </a>
+      </div>
     </main>
   )
 }

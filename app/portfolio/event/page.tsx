@@ -887,6 +887,31 @@ export default function Page() {
           </div>
         </div>
       </footer>
+
+      {/* STICKY MOBILE CTA */}
+      <div
+        className="fixed bottom-0 left-0 right-0 z-40 md:hidden"
+        style={{
+          background: 'rgba(255,255,255,0.95)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          borderTop: '1px solid #e0e0db',
+          padding: 12,
+        }}
+      >
+        <a
+          href="#apply"
+          className="btn-azure"
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            padding: '14px 20px',
+            fontSize: 15,
+          }}
+        >
+          지금 신청 · 마컨2026 마감 임박
+        </a>
+      </div>
     </main>
   )
 }
