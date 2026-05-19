@@ -50,6 +50,12 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     description: "신규 브랜드·라이프스타일 제품의 런칭 전 기대감을 만들고 이메일 사전예약을 받는 Coming Soon 랜딩",
     designTone: "Deep Indigo + Pastel Accent (절제된 미스터리 톤)",
   },
+  {
+    slug: "profile",
+    title: "1인 프로필형",
+    description: "작가·크리에이터·강연자의 소개와 채널 링크를 한 페이지에 모은 Link-in-Bio 대체 프로필 카드",
+    designTone: "Dot-grid Canvas + Fire Orange Accent (Firecrawl 화이트보드 톤)",
+  },
 ];
 
 export default function PortfolioListPage() {
