@@ -1,0 +1,1703 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NOUN — 곧, 이름이 생깁니다.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600&display=swap" />
+<style>
+/* =========================================================================
+   Adora tokens — vendored locally so this preview is self-contained.
+   ========================================================================= */
+:root {
+  --color-canvas-white:    #ffffff;
+  --color-cloud-mist:      #e0e0db;
+  --color-slate-text:      #353241;
+  --color-rich-violet:     #21164c;
+  --color-action-violet:   #592eff;
+  --color-air-blue:        #bcf2ff;
+  --color-lush-green:      #dfff9d;
+  --color-sunset-pink:     #ffaae6;
+  --color-neon-pink:       #f843c2;
+  --color-aqua-blue:       #2ed6ff;
+  --color-electric-green:  #a2ea13;
+  --color-soft-gray-fill:  #eeeeee;
+
+  --font-polysans:           "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-plus-jakarta-sans:  "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif-kr:           "Noto Serif KR", "Nanum Myeongjo", ui-serif, serif;
+
+  --tracking-tight: -0.02em;
+
+  --radius-cards:    26px;
+  --radius-buttons:  12px;
+  --radius-badges:   200px;
+  --radius-full-2:   64px;
+
+  --ease-out-soft: cubic-bezier(.2, .7, .2, 1);
+  --dur-fast:      120ms;
+  --dur-base:      200ms;
+  --dur-slow:      360ms;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img, svg { display: block; max-width: 100%; }
+
+body {
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 18px;
+  line-height: 1.6;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-slate-text);
+  background: var(--color-rich-violet);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-break: keep-all;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Section-internal hairline */
+.dark { background: var(--color-rich-violet); color: var(--color-canvas-white); }
+.light { background: var(--color-canvas-white); color: var(--color-slate-text); }
+
+/* =========================================================================
+   Hero — dark Rich Violet, full screen
+   ========================================================================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-rich-violet);
+  color: var(--color-canvas-white);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 32px 24px 64px;
+}
+
+/* Decorative vector */
+.hero__deco { position: absolute; pointer-events: none; }
+.hero__deco--tl  { top: 8%;    left: -40px;  width: 280px; opacity: .35; }
+.hero__deco--br  { bottom: 4%; right: -60px; width: 320px; opacity: .30; }
+.hero__deco--m   { top: 28%; right: 8%; width: 96px; opacity: .55; }
+
+.hero__top { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; }
+.brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--color-canvas-white);
+  font-family: var(--font-polysans);
+  font-weight: 700; font-size: 18px;
+  letter-spacing: -.04em;
+}
+.brand__mark {
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--color-canvas-white);
+  border-radius: 50%;
+  position: relative;
+}
+.brand__mark::after {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-canvas-white);
+}
+.hero__nav {
+  display: flex; gap: 24px;
+  font-size: 13px;
+  color: rgba(255,255,255,.7);
+}
+.hero__nav a { transition: color var(--dur-fast) var(--ease-out-soft); }
+.hero__nav a:hover { color: var(--color-canvas-white); }
+
+.hero__center {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  gap: 28px;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 56px 0 24px;
+  position: relative; z-index: 1;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 28px;
+  padding: 0 14px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: var(--radius-badges);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-canvas-white);
+}
+.eyebrow .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-neon-pink);
+  box-shadow: 0 0 12px var(--color-neon-pink);
+  animation: noun-pulse 2.2s ease-in-out infinite;
+}
+@keyframes noun-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.85); }
+}
+
+.headline {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: clamp(40px, 6.4vw, 84px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  color: var(--color-canvas-white);
+  margin: 0;
+  max-width: 14ch;
+}
+.headline em {
+  font-style: normal;
+  color: var(--color-sunset-pink);
+}
+
+.subhead {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.7);
+  margin: 0;
+  max-width: 42ch;
+}
+
+/* Countdown */
+.countdown { display: flex; gap: 12px; margin-top: 8px; }
+.cd-unit {
+  min-width: 92px;
+  padding: 16px 8px 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 18px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.cd-unit__n {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: var(--color-canvas-white);
+  font-variant-numeric: tabular-nums;
+}
+.cd-unit__l {
+  margin-top: 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.5);
+  font-weight: 500;
+}
+
+/* Signup form */
+.signup {
+  margin-top: 8px;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: var(--radius-badges);
+  padding: 6px;
+  transition: border-color var(--dur-base) var(--ease-out-soft), background var(--dur-base) var(--ease-out-soft);
+}
+.signup:focus-within { border-color: var(--color-canvas-white); background: rgba(255,255,255,.1); }
+.signup__input {
+  flex: 1; background: transparent; border: 0; outline: 0;
+  padding: 0 18px;
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 15px;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-canvas-white);
+}
+.signup__input::placeholder { color: rgba(255,255,255,.5); }
+.signup__btn {
+  border: 0; cursor: pointer;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: var(--radius-badges);
+  background: var(--color-canvas-white);
+  color: var(--color-rich-violet);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 15px; font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  transition: transform var(--dur-fast) var(--ease-out-soft), background var(--dur-base) var(--ease-out-soft), color var(--dur-base) var(--ease-out-soft);
+}
+.signup__btn:hover { background: var(--color-action-violet); color: var(--color-canvas-white); }
+.signup__btn:active { transform: translateY(1px) scale(.99); }
+.signup.is-done { border-color: var(--color-electric-green); background: rgba(162,234,19,.08); }
+
+.signup__success {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--color-electric-green);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity var(--dur-slow) var(--ease-out-soft), transform var(--dur-slow) var(--ease-out-soft);
+}
+.signup__success.is-on { opacity: 1; transform: translateY(0); }
+
+.trust {
+  font-size: 13px;
+  color: rgba(255,255,255,.5);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.trust strong { color: rgba(255,255,255,.85); font-weight: 600; }
+.trust .stack { display: inline-flex; }
+.trust .stack i {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-rich-violet);
+  margin-left: -6px;
+}
+.trust .stack i:nth-child(1) { background: var(--color-air-blue); margin-left: 0; }
+.trust .stack i:nth-child(2) { background: var(--color-sunset-pink); }
+.trust .stack i:nth-child(3) { background: var(--color-lush-green); }
+
+/* Section divider hairline used between dark blocks */
+.hairline {
+  max-width: 1080px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* =========================================================================
+   Section labels — reused across teaser sections
+   ========================================================================= */
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.section-label--air { color: var(--color-air-blue); }
+.section-label--green { color: var(--color-electric-green); }
+.section-label--pink { color: var(--color-sunset-pink); }
+.section-label--violet { color: var(--color-action-violet); }
+.section-label--mist { color: var(--color-rich-violet); }
+
+/* =========================================================================
+   About teaser (dark) — short
+   ========================================================================= */
+.teaser {
+  background: var(--color-rich-violet);
+  color: var(--color-canvas-white);
+  padding: 100px 24px 100px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.teaser__inner { max-width: 720px; margin: 0 auto; }
+.teaser__copy {
+  font-family: var(--font-polysans);
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.45;
+  letter-spacing: -.02em;
+  color: rgba(255,255,255,.92);
+  margin: 24px 0 0;
+}
+.teaser__copy em { font-style: normal; color: var(--color-sunset-pink); }
+.teaser__sign {
+  margin-top: 40px;
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .3em;
+  color: rgba(255,255,255,.5);
+}
+
+/* =========================================================================
+   Manifesto — large quoted statement on dark, with side meta
+   ========================================================================= */
+.manifesto {
+  background: var(--color-rich-violet);
+  color: var(--color-canvas-white);
+  padding: 100px 24px 120px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.manifesto__inner {
+  max-width: 1080px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2.4fr;
+  gap: 80px;
+  align-items: start;
+}
+.manifesto__meta { display: flex; flex-direction: column; gap: 18px; }
+.manifesto__meta-title {
+  font-family: var(--font-polysans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--color-air-blue);
+  margin: 0;
+}
+.manifesto__meta-body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,.55);
+  max-width: 22ch;
+}
+.manifesto__quote {
+  font-family: var(--font-serif-kr);
+  font-weight: 400;
+  font-size: clamp(28px, 3.8vw, 48px);
+  line-height: 1.45;
+  letter-spacing: -.01em;
+  color: var(--color-canvas-white);
+  margin: 0;
+  max-width: 22ch;
+  position: relative;
+}
+.manifesto__quote::before {
+  content: "“";
+  position: absolute;
+  left: -52px; top: -24px;
+  font-family: var(--font-serif-kr);
+  font-size: 96px;
+  color: var(--color-sunset-pink);
+  line-height: 1;
+  opacity: .9;
+}
+.manifesto__quote em {
+  font-style: normal;
+  color: var(--color-sunset-pink);
+}
+.manifesto__attr {
+  margin-top: 32px;
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+  letter-spacing: -.02em;
+}
+.manifesto__attr b {
+  color: rgba(255,255,255,.85);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* =========================================================================
+   First-look Collection — dark grid with SVG object illustrations
+   ========================================================================= */
+.collection {
+  background: var(--color-rich-violet);
+  color: var(--color-canvas-white);
+  padding: 110px 24px 120px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.collection__inner { max-width: 1200px; margin: 0 auto; }
+.collection__head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+.collection__title {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: clamp(32px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  color: var(--color-canvas-white);
+  margin: 12px 0 0;
+  max-width: 16ch;
+}
+.collection__lead {
+  max-width: 32ch;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255,255,255,.55);
+  margin: 0;
+}
+
+.collection__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.obj {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+  transition: transform var(--dur-base) var(--ease-out-soft);
+}
+.obj:hover { transform: translateY(-2px); }
+
+.obj--01 { background: linear-gradient(160deg, #2c2358 0%, #161033 100%); }
+.obj--02 { background: linear-gradient(160deg, #2a4751 0%, #15252b 100%); }
+.obj--03 { background: linear-gradient(160deg, #4a2c4a 0%, #221224 100%); }
+.obj--04 { background: linear-gradient(160deg, #3b4a22 0%, #1c2410 100%); }
+.obj--05 { background: linear-gradient(160deg, #4a3122 0%, #221710 100%); }
+.obj--06 { background: linear-gradient(160deg, #2b3a5a 0%, #131c2e 100%); }
+
+.obj__top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
+  position: relative; z-index: 2;
+}
+.obj__no {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.6);
+}
+.obj__chip {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.obj__art {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  z-index: 1;
+}
+.obj__art svg {
+  width: 50%; height: 50%;
+  color: rgba(255,255,255,.7);
+  stroke: currentColor;
+  fill: none;
+}
+.obj--01 .obj__art svg { color: var(--color-sunset-pink); }
+.obj--02 .obj__art svg { color: var(--color-air-blue); }
+.obj--03 .obj__art svg { color: var(--color-neon-pink); }
+.obj--04 .obj__art svg { color: var(--color-electric-green); }
+.obj--05 .obj__art svg { color: #f5b87a; }
+.obj--06 .obj__art svg { color: var(--color-aqua-blue); }
+
+.obj__bottom {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.obj__name {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -.02em;
+  color: var(--color-canvas-white);
+  margin: 0;
+}
+.obj__kr {
+  font-family: var(--font-serif-kr);
+  font-size: 15px;
+  color: rgba(255,255,255,.7);
+}
+
+/* =========================================================================
+   Materials & Craft — 4 cards with subtle patterns
+   ========================================================================= */
+.craft {
+  background: var(--color-rich-violet);
+  color: var(--color-canvas-white);
+  padding: 120px 24px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.craft__inner { max-width: 1200px; margin: 0 auto; }
+.craft__head {
+  display: flex; flex-direction: column; gap: 14px;
+  max-width: 720px;
+  margin: 0 auto 64px;
+  text-align: center; align-items: center;
+}
+.craft__title {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--color-canvas-white);
+  margin: 0;
+}
+.craft__lead {
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(255,255,255,.6);
+  margin: 0;
+  max-width: 42ch;
+}
+
+.craft__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.mat {
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.mat__swatch {
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Oak — vertical woodgrain via repeating-gradient + curved overlay */
+.mat__swatch--oak {
+  background:
+    repeating-linear-gradient(
+      87deg,
+      #c69366 0px, #c69366 2px,
+      #b27e52 2px, #b27e52 4px,
+      #c89870 4px, #c89870 7px,
+      #a96e44 7px, #a96e44 8px
+    );
+}
+.mat__swatch--oak::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 30% 60% at 30% 50%, rgba(120,70,30,.4), transparent 70%),
+    radial-gradient(ellipse 25% 70% at 70% 50%, rgba(160,100,60,.3), transparent 70%);
+}
+
+/* Linen — woven cross-hatch */
+.mat__swatch--linen {
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.18) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.12) 0 1px, transparent 1px 5px),
+    linear-gradient(135deg, #d6cab1 0%, #b3a583 100%);
+}
+
+/* Earthenware (옹기) — soft warm clay with dotted speckle */
+.mat__swatch--clay {
+  background:
+    radial-gradient(circle at 25% 30%, rgba(80,30,20,.4) 0 1px, transparent 2px),
+    radial-gradient(circle at 60% 20%, rgba(80,30,20,.3) 0 1px, transparent 2px),
+    radial-gradient(circle at 80% 70%, rgba(80,30,20,.4) 0 1px, transparent 2px),
+    radial-gradient(circle at 35% 75%, rgba(80,30,20,.3) 0 1px, transparent 2px),
+    radial-gradient(circle at 50% 50%, rgba(80,30,20,.25) 0 1.5px, transparent 3px),
+    radial-gradient(circle at 70% 40%, rgba(80,30,20,.3) 0 1px, transparent 2px),
+    radial-gradient(circle at 15% 60%, rgba(80,30,20,.35) 0 1px, transparent 2px),
+    linear-gradient(150deg, #6b3a26 0%, #3a1e12 100%);
+  background-size: 24px 24px, 32px 32px, 36px 36px, 28px 28px, 40px 40px, 30px 30px, 26px 26px, auto;
+}
+
+/* Brass — diagonal sheen */
+.mat__swatch--brass {
+  background:
+    linear-gradient(105deg,
+      #c89c4a 0%, #e6c073 18%, #b88334 30%, #d9a857 45%,
+      #a87b2e 60%, #e3b961 75%, #b08433 90%, #d6a553 100%);
+}
+.mat__swatch--brass::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(105deg,
+      transparent 0px, transparent 6px,
+      rgba(255,255,255,.06) 6px, rgba(255,255,255,.06) 7px);
+}
+
+.mat__meta {
+  padding: 18px 20px 22px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.mat__no {
+  font-family: var(--font-polysans);
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.4);
+  font-weight: 600;
+}
+.mat__name {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -.02em;
+  color: var(--color-canvas-white);
+  margin: 0;
+}
+.mat__kr {
+  font-family: var(--font-serif-kr);
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+}
+
+/* =========================================================================
+   Benefits — back to canvas white
+   ========================================================================= */
+.benefits {
+  background: var(--color-canvas-white);
+  padding: 110px 24px;
+}
+.benefits__inner { max-width: 1080px; margin: 0 auto; }
+.benefits__head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.benefits__title {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+  margin: 0;
+  max-width: 18ch;
+}
+.benefits__lead {
+  font-size: 15px;
+  color: var(--color-slate-text);
+  opacity: .65;
+  margin: 0;
+  max-width: 32ch;
+}
+
+.benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.benefit {
+  background: var(--color-canvas-white);
+  border: 1px solid var(--color-cloud-mist);
+  border-radius: var(--radius-cards);
+  padding: 32px 28px 36px;
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 240px;
+  transition: border-color var(--dur-base) var(--ease-out-soft);
+}
+.benefit:hover { border-color: var(--color-action-violet); }
+.benefit__num {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: var(--color-action-violet);
+}
+.benefit__icon {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 14px;
+  background: var(--color-soft-gray-fill);
+  color: var(--color-rich-violet);
+  margin-top: -4px;
+}
+.benefit__icon svg { width: 22px; height: 22px; }
+.benefit__title {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+  margin: 0;
+}
+.benefit__body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-slate-text);
+  opacity: .8;
+  margin: 0;
+}
+.benefit:nth-child(1) .benefit__icon { background: var(--color-lush-green); }
+.benefit:nth-child(2) .benefit__icon { background: var(--color-air-blue); }
+.benefit:nth-child(3) .benefit__icon { background: var(--color-sunset-pink); }
+
+.benefits__limit {
+  margin-top: 40px;
+  padding: 28px 32px;
+  background: var(--color-soft-gray-fill);
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.benefits__limit-text { display: flex; flex-direction: column; gap: 2px; }
+.benefits__limit-l {
+  font-family: var(--font-polysans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: var(--color-action-violet);
+  text-transform: uppercase;
+}
+.benefits__limit-h {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+  margin: 0;
+}
+.benefits__limit-bar {
+  width: 240px; max-width: 100%;
+  height: 6px;
+  background: rgba(33,22,76,.12);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.benefits__limit-bar > i {
+  position: absolute; inset: 0;
+  right: 28%;
+  background: var(--color-action-violet);
+  border-radius: 999px;
+}
+.benefits__limit-count {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-rich-violet);
+}
+
+/* =========================================================================
+   Journey timeline — canvas white
+   ========================================================================= */
+.journey {
+  background: var(--color-canvas-white);
+  padding: 100px 24px 120px;
+}
+.journey__inner { max-width: 1080px; margin: 0 auto; }
+.journey__head {
+  display: flex; flex-direction: column; gap: 14px; align-items: center;
+  text-align: center;
+  margin-bottom: 64px;
+}
+.journey__title {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+  margin: 0;
+}
+
+.journey__track {
+  position: relative;
+  padding-left: 24px;
+  border-left: 1px solid var(--color-cloud-mist);
+  margin-left: 8px;
+}
+.journey__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 32px;
+  padding: 24px 0 36px;
+}
+.journey__step::before {
+  content: "";
+  position: absolute;
+  left: -29px; top: 36px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--color-canvas-white);
+  border: 1.5px solid var(--color-cloud-mist);
+}
+.journey__step--current::before {
+  background: var(--color-action-violet);
+  border-color: var(--color-action-violet);
+  box-shadow: 0 0 0 4px rgba(89,46,255,.18);
+}
+.journey__year {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+}
+.journey__copy h4 {
+  margin: 4px 0 6px;
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+}
+.journey__copy p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-slate-text);
+  opacity: .75;
+  max-width: 48ch;
+}
+.journey__step--current .journey__year {
+  color: var(--color-action-violet);
+}
+.journey__badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--color-action-violet);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+/* =========================================================================
+   Founder's note — soft canvas
+   ========================================================================= */
+.note {
+  background: var(--color-soft-gray-fill);
+  padding: 100px 24px;
+}
+.note__inner {
+  max-width: 800px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 56px;
+  align-items: start;
+}
+.note__photo {
+  aspect-ratio: 3 / 4;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #4a3a8e 0%, #21164c 100%);
+  position: relative;
+  display: grid; place-items: center;
+}
+.note__photo::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 40% 30%, rgba(255,170,230,.22) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(188,242,255,.15) 0%, transparent 50%);
+}
+.note__photo span {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: 80px;
+  color: rgba(255,255,255,.92);
+  letter-spacing: -.04em;
+  position: relative;
+  z-index: 2;
+}
+.note__body { display: flex; flex-direction: column; gap: 16px; }
+.note__label {
+  font-family: var(--font-polysans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--color-action-violet);
+  margin: 0;
+}
+.note__heading {
+  font-family: var(--font-serif-kr);
+  font-size: 28px;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: var(--color-rich-violet);
+  margin: 0;
+}
+.note__copy {
+  font-family: var(--font-serif-kr);
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--color-slate-text);
+  margin: 0;
+}
+.note__sign {
+  margin-top: 16px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.note__sign-name {
+  font-family: var(--font-serif-kr);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-rich-violet);
+}
+.note__sign-role {
+  font-size: 13px;
+  color: var(--color-slate-text);
+  opacity: .6;
+}
+
+/* =========================================================================
+   FAQ — canvas white
+   ========================================================================= */
+.faq {
+  background: var(--color-canvas-white);
+  padding: 110px 24px 130px;
+}
+.faq__inner {
+  max-width: 880px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 60px;
+}
+.faq__lead h2 {
+  font-family: var(--font-polysans);
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+  margin: 8px 0 16px;
+}
+.faq__lead p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-slate-text);
+  opacity: .7;
+  margin: 0 0 20px;
+}
+.faq__lead a {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600;
+  color: var(--color-action-violet);
+}
+.faq__lead a:hover { opacity: .75; }
+
+.faq__list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--color-cloud-mist); }
+.faq__item {
+  border-bottom: 1px solid var(--color-cloud-mist);
+  padding: 20px 0;
+}
+.faq__item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-polysans);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: -.02em;
+  color: var(--color-rich-violet);
+  padding: 4px 0;
+  transition: color var(--dur-fast) var(--ease-out-soft);
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover { color: var(--color-action-violet); }
+.faq__item summary .ic {
+  width: 22px; height: 22px;
+  flex: none;
+  position: relative;
+  display: grid; place-items: center;
+}
+.faq__item summary .ic::before,
+.faq__item summary .ic::after {
+  content: "";
+  position: absolute;
+  background: var(--color-rich-violet);
+  border-radius: 1px;
+  transition: transform var(--dur-base) var(--ease-out-soft);
+}
+.faq__item summary .ic::before { width: 14px; height: 1.6px; }
+.faq__item summary .ic::after  { width: 1.6px; height: 14px; }
+.faq__item[open] summary .ic::after { transform: scaleY(0); }
+.faq__item[open] summary { color: var(--color-action-violet); }
+.faq__item[open] summary .ic::before { background: var(--color-action-violet); }
+
+.faq__answer {
+  padding: 8px 0 4px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-slate-text);
+  opacity: .8;
+  max-width: 56ch;
+}
+
+/* =========================================================================
+   Social — small, before footer
+   ========================================================================= */
+.social {
+  background: var(--color-rich-violet);
+  color: var(--color-canvas-white);
+  text-align: center;
+  padding: 24px 24px 100px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+}
+.social__lead {
+  font-family: var(--font-polysans);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -.02em;
+  color: var(--color-canvas-white);
+  margin: 50px 0 0;
+}
+.social__sub {
+  font-size: 14px;
+  color: rgba(255,255,255,.55);
+  margin: 0;
+}
+.social__row { display: flex; gap: 12px; margin-top: 8px; }
+.social__icon {
+  width: 56px; height: 56px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.18);
+  display: grid; place-items: center;
+  color: var(--color-canvas-white);
+  transition: border-color var(--dur-base) var(--ease-out-soft), background var(--dur-base) var(--ease-out-soft);
+}
+.social__icon:hover { border-color: var(--color-canvas-white); background: rgba(255,255,255,.06); }
+.social__icon svg { width: 22px; height: 22px; }
+.social__handle {
+  margin-top: 8px;
+  font-family: var(--font-polysans);
+  font-size: 14px;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.45);
+}
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+.foot {
+  background: var(--color-rich-violet);
+  color: rgba(255,255,255,.4);
+  padding: 36px 24px 44px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: 12px;
+  letter-spacing: var(--tracking-tight);
+}
+.foot__inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.foot__left { display: flex; flex-direction: column; gap: 4px; }
+.foot__brand {
+  font-family: var(--font-polysans); font-weight: 700;
+  font-size: 14px; color: rgba(255,255,255,.6);
+  letter-spacing: -.02em;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.foot__brand .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--color-sunset-pink);
+}
+.foot__tiny { font-size: 11px; color: rgba(255,255,255,.3); }
+.foot__right { display: flex; gap: 20px; align-items: center; }
+.foot__right a:hover { color: rgba(255,255,255,.7); }
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+@media (max-width: 980px) {
+  .manifesto__inner { grid-template-columns: 1fr; gap: 40px; }
+  .manifesto__quote::before { left: -8px; top: -56px; font-size: 80px; }
+  .collection__grid { grid-template-columns: repeat(2, 1fr); }
+  .craft__grid { grid-template-columns: repeat(2, 1fr); }
+  .note__inner { grid-template-columns: 1fr; gap: 32px; }
+  .note__photo { aspect-ratio: 16 / 9; max-width: 320px; }
+  .faq__inner { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 720px) {
+  .hero__nav { display: none; }
+  .countdown { gap: 8px; }
+  .cd-unit { min-width: 0; flex: 1; padding: 14px 4px 10px; }
+  .cd-unit__n { font-size: 34px; }
+  .benefits__grid, .collection__grid, .craft__grid { grid-template-columns: 1fr; }
+  .benefits__limit { flex-direction: column; align-items: flex-start; }
+  .benefits__limit-bar { width: 100%; }
+  .journey__step { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (max-width: 520px) {
+  .signup { padding: 5px; }
+  .signup__input { padding: 0 12px; font-size: 14px; }
+  .signup__btn { padding: 0 16px; font-size: 14px; }
+  .cd-unit__n { font-size: 28px; }
+  .cd-unit__l { font-size: 10px; letter-spacing: .1em; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero__deco hero__deco--tl" aria-hidden="true">
+    <svg viewBox="0 0 240 240" fill="none">
+      <path d="M120 8 L140 96 L228 120 L140 144 L120 232 L100 144 L12 120 L100 96 Z"
+            stroke="#bcf2ff" stroke-width="1.5" stroke-linejoin="round" opacity=".6" />
+      <circle cx="120" cy="120" r="60" stroke="#ffaae6" stroke-width="1" opacity=".4" />
+    </svg>
+  </div>
+  <div class="hero__deco hero__deco--br" aria-hidden="true">
+    <svg viewBox="0 0 320 200" fill="none">
+      <path d="M20 120 Q90 40 200 80 T 310 60" stroke="#dfff9d" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/>
+      <path d="M20 150 Q90 80 200 110 T 310 100" stroke="#ffaae6" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".5"/>
+      <path d="M20 180 Q90 120 200 140 T 310 140" stroke="#bcf2ff" stroke-width="1" fill="none" stroke-linecap="round" opacity=".4"/>
+    </svg>
+  </div>
+  <div class="hero__deco hero__deco--m" aria-hidden="true">
+    <svg viewBox="0 0 96 96" fill="none">
+      <path d="M48 6 L54 42 L90 48 L54 54 L48 90 L42 54 L6 48 L42 42 Z"
+            stroke="#ffaae6" stroke-width="1.4" stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <header class="hero__top">
+    <a class="brand" href="#">
+      <span class="brand__mark"></span>
+      <span>NOUN</span>
+    </a>
+    <nav class="hero__nav">
+      <a href="#collection">컬렉션</a>
+      <a href="#craft">소재</a>
+      <a href="#journey">여정</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <div class="hero__center">
+    <span class="eyebrow"><span class="dot"></span>Coming soon · 2026</span>
+
+    <h1 class="headline">곧, 이름이<br/><em>생깁니다.</em></h1>
+
+    <p class="subhead">이름 없던 일상의 오브제 — NOUN.<br/>데일리의 새로운 정의가 곧 도착합니다.</p>
+
+    <div class="countdown" id="countdown" aria-label="출시까지 남은 시간">
+      <div class="cd-unit"><span class="cd-unit__n" data-unit="d">30</span><span class="cd-unit__l">Days</span></div>
+      <div class="cd-unit"><span class="cd-unit__n" data-unit="h">00</span><span class="cd-unit__l">Hours</span></div>
+      <div class="cd-unit"><span class="cd-unit__n" data-unit="m">00</span><span class="cd-unit__l">Minutes</span></div>
+      <div class="cd-unit"><span class="cd-unit__n" data-unit="s">00</span><span class="cd-unit__l">Seconds</span></div>
+    </div>
+
+    <form class="signup" id="signup" novalidate>
+      <input class="signup__input" id="signup-email" type="email" required placeholder="이메일을 입력해 주세요" aria-label="이메일" />
+      <button class="signup__btn" type="submit">사전예약하기</button>
+    </form>
+    <p class="signup__success" id="signup-success">사전예약이 완료되었어요. 가장 먼저 알려드릴게요.</p>
+
+    <div class="trust">
+      <span class="stack"><i></i><i></i><i></i></span>
+      <span>이미 <strong id="trust-count">2,847</strong>명이 기다리고 있어요</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT (short teaser copy)
+     ============================================================ -->
+<section class="teaser">
+  <div class="teaser__inner">
+    <p class="section-label section-label--air">About</p>
+    <p class="teaser__copy">
+      일상은 사물로 이루어져 있습니다. 우리는 그 사물에 이름을 다시 붙입니다.
+      오래된 형태에 새로운 시선을 더해, <em>이름 없던 것들에 이름을</em> 돌려줍니다.
+    </p>
+    <p class="teaser__sign">SEE YOU SOON</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     MANIFESTO
+     ============================================================ -->
+<section class="manifesto">
+  <div class="manifesto__inner">
+    <div class="manifesto__meta">
+      <p class="manifesto__meta-title">Manifesto · 我們相信</p>
+      <p class="manifesto__meta-body">
+        4년간 13명의 장인, 6개의 공방, 2개 도시를 거쳐 다듬어 온 한 줄의 문장.
+      </p>
+    </div>
+    <div>
+      <p class="manifesto__quote">
+        우리는 사물을 만들지 않습니다.<br/>
+        그 사물이 머무는 <em>시간</em>을 만듭니다.
+      </p>
+      <p class="manifesto__attr">
+        <b>NOUN Studio · 2026</b>
+        서울 · 청주
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FIRST-LOOK COLLECTION
+     ============================================================ -->
+<section class="collection" id="collection">
+  <div class="collection__inner">
+    <div class="collection__head">
+      <div>
+        <p class="section-label section-label--pink">The first chapter</p>
+        <h2 class="collection__title">첫 컬렉션<br/>여섯 개의 오브제.</h2>
+      </div>
+      <p class="collection__lead">
+        형태와 이름을 다시 짓는 작은 일들. 사진은 출시일에 공개되며, 지금은 윤곽만 살짝.
+      </p>
+    </div>
+
+    <div class="collection__grid">
+      <!-- 01 — Candle / 빛머묾 -->
+      <article class="obj obj--01">
+        <div class="obj__top">
+          <span class="obj__no">No. 01</span>
+          <span class="obj__chip">Living</span>
+        </div>
+        <div class="obj__art" aria-hidden="true">
+          <svg viewBox="0 0 100 140" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M50 18 C 50 22, 47 26, 47 31 C 47 35, 53 35, 53 31 C 53 26, 50 22, 50 18 Z"/>
+            <path d="M50 31 L50 40"/>
+            <rect x="38" y="40" width="24" height="58" rx="2"/>
+            <path d="M32 98 L68 98 L72 110 L28 110 Z"/>
+            <path d="M30 110 L70 110 L72 116 L28 116 Z"/>
+          </svg>
+        </div>
+        <div class="obj__bottom">
+          <h3 class="obj__name">Lumen</h3>
+          <span class="obj__kr">빛머묾 · 빛이 오래 머무는 자리</span>
+        </div>
+      </article>
+
+      <!-- 02 — Bowl / 담는것 -->
+      <article class="obj obj--02">
+        <div class="obj__top">
+          <span class="obj__no">No. 02</span>
+          <span class="obj__chip">Kitchen</span>
+        </div>
+        <div class="obj__art" aria-hidden="true">
+          <svg viewBox="0 0 120 90" stroke-width="1.2">
+            <ellipse cx="60" cy="28" rx="42" ry="6"/>
+            <path d="M18 28 Q18 62 40 70 L80 70 Q102 62 102 28"/>
+            <path d="M30 50 Q60 56 90 50" opacity=".4"/>
+            <path d="M34 36 Q60 42 86 36" opacity=".25"/>
+          </svg>
+        </div>
+        <div class="obj__bottom">
+          <h3 class="obj__name">Hereo</h3>
+          <span class="obj__kr">담는것 · 가만한 깊이의 그릇</span>
+        </div>
+      </article>
+
+      <!-- 03 — Incense / 향 -->
+      <article class="obj obj--03">
+        <div class="obj__top">
+          <span class="obj__no">No. 03</span>
+          <span class="obj__chip">Mood</span>
+        </div>
+        <div class="obj__art" aria-hidden="true">
+          <svg viewBox="0 0 100 140" stroke-width="1.2" stroke-linecap="round">
+            <path d="M54 12 Q47 24 54 36 Q61 48 54 60"/>
+            <path d="M48 18 Q42 30 48 42" opacity=".5"/>
+            <path d="M58 22 Q64 34 58 46" opacity=".4"/>
+            <line x1="50" y1="60" x2="50" y2="98"/>
+            <ellipse cx="50" cy="102" rx="6" ry="3"/>
+            <path d="M28 108 L72 108 L66 124 L34 124 Z"/>
+          </svg>
+        </div>
+        <div class="obj__bottom">
+          <h3 class="obj__name">Nara</h3>
+          <span class="obj__kr">향 · 가벼운 연기, 무거운 기억</span>
+        </div>
+      </article>
+
+      <!-- 04 — Cup / 잔 -->
+      <article class="obj obj--04">
+        <div class="obj__top">
+          <span class="obj__no">No. 04</span>
+          <span class="obj__chip">Table</span>
+        </div>
+        <div class="obj__art" aria-hidden="true">
+          <svg viewBox="0 0 100 130" stroke-width="1.2">
+            <ellipse cx="50" cy="28" rx="22" ry="5"/>
+            <path d="M28 28 L32 95 Q50 102 68 95 L72 28"/>
+            <ellipse cx="50" cy="95" rx="18" ry="3" opacity=".4"/>
+            <path d="M72 40 Q86 50 84 70 Q82 84 72 86" />
+          </svg>
+        </div>
+        <div class="obj__bottom">
+          <h3 class="obj__name">Mol</h3>
+          <span class="obj__kr">잔 · 손에 잡히는 온도</span>
+        </div>
+      </article>
+
+      <!-- 05 — Vase / 화 -->
+      <article class="obj obj--05">
+        <div class="obj__top">
+          <span class="obj__no">No. 05</span>
+          <span class="obj__chip">Flora</span>
+        </div>
+        <div class="obj__art" aria-hidden="true">
+          <svg viewBox="0 0 100 160" stroke-width="1.2">
+            <ellipse cx="50" cy="22" rx="10" ry="3"/>
+            <path d="M40 22 L40 52 Q22 72 22 104 Q22 134 50 138 Q78 134 78 104 Q78 72 60 52 L60 22"/>
+            <path d="M30 100 Q50 106 70 100" opacity=".35"/>
+            <path d="M28 116 Q50 122 72 116" opacity=".25"/>
+          </svg>
+        </div>
+        <div class="obj__bottom">
+          <h3 class="obj__name">Ooru</h3>
+          <span class="obj__kr">화 · 줄기를 위한 한 칸</span>
+        </div>
+      </article>
+
+      <!-- 06 — Textile / 결 -->
+      <article class="obj obj--06">
+        <div class="obj__top">
+          <span class="obj__no">No. 06</span>
+          <span class="obj__chip">Cloth</span>
+        </div>
+        <div class="obj__art" aria-hidden="true">
+          <svg viewBox="0 0 120 100" stroke-width="1.2">
+            <path d="M18 30 L102 30 L102 82 L18 82 Z"/>
+            <path d="M18 30 L60 52 L102 30"/>
+            <path d="M60 52 L60 82"/>
+            <path d="M30 50 L90 50" opacity=".3"/>
+            <path d="M30 65 L90 65" opacity=".3"/>
+            <path d="M30 75 L90 75" opacity=".25"/>
+          </svg>
+        </div>
+        <div class="obj__bottom">
+          <h3 class="obj__name">Gyeol</h3>
+          <span class="obj__kr">결 · 손이 닿을 때 처음 아는</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MATERIALS & CRAFT
+     ============================================================ -->
+<section class="craft" id="craft">
+  <div class="craft__inner">
+    <div class="craft__head">
+      <p class="section-label section-label--green">Materials &amp; craft</p>
+      <h2 class="craft__title">손과 시간으로 다듬은 네 가지.</h2>
+      <p class="craft__lead">
+        모든 오브제는 단일 소재의 정직한 표면을 지향합니다.
+        과한 마감은 빼고, 오래 두고 보아도 질리지 않는 결만 남깁니다.
+      </p>
+    </div>
+
+    <div class="craft__grid">
+      <article class="mat">
+        <div class="mat__swatch mat__swatch--oak" aria-label="참나무 스와치"></div>
+        <div class="mat__meta">
+          <span class="mat__no">M / 01</span>
+          <h3 class="mat__name">Oak</h3>
+          <span class="mat__kr">참나무 · 천연 무도장</span>
+        </div>
+      </article>
+      <article class="mat">
+        <div class="mat__swatch mat__swatch--linen" aria-label="린넨 스와치"></div>
+        <div class="mat__meta">
+          <span class="mat__no">M / 02</span>
+          <h3 class="mat__name">Linen</h3>
+          <span class="mat__kr">린넨 · 자연 표백</span>
+        </div>
+      </article>
+      <article class="mat">
+        <div class="mat__swatch mat__swatch--clay" aria-label="옹기 스와치"></div>
+        <div class="mat__meta">
+          <span class="mat__no">M / 03</span>
+          <h3 class="mat__name">Onggi</h3>
+          <span class="mat__kr">옹기 · 무유 소성</span>
+        </div>
+      </article>
+      <article class="mat">
+        <div class="mat__swatch mat__swatch--brass" aria-label="황동 스와치"></div>
+        <div class="mat__meta">
+          <span class="mat__no">M / 04</span>
+          <h3 class="mat__name">Brass</h3>
+          <span class="mat__kr">황동 · 손 광택</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BENEFITS — canvas white
+     ============================================================ -->
+<section class="benefits">
+  <div class="benefits__inner">
+    <div class="benefits__head">
+      <h2 class="benefits__title">사전예약 멤버에게만<br/>드리는 세 가지.</h2>
+      <p class="benefits__lead">정식 출시 전 가입한 분들에게만 드리는 혜택입니다. 자리는 한정되어 있어요.</p>
+    </div>
+
+    <div class="benefits__grid">
+      <article class="benefit">
+        <span class="benefit__num">01</span>
+        <div class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 12v10H4V12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/>
+            <path d="M12 7H7.5A2.5 2.5 0 0 1 7.5 2C11 2 12 7 12 7zM12 7h4.5A2.5 2.5 0 0 0 16.5 2C13 2 12 7 12 7z"/>
+          </svg>
+        </div>
+        <h3 class="benefit__title">평생 20% 할인</h3>
+        <p class="benefit__body">정식 출시 후 첫 1년간, 사전예약자에게만 적용되는 멤버 가격.</p>
+      </article>
+
+      <article class="benefit">
+        <span class="benefit__num">02</span>
+        <div class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 22h16"/><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M14 12h.01"/>
+          </svg>
+        </div>
+        <h3 class="benefit__title">7일 먼저 입장</h3>
+        <p class="benefit__body">정식 오픈 일주일 전, 멤버 전용 프리뷰로 첫 컬렉션을 먼저 만나보세요.</p>
+      </article>
+
+      <article class="benefit">
+        <span class="benefit__num">03</span>
+        <div class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>
+          </svg>
+        </div>
+        <h3 class="benefit__title">한정 오브제 키트</h3>
+        <p class="benefit__body">사전예약자에게만 보내드리는 첫 컬렉션 사은품. 넘버링 한정 수량.</p>
+      </article>
+    </div>
+
+    <div class="benefits__limit">
+      <div class="benefits__limit-text">
+        <span class="benefits__limit-l">한정 수량 · Numbered 001 → 500</span>
+        <p class="benefits__limit-h">남은 자리 360 / 500</p>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div class="benefits__limit-bar"><i></i></div>
+        <span class="benefits__limit-count">72%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     JOURNEY TIMELINE
+     ============================================================ -->
+<section class="journey" id="journey">
+  <div class="journey__inner">
+    <div class="journey__head">
+      <p class="section-label section-label--violet">Journey</p>
+      <h2 class="journey__title">사 년의 준비, 한 달의 도착.</h2>
+    </div>
+
+    <div class="journey__track">
+      <div class="journey__step">
+        <div class="journey__year">2022</div>
+        <div class="journey__copy">
+          <h4>스튜디오의 시작</h4>
+          <p>두 명의 디자이너가 작은 공방에서 첫 도면을 그립니다. 도면 위에는 형태만 있고, 아직 이름이 없습니다.</p>
+        </div>
+      </div>
+      <div class="journey__step">
+        <div class="journey__year">2024</div>
+        <div class="journey__copy">
+          <h4>첫 시제품</h4>
+          <p>여섯 점의 오브제가 일곱 번의 형태를 거쳐 모양을 잡습니다. 청주의 공방, 서울의 작업실.</p>
+        </div>
+      </div>
+      <div class="journey__step">
+        <div class="journey__year">2025</div>
+        <div class="journey__copy">
+          <h4>비공개 베타</h4>
+          <p>200명의 동료들이 6개월간 자신의 집에서 오브제를 두고, 결과 흠을 함께 기록합니다.</p>
+        </div>
+      </div>
+      <div class="journey__step journey__step--current">
+        <div class="journey__year">2026</div>
+        <div class="journey__copy">
+          <h4>정식 공개 <span class="journey__badge">In 30 days</span></h4>
+          <p>첫 컬렉션, 첫 이름들이 한 곳에 모입니다. 사전예약 멤버에게 가장 먼저 도착합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOUNDER'S NOTE
+     ============================================================ -->
+<section class="note">
+  <div class="note__inner">
+    <div class="note__photo" aria-hidden="true">
+      <span>SJ</span>
+    </div>
+    <div class="note__body">
+      <p class="note__label">A note from the founder</p>
+      <h3 class="note__heading">"이름을 다시 짓는 일은,<br/>사물을 다시 좋아하게 하는 일."</h3>
+      <p class="note__copy">
+        오래된 사물을 좋아하는 사람들이 모였습니다.
+        매끈한 표면보다 손때, 새것보다 두 번째 사용을 좋아하는 사람들.
+        우리는 그 마음을 일상의 형태로 옮기는 일을 하기로 했습니다.
+        한 줄 한 줄, 천천히 보내드리겠습니다.
+      </p>
+      <div class="note__sign">
+        <span class="note__sign-name">서지윤</span>
+        <span class="note__sign-role">Founder, NOUN Studio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="faq" id="faq">
+  <div class="faq__inner">
+    <div class="faq__lead">
+      <p class="section-label section-label--mist">FAQ</p>
+      <h2>궁금하실 것들.</h2>
+      <p>출시 전 가장 많이 받은 질문들을 모았습니다. 더 궁금한 점은 메일로 답해드릴게요.</p>
+      <a href="/cdn-cgi/l/email-protection#adc5c8c1c1c2edc3c2d8c383ded9d8c9c4c2"><span class="__cf_email__" data-cfemail="3e565b5252517e50514b50104d4a4b5a5751">[email&#160;protected]</span> →</a>
+    </div>
+    <div class="faq__list">
+      <details class="faq__item">
+        <summary>사전예약은 어떻게 진행되나요? <span class="ic" aria-hidden="true"></span></summary>
+        <p class="faq__answer">상단의 폼에 이메일만 남겨주시면 됩니다. 결제는 정식 출시일에 별도로 안내드리며, 사전예약 자체에는 비용이 없습니다.</p>
+      </details>
+      <details class="faq__item">
+        <summary>20% 할인은 어떻게 적용되나요? <span class="ic" aria-hidden="true"></span></summary>
+        <p class="faq__answer">출시 후 첫 1년간 멤버 코드를 통해 자동 적용됩니다. 코드는 사전예약자에게 이메일로 1:1 발송됩니다.</p>
+      </details>
+      <details class="faq__item">
+        <summary>한정 굿즈는 어떤 것인가요? <span class="ic" aria-hidden="true"></span></summary>
+        <p class="faq__answer">사전예약 멤버 500분께만 보내드리는 넘버링 키트입니다. 첫 컬렉션과 동일 소재로 제작되며 첫 주문에 동봉됩니다.</p>
+      </details>
+      <details class="faq__item">
+        <summary>해외 배송도 가능한가요? <span class="ic" aria-hidden="true"></span></summary>
+        <p class="faq__answer">초기에는 국내(한국) 배송만 지원합니다. 해외 배송은 출시 후 점진적으로 열어 갈 계획이며 알림을 별도로 보내드립니다.</p>
+      </details>
+      <details class="faq__item">
+        <summary>오프라인 매장이 있나요? <span class="ic" aria-hidden="true"></span></summary>
+        <p class="faq__answer">정식 출시 시점에는 온라인 위주로 시작합니다. 서울의 작은 쇼룸을 2026년 후반에 열 예정이며, 사전 초대장은 멤버에게 먼저 보내드립니다.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOCIAL
+     ============================================================ -->
+<section class="social">
+  <p class="social__lead">Stay tuned — 소식을 가장 먼저 받아보세요.</p>
+  <p class="social__sub">메일 외에도 인스타그램에서 작업 과정을 살짝 공개합니다.</p>
+  <div class="social__row">
+    <a class="social__icon" href="#" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+    </a>
+    <a class="social__icon" href="#" aria-label="X (Twitter)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l16 16M20 4L4 20"/>
+      </svg>
+    </a>
+    <a class="social__icon" href="#" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+      </svg>
+    </a>
+    <a class="social__icon" href="#" aria-label="Threads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21c5 0 8-3 8-8 0-4-2-7-6-7-3 0-5 2-5 4 0 1 1 2 2 2"/>
+        <path d="M12 14c-2 0-3-1-3-3 0-3 3-5 6-5"/>
+      </svg>
+    </a>
+  </div>
+  <p class="social__handle">@noun.studio</p>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__left">
+      <span class="foot__brand"><span class="dot"></span> NOUN Studio · Seoul</span>
+      <span class="foot__tiny">© 2026 NOUN. All rights reserved. · 포트폴리오용 샘플 작업입니다</span>
+    </div>
+    <div class="foot__right">
+      <a href="#">← 다른 포트폴리오 보기</a>
+      <a href="#">개인정보 처리방침</a>
+      <a href="#">이용약관</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* =========================================================================
+   Countdown
+   ========================================================================= */
+(function () {
+  const KEY = "noun-launch-target";
+  let target = parseInt(localStorage.getItem(KEY), 10);
+  if (!target || isNaN(target)) {
+    target = Date.now() + 30 * 24 * 60 * 60 * 1000;
+    localStorage.setItem(KEY, String(target));
+  }
+  const slots = {
+    d: document.querySelector('[data-unit="d"]'),
+    h: document.querySelector('[data-unit="h"]'),
+    m: document.querySelector('[data-unit="m"]'),
+    s: document.querySelector('[data-unit="s"]'),
+  };
+  const pad = (n) => String(Math.max(0, n)).padStart(2, "0");
+  function tick() {
+    const diff = Math.max(0, target - Date.now());
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    slots.d.textContent = pad(d);
+    slots.h.textContent = pad(h);
+    slots.m.textContent = pad(m);
+    slots.s.textContent = pad(s);
+  }
+  tick();
+  const id = setInterval(tick, 1000);
+  window.addEventListener("beforeunload", () => clearInterval(id));
+})();
+
+/* =========================================================================
+   Signup form
+   ========================================================================= */
+(function () {
+  const form = document.getElementById("signup");
+  const success = document.getElementById("signup-success");
+  const trust = document.getElementById("trust-count");
+  const input = document.getElementById("signup-email");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = input.value.trim();
+    if (!value || !/.+@.+\..+/.test(value)) {
+      input.focus();
+      return;
+    }
+    console.log("[signup] submit", { email: value });
+    form.classList.add("is-done");
+    success.classList.add("is-on");
+    input.disabled = true;
+    form.querySelector("button").disabled = true;
+    form.querySelector("button").textContent = "완료";
+    const current = parseInt(trust.textContent.replace(/,/g, ""), 10) || 0;
+    trust.textContent = (current + 1).toLocaleString();
+  });
+})();
+</script>
+
+</body>
+</html>

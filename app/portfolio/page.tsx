@@ -44,6 +44,12 @@ const PORTFOLIO_CARDS: PortfolioCard[] = [
     description: "롱폼 스토리텔링으로 정보성 상품·온라인 강의의 구매 전환을 끌어내는 랜딩",
     designTone: "Peach + Teal/Lime Accent (인프런/클래스101 톤)",
   },
+  {
+    slug: "teaser",
+    title: "사전예약/티저형",
+    description: "신규 브랜드·라이프스타일 제품의 런칭 전 기대감을 만들고 이메일 사전예약을 받는 Coming Soon 랜딩",
+    designTone: "Deep Indigo + Pastel Accent (절제된 미스터리 톤)",
+  },
 ];
 
 export default function PortfolioListPage() {
