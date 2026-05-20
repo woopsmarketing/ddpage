@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import "./main.css";
 import { loadClient } from "@/lib/seo/loader";
 import {
   canonicalUrl,

@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { buildPageMetadata } from "@/lib/seo/helpers";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schemas";
+import OrderForm from "./OrderForm";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
@@ -11,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     fallback: {
       title: "주문하기",
       description:
-        "뚝딱페이지 랜딩페이지 호스팅 주문. 월 14,900원으로 사이트 제작·호스팅·SEO/AEO·서브도메인까지 모두 포함됩니다.",
+        "시안 디자인의 톤과 사업 콘텐츠만 알려주시면, 신청 후 약 1시간 안에 시안이 도착합니다. 올인원 패키지 14,900원.",
     },
   });
 }
@@ -30,9 +31,7 @@ export default async function OrderPage() {
           ]),
         ]}
       />
-      <main className="flex min-h-screen items-center justify-center p-8">
-        <h1 className="text-2xl font-semibold">Order</h1>
-      </main>
+      <OrderForm />
     </>
   );
 }
