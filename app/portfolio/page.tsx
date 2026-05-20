@@ -5,11 +5,7 @@ import { buildPageMetadata } from "@/lib/seo/helpers";
 import { loadClient } from "@/lib/seo/loader";
 import { PORTFOLIOS } from "@/lib/portfolios";
 import JsonLd from "@/components/JsonLd";
-import {
-  breadcrumbSchema,
-  faqSchema,
-  itemListSchema,
-} from "@/lib/seo/schemas";
+import { breadcrumbSchema, itemListSchema } from "@/lib/seo/schemas";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
@@ -37,8 +33,7 @@ export default async function PortfolioListPage() {
             { name: "포트폴리오", pathname: "/portfolio" },
           ]),
           itemListSchema(config, host),
-          faqSchema(config),
-        ].filter(Boolean)}
+        ]}
       />
       <main className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
         <header className="mb-12">

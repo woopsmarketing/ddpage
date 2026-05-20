@@ -51,13 +51,15 @@ export function organizationSchema(config: ClientConfig, host: string) {
         }
       : undefined;
 
+  // inLanguage 는 의도적으로 제외: schema.org 스펙상 Organization 에는
+  // inLanguage 가 표준 속성이 아니라 Rich Results 가 경고로 표시한다.
+  // (WebSite, Article, CreativeWork 등에는 유효 — 그쪽엔 유지)
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${base}#organization`,
     name: config.name,
     url: base,
-    inLanguage: "ko-KR",
     logo: {
       "@type": "ImageObject",
       url: config.ogImage.logo ?? `${base}/icon`,

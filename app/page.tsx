@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { buildPageMetadata } from "@/lib/seo/helpers";
 import { loadClient } from "@/lib/seo/loader";
 import JsonLd from "@/components/JsonLd";
-import { businessTypeSchema, faqSchema } from "@/lib/seo/schemas";
+import { businessTypeSchema } from "@/lib/seo/schemas";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
@@ -24,11 +24,7 @@ export default async function Home() {
 
   return (
     <>
-      <JsonLd
-        data={[businessTypeSchema(config, host), faqSchema(config)].filter(
-          Boolean,
-        )}
-      />
+      <JsonLd data={[businessTypeSchema(config, host)]} />
       <main className="flex min-h-screen items-center justify-center p-8">
         <h1 className="text-2xl font-semibold">ddpage</h1>
       </main>

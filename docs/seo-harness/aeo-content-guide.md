@@ -2,24 +2,53 @@
 
 > 이 문서는 사이트 콘텐츠를 작성·수정할 때 AI 답변엔진(ChatGPT/Claude/Perplexity 등)이 잘 인용하도록 만드는 규칙을 정리합니다.
 
-## 1. `data-speakable` 속성
+## 1. FAQPage schema 박기 — page-owns-data 패턴 (D-18)
 
-FAQ 답변과 답변 우선 단락(answer-first paragraph)에 `data-speakable="true"` 속성을 부착하세요. schema-agent가 자동으로 SpeakableSpecification JSON-LD를 생성해 음성 어시스턴트(Google Assistant, Bixby 등) 노출을 늘립니다.
-
-예시:
+**핵심 원칙**: FAQ 섹션이 *화면에 실제로 표시되는* 페이지에서만 schema를 박는다. 자동 주입 안 함 (페이지 콘텐츠와 schema 불일치 방지).
 
 ```tsx
-<p data-speakable="true">
-  월 14,900원으로 사이트 제작, 호스팅, SSL, SEO/AEO가 모두 포함됩니다.
-</p>
+import JsonLd from "@/components/JsonLd";
+import { faqSchema } from "@/lib/seo/schemas";
+
+// 1) 단일 데이터 소스 — 같은 배열이 화면과 schema 둘 다에 사용됨
+const FAQ_ITEMS = [
+  { q: "정말 월 14,900원에 다 되나요?", a: "네. SEO/AEO까지 모두 포함입니다." },
+  { q: "사이트 만들기 얼마나 걸리나요?", a: "신청 후 1~2일 안에 시안 받으실 수 있습니다." },
+  // ...
+];
+
+export default function Home() {
+  return (
+    <>
+      {/* 2) schema는 화면과 같은 데이터로 */}
+      <JsonLd data={[faqSchema(FAQ_ITEMS)].filter(Boolean)} />
+
+      <main>
+        {/* 3) 화면 렌더링 — 반드시 같은 Q&A 가 보이도록 */}
+        <section id="faq">
+          {FAQ_ITEMS.map((item) => (
+            <details key={item.q}>
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </section>
+      </main>
+    </>
+  );
+}
 ```
 
-권장 위치:
-- FAQ의 각 답변 (`<dd>` 또는 `<p>`)
-- 핵심 소개 단락 (페이지 상단 1~2문장)
-- 가격, 환불, 운영 정책 등 직접 답변 가능한 정보
+규칙:
+- `faqSchema(faq)` — 배열을 받아 schema 객체 반환. 빈 배열이면 `null` 반환 (`.filter(Boolean)` 로 제거).
+- FAQ 데이터는 **반드시 화면에도 표시** 되어야 함. schema만 박고 화면 누락은 Google 가이드라인 위반.
+- 페이지에 FAQ 없으면 `<JsonLd>` 에 `faqSchema(...)` 호출도 하지 마세요.
 
-남용 금지: 페이지당 3~5개 이내. 모든 단락에 부착하면 효과가 희석됩니다.
+## 2. `data-speakable` 속성 (현재 비활성)
+
+음성 비서(Google Assistant, Siri) 인용용 `data-speakable` 속성은 schema-agent가 자동 cssSelector 를 박는 패턴이었으나, 실제 페이지 DOM 과 매치 안 되는 경고가 자주 떠서 **D-18 에서 자동 주입 제거**.
+
+부착해도 무해하나 현재 효과 없음. 필요하면 페이지가 직접 SpeakableSpecification schema 를 박는 패턴으로 v2 에서 재활성화 예정.
 
 ## 2. HowTo 3단계 패턴 (D-11)
 

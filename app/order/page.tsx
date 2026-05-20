@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { buildPageMetadata } from "@/lib/seo/helpers";
-import { loadClient } from "@/lib/seo/loader";
 import JsonLd from "@/components/JsonLd";
-import { breadcrumbSchema, faqSchema } from "@/lib/seo/schemas";
+import { breadcrumbSchema } from "@/lib/seo/schemas";
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
@@ -20,7 +19,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function OrderPage() {
   const h = await headers();
   const host = h.get("host") ?? "ddpage.kr";
-  const config = await loadClient("ddpage");
 
   return (
     <>
@@ -30,8 +28,7 @@ export default async function OrderPage() {
             { name: "홈", pathname: "/" },
             { name: "주문하기", pathname: "/order" },
           ]),
-          faqSchema(config),
-        ].filter(Boolean)}
+        ]}
       />
       <main className="flex min-h-screen items-center justify-center p-8">
         <h1 className="text-2xl font-semibold">Order</h1>

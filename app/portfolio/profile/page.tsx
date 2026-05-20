@@ -15,10 +15,9 @@ import {
   Rss,
 } from 'lucide-react'
 import { buildPageMetadata } from '@/lib/seo/helpers'
-import { loadClient } from '@/lib/seo/loader'
 import { getPortfolio } from '@/lib/portfolios'
 import JsonLd from '@/components/JsonLd'
-import { breadcrumbSchema, faqSchema } from '@/lib/seo/schemas'
+import { breadcrumbSchema } from '@/lib/seo/schemas'
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
@@ -266,7 +265,6 @@ const SOCIALS = [
 export default async function Page() {
   const h = await headers()
   const host = h.get('host') ?? 'ddpage.kr'
-  const config = await loadClient('ddpage')
   const entry = getPortfolio('profile')
 
   return (
@@ -278,8 +276,7 @@ export default async function Page() {
             { name: '포트폴리오', pathname: '/portfolio' },
             { name: entry?.title ?? '1인 프로필형', pathname: '/portfolio/profile' },
           ]),
-          faqSchema(config),
-        ].filter(Boolean)}
+        ]}
       />
       <main className="ddpage-profile">
         <style dangerouslySetInnerHTML={{ __html: SCOPED_CSS }} />
