@@ -111,6 +111,22 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
       </section>
 
       {/* ============================================================
+           1.5 Early-bird banner — Hero 직후, urgency 강조
+           ============================================================ */}
+      <section className="earlybird-banner">
+        <div className="earlybird-banner__inner">
+          <span className="earlybird-banner__badge">출시 기념</span>
+          <p className="earlybird-banner__text break-keep">
+            <b>선착순 50명만</b> <b>14,900원</b>에 시작 — 이후 정가는 별도 안내
+          </p>
+          <Link href="/order" className="btn btn--primary btn--sm earlybird-banner__cta">
+            지금 시작
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
+          </Link>
+        </div>
+      </section>
+
+      {/* ============================================================
            2. Pain points
            ============================================================ */}
       <section className="section">
