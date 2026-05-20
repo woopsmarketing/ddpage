@@ -10,6 +10,7 @@ import {
 } from "./constants";
 import type { ClientConfig } from "./types";
 import { loadClient } from "./loader";
+import { getPortfolio } from "@/lib/portfolios";
 
 // ───── URL ─────
 export function siteUrl(host: string): string {
@@ -178,6 +179,16 @@ export function clientHost(config: ClientConfig): string {
     : config.domain;
 }
 
+/**
+ * `/portfolio/<slug>` 형태일 때 매칭 portfolio 엔트리 반환.
+ * 그 외 경로(`/portfolio`, `/`, 등)는 undefined.
+ */
+function portfolioEntryFromPathname(pathname: string) {
+  const m = pathname.match(/^\/portfolio\/([^/]+)\/?$/);
+  if (!m) return undefined;
+  return getPortfolio(m[1]);
+}
+
 export async function buildPageMetadata(
   opts: BuildPageMetadataOpts,
 ): Promise<Metadata> {
@@ -186,12 +197,17 @@ export async function buildPageMetadata(
 
   const key = routeKey(opts.pathname);
   const pageOverride = key !== "other" ? config.pages?.[key] : undefined;
+  const portfolioEntry = portfolioEntryFromPathname(opts.pathname);
 
   const title =
-    pageOverride?.title ?? opts.fallback?.title ?? config.tagline;
+    pageOverride?.title ??
+    portfolioEntry?.title ??
+    opts.fallback?.title ??
+    config.tagline;
 
   const description =
     pageOverride?.description ??
+    portfolioEntry?.description ??
     opts.fallback?.description ??
     config.description;
 

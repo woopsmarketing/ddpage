@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>런온(LearnOn) — 배움이 시작되는 곳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --color-primary:#0052ff;
+    --color-primary-active:#003ecc;
+    --color-canvas:#ffffff;
+    --color-surface-soft:#f7f7f7;
+    --color-surface-strong:#eef0f3;
+    --color-surface-dark:#0a0b0d;
+    --color-surface-dark-elevated:#16181c;
+    --color-hairline:#dee1e6;
+    --color-hairline-soft:#eef0f3;
+    --color-ink:#0a0b0d;
+    --color-body:#5b616e;
+    --color-muted:#7c828a;
+    --color-muted-soft:#a8acb3;
+    --color-on-primary:#ffffff;
+    --color-on-dark:#ffffff;
+    --color-on-dark-soft:#a8acb3;
+    --color-semantic-up:#05b169;
+    --color-semantic-down:#cf202f;
+    --color-accent-yellow:#f4b000;
+    --pastel-mint:#d6f1e3;
+    --pastel-mint-d:#0a5c3d;
+    --pastel-peach:#ffe3d3;
+    --pastel-sky:#dbe8ff;
+    --pastel-sky-d:#143a8a;
+    --pastel-cream:#fff3cf;
+    --pastel-cream-d:#7a4d00;
+
+    --font-display:'Inter','Noto Sans KR',-apple-system,system-ui,sans-serif;
+    --font-sans:'Inter','Noto Sans KR',-apple-system,system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+    --container-max:1200px;
+    --nav-height:64px;
+    --radius-pill:100px;
+    --radius-xl:24px;
+    --radius-lg:16px;
+    --radius-md:12px;
+    --shadow-soft:0 4px 12px rgba(0,0,0,0.04);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  html,body{margin:0;padding:0;background:var(--color-canvas);color:var(--color-ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{font-size:16px;line-height:1.5}
+  a{color:var(--color-primary);text-decoration:none}
+  a:hover{text-decoration:underline}
+  button{font-family:var(--font-sans)}
+  img{display:block;max-width:100%}
+
+  /* layout */
+  .container{max-width:var(--container-max);margin:0 auto;padding:0 32px}
+  .section{padding:96px 32px}
+
+  /* nav */
+  .nav{height:var(--nav-height);background:rgba(10,11,13,0.92);backdrop-filter:saturate(1.2) blur(8px);-webkit-backdrop-filter:saturate(1.2) blur(8px);color:#fff;border-bottom:1px solid #16181c;position:sticky;top:0;z-index:50}
+  .nav-inner{max-width:var(--container-max);margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:32px}
+  .wordmark{font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:-0.5px;color:#fff;display:inline-flex;align-items:center;gap:8px}
+  .wordmark .dot{width:10px;height:10px;border-radius:50%;background:var(--color-primary);display:inline-block}
+  .nav-menu{display:flex;align-items:center;gap:28px;margin-left:8px}
+  .nav-menu a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.78);transition:color .15s ease-out}
+  .nav-menu a:hover{text-decoration:none;color:#fff}
+  .nav-menu a.active{color:#fff;position:relative}
+  .nav-menu a.active::after{content:"";position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--color-primary);border-radius:2px}
+  .nav-spacer{flex:1}
+  .nav-actions{display:flex;align-items:center;gap:12px}
+  .nav-signin{font-size:14px;font-weight:600;color:#fff;background:transparent;border:0;cursor:pointer;padding:0 8px}
+
+  /* buttons */
+  .btn{font-family:var(--font-sans);font-weight:600;font-size:16px;line-height:1.15;border:0;border-radius:var(--radius-pill);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 20px;height:44px;transition:background-color .15s ease-out,transform .15s ease-out;white-space:nowrap;text-decoration:none}
+  .btn-primary{background:var(--color-primary);color:#fff}
+  .btn-primary:hover{background:var(--color-primary-active);text-decoration:none}
+  .btn-pill-cta{background:var(--color-primary);color:#fff;height:56px;padding:0 32px;font-size:16px}
+  .btn-pill-cta:hover{background:var(--color-primary-active);text-decoration:none}
+  .btn-outline-dark{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px #fff;height:56px;padding:0 32px}
+  .btn-outline-dark:hover{background:rgba(255,255,255,0.06);text-decoration:none}
+  .btn-outline-light{background:transparent;color:var(--color-ink);box-shadow:inset 0 0 0 1px var(--color-hairline);height:44px;padding:0 20px}
+  .btn-outline-light:hover{background:var(--color-surface-soft);text-decoration:none}
+  .btn-secondary-light{background:var(--color-surface-strong);color:var(--color-ink)}
+
+  /* eyebrow pill */
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:var(--color-surface-dark-elevated);font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#fff;white-space:nowrap}
+  .eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--color-semantic-up);box-shadow:0 0 0 0 rgba(5,177,105,.6);animation:pulse 1.8s ease-out infinite}
+  .eyebrow-light{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:var(--color-surface-strong);color:var(--color-ink);font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(5,177,105,.55)}70%{box-shadow:0 0 0 10px rgba(5,177,105,0)}100%{box-shadow:0 0 0 0 rgba(5,177,105,0)}}
+
+  /* type */
+  h1,h2,h3,h4{margin:0}
+  h1{font-family:var(--font-display);font-weight:400;font-size:72px;line-height:1;letter-spacing:-2.2px;color:var(--color-ink)}
+  h2{font-family:var(--font-display);font-weight:400;font-size:52px;line-height:1;letter-spacing:-1.3px;color:var(--color-ink)}
+  h3{font-family:var(--font-display);font-weight:400;font-size:32px;line-height:1.13;letter-spacing:-0.4px;color:var(--color-ink)}
+  h4{font-family:var(--font-sans);font-weight:600;font-size:18px;line-height:1.33;color:var(--color-ink)}
+  p{margin:0;color:var(--color-body);font-size:16px;line-height:1.5}
+  .lead{font-size:18px;line-height:1.55;color:var(--color-body)}
+  .lead-on-dark{color:var(--color-on-dark-soft)}
+  .label{font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-muted)}
+  .label-on-dark{color:var(--color-on-dark-soft)}
+  .mono{font-family:var(--font-mono);font-weight:500;font-variant-numeric:tabular-nums}
+
+  /* scroll-reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal-delay-1{transition-delay:.08s}
+  .reveal-delay-2{transition-delay:.16s}
+  .reveal-delay-3{transition-delay:.24s}
+  .reveal-delay-4{transition-delay:.32s}
+
+  /* ============ HERO ============ */
+  .hero{background:var(--color-surface-dark);color:#fff;padding:80px 32px 120px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;left:-200px;top:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,82,255,0.18),transparent 60%);pointer-events:none}
+  .hero::after{content:"";position:absolute;right:-150px;bottom:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(244,176,0,0.08),transparent 60%);pointer-events:none}
+  .hero-grid{max-width:var(--container-max);margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+  .hero h1{color:#fff;margin-top:20px;text-wrap:balance;font-size:72px;letter-spacing:-2.2px}
+  .hero h1 .accent{color:var(--color-primary)}
+  .hero .lead{color:var(--color-on-dark-soft);margin-top:20px;max-width:480px}
+  .hero h1 .accent{position:relative;display:inline-block}
+
+  .signup-form{margin-top:32px;display:flex;align-items:center;gap:8px;background:var(--color-surface-dark-elevated);padding:8px;border-radius:var(--radius-pill);max-width:520px;border:1px solid #1f232a;transition:border-color .15s ease-out,box-shadow .15s ease-out}
+  .signup-form:focus-within{border-color:#324053;box-shadow:0 0 0 4px rgba(0,82,255,0.18)}
+  .signup-form input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-family:var(--font-sans);font-size:16px;padding:0 16px;height:48px;min-width:0}
+  .signup-form input::placeholder{color:var(--color-muted)}
+  .signup-form button{background:var(--color-primary);color:#fff;border:0;border-radius:var(--radius-pill);height:48px;padding:0 24px;font-family:var(--font-sans);font-weight:600;font-size:15px;cursor:pointer;transition:background .15s ease-out}
+  .signup-form button:hover{background:var(--color-primary-active)}
+  .form-micro{display:flex;align-items:center;gap:16px;margin-top:14px;color:var(--color-on-dark-soft);font-size:13px;flex-wrap:wrap}
+  .form-micro .check{color:var(--color-semantic-up)}
+  .form-success{display:none;margin-top:14px;color:var(--color-semantic-up);font-size:14px;font-weight:600}
+  .form-success.show{display:block}
+
+  /* hero floating cards */
+  .hero-mock{position:relative;height:520px}
+  .pcard{background:var(--color-surface-dark-elevated);border-radius:var(--radius-xl);padding:24px;color:#fff;box-shadow:0 24px 60px rgba(0,0,0,0.5);position:absolute}
+  .pcard.course{width:380px;right:0;top:24px;transform:rotate(-2deg);animation:floatA 7s ease-in-out infinite}
+  .pcard.stat{width:240px;right:260px;top:300px;transform:rotate(3deg);animation:floatB 8s ease-in-out infinite .8s}
+  .pcard.badge{width:200px;right:-12px;top:-28px;transform:rotate(6deg);padding:14px 18px;background:var(--color-primary);box-shadow:0 16px 36px rgba(0,82,255,0.4);animation:floatC 6s ease-in-out infinite .4s}
+  @keyframes floatA{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-12px)}}
+  @keyframes floatB{0%,100%{transform:rotate(3deg) translateY(0)}50%{transform:rotate(3deg) translateY(10px)}}
+  @keyframes floatC{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(8deg) translateY(-6px)}}
+
+  .course-thumb{aspect-ratio:16/9;border-radius:var(--radius-lg);background:linear-gradient(135deg,#1f2a55,#0d1532);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:14px}
+  .course-thumb::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgba(0,82,255,.45),transparent 55%),radial-gradient(120% 80% at 0% 100%,rgba(244,176,0,.25),transparent 55%)}
+  .course-thumb .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.96);display:flex;align-items:center;justify-content:center;color:#0a0b0d}
+  .course-thumb .chip{position:relative;background:rgba(10,11,13,0.7);backdrop-filter:blur(8px);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px}
+  .course-meta{margin-top:14px}
+  .course-meta .ctitle{font-size:15px;font-weight:600}
+  .course-meta .csub{font-size:12px;color:var(--color-on-dark-soft);margin-top:2px}
+  .course-progress{margin-top:14px;display:flex;align-items:center;gap:12px}
+  .pbar{flex:1;height:6px;background:#0a0b0d;border-radius:100px;overflow:hidden}
+  .pbar > i{display:block;height:100%;background:var(--color-primary);border-radius:100px}
+  .ptxt{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--color-on-dark-soft)}
+
+  .stat-card .slabel{font-size:11px;color:var(--color-on-dark-soft);text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  .stat-card .sval{font-family:var(--font-mono);font-weight:500;font-size:36px;line-height:1;margin-top:10px;letter-spacing:-1px}
+  .stat-card .sdelta{font-family:var(--font-mono);font-size:12px;color:var(--color-semantic-up);margin-top:6px}
+  .stat-card svg{margin-top:14px}
+
+  .badge-card .blabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;opacity:.9}
+  .badge-card .btitle{font-family:var(--font-display);font-weight:400;font-size:24px;letter-spacing:-0.5px;margin-top:4px;line-height:1.1}
+
+  /* section heads (reusable) */
+  .section-head{max-width:760px;margin-bottom:56px}
+  .section-head h2{margin-top:12px;text-wrap:balance}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .section-head p{margin-top:16px;font-size:17px;max-width:600px}
+  .section-head.center p{margin-left:auto;margin-right:auto}
+
+  /* ============ LOGO MARQUEE ============ */
+  .logos{background:var(--color-surface-soft);padding:56px 0;border-bottom:1px solid var(--color-hairline-soft);position:relative;overflow:hidden}
+  .logos .logos-label{text-align:center;color:var(--color-muted);font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:32px}
+  .marquee{display:flex;gap:64px;width:max-content;animation:marquee 36s linear infinite}
+  .marquee:hover{animation-play-state:paused}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .marquee .lg{display:flex;align-items:center;justify-content:center;height:36px;padding:0 8px;font-family:var(--font-display);font-weight:600;font-size:22px;color:var(--color-muted);letter-spacing:-0.5px;white-space:nowrap;opacity:.85}
+  .marquee .lg .glyph{margin-right:10px;font-family:var(--font-mono);font-weight:500;color:var(--color-ink)}
+
+  /* ============ VALUE PROPS ============ */
+  .vp-section{background:var(--color-canvas);padding:120px 32px 96px}
+  .vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .vp-card{background:var(--color-canvas);border:1px solid var(--color-hairline);border-radius:var(--radius-xl);padding:36px;display:flex;flex-direction:column;gap:16px;min-height:300px;transition:box-shadow .2s ease-out,transform .2s ease-out}
+  .vp-card:hover{box-shadow:var(--shadow-soft);transform:translateY(-2px)}
+  .vp-icon{width:56px;height:56px;border-radius:var(--radius-md);background:var(--color-surface-strong);display:flex;align-items:center;justify-content:center;color:var(--color-ink)}
+  .vp-card h4{font-family:var(--font-display);font-weight:400;font-size:24px;letter-spacing:-0.4px;line-height:1.2}
+  .vp-card p{font-size:15px}
+  .vp-card .vp-foot{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--color-primary)}
+
+  /* ============ CATEGORY GRID ============ */
+  .cats{background:var(--color-canvas);padding:96px 32px}
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cat{aspect-ratio:1/1;border-radius:var(--radius-xl);padding:24px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .2s ease-out,box-shadow .2s ease-out;position:relative;overflow:hidden}
+  .cat:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}
+  .cat .cat-count{font-family:var(--font-mono);font-weight:500;font-size:12px;opacity:.65}
+  .cat .cat-title{font-family:var(--font-display);font-weight:400;font-size:24px;letter-spacing:-0.5px;line-height:1.1}
+  .cat .cat-emoji{font-size:36px;line-height:1;align-self:flex-end;opacity:0}
+  .cat .cat-icon{align-self:flex-end;opacity:.85}
+  .cat-mint{background:var(--pastel-mint);color:var(--pastel-mint-d)}
+  .cat-peach{background:var(--pastel-peach);color:#7a2d00}
+  .cat-sky{background:var(--pastel-sky);color:var(--pastel-sky-d)}
+  .cat-cream{background:var(--pastel-cream);color:var(--pastel-cream-d)}
+  .cat-ink{background:var(--color-surface-dark);color:#fff}
+  .cat-blue{background:var(--color-primary);color:#fff}
+  .cat-strong{background:var(--color-surface-strong);color:var(--color-ink)}
+  .cat-ink2{background:#1a1d22;color:#fff}
+
+  /* ============ INSTRUCTORS ============ */
+  .ins{background:var(--color-surface-soft);padding:96px 32px}
+  .ins-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .ins-card{background:var(--color-canvas);border-radius:var(--radius-xl);padding:24px;display:flex;flex-direction:column;gap:16px;border:1px solid var(--color-hairline);transition:transform .2s ease-out,box-shadow .2s ease-out}
+  .ins-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}
+  .ins-photo{aspect-ratio:1/1;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--pastel-sky),var(--pastel-mint));display:flex;align-items:flex-end;justify-content:flex-start;padding:16px;position:relative;overflow:hidden;font-family:var(--font-display);font-weight:400;font-size:120px;line-height:1;color:rgba(255,255,255,0.85);letter-spacing:-4px}
+  .ins-photo .tag{position:absolute;top:12px;left:12px;background:rgba(10,11,13,0.75);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;letter-spacing:0.04em}
+  .ins-photo.p2{background:linear-gradient(135deg,var(--pastel-peach),var(--pastel-cream))}
+  .ins-photo.p3{background:linear-gradient(135deg,#1f2a55,var(--color-primary))}
+  .ins-photo.p4{background:linear-gradient(135deg,var(--pastel-mint),#0d3b29)}
+  .ins-name{font-family:var(--font-sans);font-weight:600;font-size:17px;color:var(--color-ink)}
+  .ins-role{font-size:13px;color:var(--color-muted);margin-top:4px}
+  .ins-stats{margin-top:auto;display:flex;gap:16px;font-size:13px;color:var(--color-body)}
+  .ins-stats b{color:var(--color-ink);font-weight:600}
+
+  /* ============ FEATURED COURSES (dark editorial) ============ */
+  .feat{background:var(--color-surface-dark);color:#fff;padding:96px 32px;position:relative;overflow:hidden}
+  .feat::before{content:"";position:absolute;left:50%;top:-100px;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse at center,rgba(0,82,255,0.12),transparent 60%);pointer-events:none}
+  .feat .section-head h2,.feat h2{color:#fff}
+  .feat .section-head p{color:var(--color-on-dark-soft)}
+  .feat .label{color:var(--color-on-dark-soft)}
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+  .feat-card{background:var(--color-surface-dark-elevated);border-radius:var(--radius-xl);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s ease-out,box-shadow .2s ease-out;cursor:pointer}
+  .feat-card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,0.55)}
+  .feat-thumb{aspect-ratio:16/10;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:14px}
+  .feat-thumb .chip{background:rgba(10,11,13,0.7);backdrop-filter:blur(8px);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;z-index:1}
+  .feat-thumb .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,0.96);display:flex;align-items:center;justify-content:center;color:#0a0b0d;z-index:1}
+  .feat-thumb.t1{background:linear-gradient(135deg,#1a3a8a,#0d1532)}
+  .feat-thumb.t2{background:linear-gradient(135deg,#2d1a4a,#0a0b0d)}
+  .feat-thumb.t3{background:linear-gradient(135deg,#0d3b29,#0a0b0d)}
+  .feat-thumb.t4{background:linear-gradient(135deg,#5a2d00,#0a0b0d)}
+  .feat-thumb.t5{background:linear-gradient(135deg,#2a2a2a,#0a0b0d)}
+  .feat-thumb.t6{background:linear-gradient(135deg,#1f2a55,#3a1a4a)}
+  .feat-body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .feat-body .ftitle{font-family:var(--font-sans);font-weight:600;font-size:17px;line-height:1.3;color:#fff}
+  .feat-body .fsub{font-size:13px;color:var(--color-on-dark-soft)}
+  .feat-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:8px}
+  .feat-rating{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-weight:500;font-size:13px;color:#fff}
+  .feat-rating .star{color:var(--color-accent-yellow)}
+  .feat-price{font-family:var(--font-mono);font-weight:500;font-size:14px;color:#fff}
+  .feat-price s{color:var(--color-muted);font-size:11px;margin-right:6px}
+  .feat-cta-wrap{display:flex;justify-content:center;margin-top:48px}
+
+  /* ============ STATS ============ */
+  .trust{background:var(--color-surface-soft);padding:96px 32px}
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:48px}
+  .stat-block{background:var(--color-canvas);border:1px solid var(--color-hairline);border-radius:var(--radius-xl);padding:32px}
+  .stat-block .label{margin-bottom:16px;display:block}
+  .stat-block .num{font-family:var(--font-mono);font-weight:500;font-size:56px;line-height:1;letter-spacing:-2px;color:var(--color-ink)}
+  .stat-block .num .unit{font-size:20px;color:var(--color-muted);margin-left:6px;letter-spacing:0}
+  .stat-block .sub{margin-top:12px;font-size:14px;color:var(--color-body)}
+  .stat-block .delta{color:var(--color-semantic-up);font-family:var(--font-mono);font-size:13px;margin-top:8px}
+
+  /* ============ HOW IT WORKS ============ */
+  .how{background:var(--color-canvas);padding:96px 32px}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px;position:relative}
+  .step{background:var(--color-surface-soft);border-radius:var(--radius-xl);padding:36px 32px;display:flex;flex-direction:column;gap:16px;min-height:300px;position:relative;overflow:hidden;transition:transform .2s ease-out,box-shadow .2s ease-out}
+  .step:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}
+  .step .stepnum{font-family:var(--font-mono);font-weight:500;font-size:14px;color:var(--color-muted)}
+  .step h4{font-family:var(--font-display);font-weight:400;font-size:28px;letter-spacing:-0.5px;line-height:1.15}
+  .step p{font-size:15px}
+  .step.accent{background:var(--color-surface-dark);color:#fff}
+  .step.accent h4{color:#fff}
+  .step.accent p{color:var(--color-on-dark-soft)}
+  .step.accent .stepnum{color:var(--color-on-dark-soft)}
+  .step .step-art{margin-top:auto;align-self:flex-end;opacity:.55}
+
+  /* ============ COMPARISON TABLE ============ */
+  .cmp{background:var(--color-canvas);padding:96px 32px}
+  .cmp-wrap{max-width:980px;margin:0 auto}
+  .cmp-table{background:var(--color-canvas);border:1px solid var(--color-hairline);border-radius:var(--radius-xl);overflow:hidden}
+  .cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;align-items:center}
+  .cmp-row:not(:last-child){border-bottom:1px solid var(--color-hairline-soft)}
+  .cmp-row.cmp-head{background:var(--color-surface-soft)}
+  .cmp-cell{padding:20px 24px;font-size:15px;color:var(--color-body)}
+  .cmp-cell.feat-name{color:var(--color-ink);font-weight:500}
+  .cmp-cell.center{text-align:center}
+  .cmp-cell.brand-col{background:rgba(0,82,255,0.04);font-weight:600;color:var(--color-ink);text-align:center;font-size:16px;border-left:1px solid var(--color-hairline-soft);border-right:1px solid var(--color-hairline-soft)}
+  .cmp-row.cmp-head .cmp-cell.brand-col{background:var(--color-primary);color:#fff;font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:-0.3px}
+  .cmp-row.cmp-head .cmp-cell{font-family:var(--font-sans);font-weight:600;color:var(--color-ink);font-size:14px;text-transform:uppercase;letter-spacing:0.06em;padding-top:18px;padding-bottom:18px}
+  .check-y{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(0,82,255,0.1);color:var(--color-primary)}
+  .check-n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--color-surface-strong);color:var(--color-muted-soft)}
+  .cmp-val{font-size:14px;color:var(--color-muted)}
+
+  /* ============ TESTIMONIALS ============ */
+  .testi{background:var(--color-surface-soft);padding:96px 32px}
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .review{background:var(--color-canvas);border:1px solid var(--color-hairline);border-radius:var(--radius-xl);padding:28px;display:flex;flex-direction:column;gap:16px;transition:transform .2s ease-out,box-shadow .2s ease-out}
+  .review:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}
+  .review .stars{color:var(--color-accent-yellow);letter-spacing:2px;font-size:16px}
+  .review blockquote{margin:0;font-size:15px;line-height:1.55;color:var(--color-ink);font-weight:500}
+  .review .who{display:flex;align-items:center;gap:12px;margin-top:auto}
+  .avatar{width:40px;height:40px;border-radius:50%;background:var(--color-surface-strong);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:var(--color-ink)}
+  .avatar.a1{background:var(--pastel-sky);color:var(--pastel-sky-d)}
+  .avatar.a2{background:var(--pastel-mint);color:var(--pastel-mint-d)}
+  .avatar.a3{background:var(--pastel-peach);color:#7a2d00}
+  .avatar.a4{background:var(--pastel-cream);color:var(--pastel-cream-d)}
+  .avatar.a5{background:var(--color-surface-dark);color:#fff}
+  .avatar.a6{background:var(--color-primary);color:#fff}
+  .review .name{font-size:14px;font-weight:600;color:var(--color-ink)}
+  .review .meta{font-size:12px;color:var(--color-muted)}
+
+  /* ============ FAQ ============ */
+  .faq-section{background:var(--color-canvas);padding:96px 32px}
+  .faq-wrap{max-width:880px;margin:0 auto}
+  .faq-head{text-align:center;margin-bottom:48px}
+  .faq-head h2{text-wrap:balance}
+  .faq-list{display:flex;flex-direction:column;gap:12px}
+  .faq{background:var(--color-canvas);border:1px solid var(--color-hairline);border-radius:var(--radius-xl);overflow:hidden;transition:border-color .15s ease-out}
+  .faq.open{border-color:#c8cdd4}
+  .faq-q{width:100%;background:transparent;border:0;cursor:pointer;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;text-align:left;color:var(--color-ink);font-family:var(--font-sans);font-weight:600;font-size:17px;line-height:1.4}
+  .faq-q .qcaret{flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:var(--color-surface-strong);display:flex;align-items:center;justify-content:center;transition:transform .25s ease-out,background .15s ease-out,color .15s ease-out;color:var(--color-ink)}
+  .faq.open .qcaret{background:var(--color-primary);color:#fff;transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease-out}
+  .faq-a-inner{padding:0 28px 24px;color:var(--color-body);font-size:15px;line-height:1.65;max-width:720px}
+  .faq.open .faq-a{max-height:400px}
+
+  /* ============ FINAL CTA ============ */
+  .final-cta{background:var(--color-surface-dark);color:#fff;padding:120px 32px;text-align:center;position:relative;overflow:hidden}
+  .final-cta::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:1000px;height:1000px;border-radius:50%;background:radial-gradient(circle at center,rgba(0,82,255,0.22),transparent 60%);pointer-events:none}
+  .final-cta-inner{position:relative;max-width:760px;margin:0 auto;z-index:1}
+  .final-cta h2{color:#fff;font-size:56px;letter-spacing:-1.5px;margin:0;text-wrap:balance}
+  .final-cta .lead{margin-top:16px}
+  .final-cta .signup-form{margin:32px auto 0}
+  .final-cta .form-micro{justify-content:center}
+  .countdown{display:inline-flex;align-items:center;gap:12px;margin-top:32px;padding:14px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-pill)}
+  .countdown .cd-label{font-size:13px;color:var(--color-on-dark-soft);text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+  .countdown .cd-time{font-family:var(--font-mono);font-weight:500;font-size:18px;color:#fff;letter-spacing:0;font-variant-numeric:tabular-nums}
+
+  /* ============ FOOTER ============ */
+  footer{background:var(--color-canvas);border-top:1px solid var(--color-hairline)}
+  .footer-inner{max-width:var(--container-max);margin:0 auto;padding:64px 32px 32px}
+  .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:32px;margin-bottom:48px}
+  .footer-brand .wordmark{color:var(--color-ink)}
+  .footer-brand p{margin-top:16px;font-size:14px;max-width:340px}
+  .footer-social{display:flex;gap:8px;margin-top:24px}
+  .footer-social a{width:36px;height:36px;border-radius:50%;background:var(--color-surface-strong);display:inline-flex;align-items:center;justify-content:center;color:var(--color-ink)}
+  .footer-social a:hover{background:var(--color-ink);color:#fff;text-decoration:none}
+  .footer-col h5{font-family:var(--font-sans);font-weight:600;font-size:14px;color:var(--color-ink);margin:0 0 16px}
+  .footer-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .footer-col a{font-size:14px;color:var(--color-body)}
+  .footer-legal{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--color-hairline)}
+  .footer-biz{font-size:12px;color:var(--color-muted);line-height:1.8;max-width:720px}
+  .footer-links{display:flex;gap:16px}
+  .footer-links a{font-size:12px;color:var(--color-muted)}
+
+  /* small icon helper */
+  .ico{width:24px;height:24px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" data-screen-label="nav">
+  <div class="nav-inner">
+    <a href="#top" class="wordmark"><span class="dot"></span>LearnOn</a>
+    <div class="nav-menu" id="nav-menu">
+      <a href="#why" data-target="why">왜 런온인가</a>
+      <a href="#categories" data-target="categories">카테고리</a>
+      <a href="#instructors" data-target="instructors">강사진</a>
+      <a href="#courses" data-target="courses">추천 강의</a>
+      <a href="#testimonials" data-target="testimonials">후기</a>
+      <a href="#faq" data-target="faq">자주 묻는 질문</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-actions">
+      <button class="nav-signin">로그인</button>
+      <a href="#final-cta" class="btn btn-primary" style="height:36px;padding:0 16px;font-size:14px">사전예약</a>
+    </div>
+  </div>
+</nav>
+
+<span id="top"></span>
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero" data-screen-label="01 Hero">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow reveal"><span class="pulse"></span>사전예약 오픈 · 7일 한정</span>
+      <h1 class="reveal reveal-delay-1">배움이<br>시작되는 곳,<br><span class="accent">런온.</span></h1>
+      <p class="lead reveal reveal-delay-2">필요한 강의만 골라 듣는 큐레이션 학습 플랫폼.<br>지금 사전예약하면 정식 오픈일에 첫 강의 <strong style="color:#fff">25% 할인</strong>으로 시작할 수 있어요.</p>
+
+      <form class="signup-form reveal reveal-delay-3" id="hero-form" onsubmit="return handleSignup(event,'hero')">
+        <input type="email" name="email" placeholder="이메일 주소를 입력해 주세요" required autocomplete="email">
+        <button type="submit">사전예약 하기</button>
+      </form>
+      <div class="form-micro reveal reveal-delay-4">
+        <span><span class="check">✓</span> 30초 가입</span>
+        <span><span class="check">✓</span> 스팸 없음</span>
+        <span><span class="check">✓</span> 언제든 해지</span>
+      </div>
+      <div class="form-success" id="hero-success">신청이 완료되었어요. 입력하신 이메일로 안내를 보내드릴게요.</div>
+    </div>
+
+    <div class="hero-mock" aria-hidden="true">
+      <div class="pcard badge badge-card">
+        <div class="blabel">사전예약 한정</div>
+        <div class="btitle">첫 강의<br>25% 할인</div>
+      </div>
+
+      <div class="pcard course">
+        <div class="course-thumb">
+          <span class="chip">디자인</span>
+          <span class="play"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="course-meta">
+          <div class="ctitle">실무로 배우는 브랜드 시스템</div>
+          <div class="csub">박지윤 · 12강 · 4시간 30분</div>
+        </div>
+        <div class="course-progress">
+          <div class="pbar"><i style="width:62%"></i></div>
+          <div class="ptxt">62%</div>
+        </div>
+      </div>
+
+      <div class="pcard stat stat-card">
+        <div class="slabel">이번 주 신청자</div>
+        <div class="sval" data-counter="12840">12,840</div>
+        <div class="sdelta">+1,204 어제 대비</div>
+        <svg viewBox="0 0 200 40" width="100%" height="40">
+          <polyline points="0,32 20,28 40,30 60,22 80,24 100,18 120,20 140,12 160,14 180,8 200,6"
+            fill="none" stroke="#05b169" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 LOGO MARQUEE ============ -->
+<section class="logos" data-screen-label="02 Partners">
+  <div class="logos-label">현업 강사들이 일하고 있는 곳</div>
+  <div class="marquee" id="marquee">
+    <div class="lg"><span class="glyph">◆</span>NAVER</div>
+    <div class="lg"><span class="glyph">▲</span>Kakao</div>
+    <div class="lg"><span class="glyph">●</span>Coupang</div>
+    <div class="lg"><span class="glyph">◇</span>Toss</div>
+    <div class="lg"><span class="glyph">■</span>Woowa</div>
+    <div class="lg"><span class="glyph">◇</span>Daangn</div>
+    <div class="lg"><span class="glyph">●</span>Line</div>
+    <div class="lg"><span class="glyph">▲</span>Krafton</div>
+    <div class="lg"><span class="glyph">◆</span>Samsung</div>
+    <div class="lg"><span class="glyph">●</span>SK Telecom</div>
+    <div class="lg"><span class="glyph">■</span>Hyundai</div>
+    <div class="lg"><span class="glyph">◇</span>Riiid</div>
+    <!-- repeat for seamless loop -->
+    <div class="lg"><span class="glyph">◆</span>NAVER</div>
+    <div class="lg"><span class="glyph">▲</span>Kakao</div>
+    <div class="lg"><span class="glyph">●</span>Coupang</div>
+    <div class="lg"><span class="glyph">◇</span>Toss</div>
+    <div class="lg"><span class="glyph">■</span>Woowa</div>
+    <div class="lg"><span class="glyph">◇</span>Daangn</div>
+    <div class="lg"><span class="glyph">●</span>Line</div>
+    <div class="lg"><span class="glyph">▲</span>Krafton</div>
+    <div class="lg"><span class="glyph">◆</span>Samsung</div>
+    <div class="lg"><span class="glyph">●</span>SK Telecom</div>
+    <div class="lg"><span class="glyph">■</span>Hyundai</div>
+    <div class="lg"><span class="glyph">◇</span>Riiid</div>
+  </div>
+</section>
+
+<!-- ============ 03 VALUE PROPS ============ -->
+<section class="vp-section" id="why" data-screen-label="03 Value props">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">왜 런온인가</span>
+      <h2>매일 쏟아지는 강의에 지쳤다면,<br>이제는 꼭 필요한 것만.</h2>
+      <p>좋은 강의 100개를 찾아 헤매는 시간 대신, 검증된 강의 1개로 시작하세요.</p>
+    </div>
+    <div class="vp-grid">
+      <div class="vp-card reveal">
+        <div class="vp-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8.5"/><path d="m3 10 9-6 9 6"/><path d="M9 21v-7h6v7"/></svg>
+        </div>
+        <h4>큐레이션된 강의만</h4>
+        <p>현업 전문가가 직접 검수한 강의만 올라옵니다. 비슷한 강의 100개 중 무엇을 들어야 할지 더는 고민하지 않아도 돼요.</p>
+        <span class="vp-foot">엄선된 200+ 강의 →</span>
+      </div>
+      <div class="vp-card reveal reveal-delay-1">
+        <div class="vp-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+        </div>
+        <h4>검증된 크리에이터</h4>
+        <p>업계 평균 7년 이상의 실무자만 강의를 만듭니다. 이론이 아닌 어제까지의 현장 경험을 그대로 전해드려요.</p>
+        <span class="vp-foot">강사진 만나보기 →</span>
+      </div>
+      <div class="vp-card reveal reveal-delay-2">
+        <div class="vp-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 3.5 8.5 9 10 5.5-1.5 9-5 9-10V7l-9-5z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h4>평생 소장, 평생 업데이트</h4>
+        <p>한 번 구매한 강의는 평생 소장. 강사가 직접 콘텐츠를 갱신하면 추가 비용 없이 새 버전이 라이브러리에 자동으로 들어옵니다.</p>
+        <span class="vp-foot">정책 자세히 보기 →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 CATEGORIES ============ -->
+<section class="cats" id="categories" data-screen-label="04 Categories">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">강의 카테고리</span>
+      <h2>처음부터 끝까지, 일에 필요한 거의 모든 것.</h2>
+      <p>12개 카테고리, 200+ 강의가 정식 오픈일에 함께 공개됩니다.</p>
+    </div>
+    <div class="cat-grid">
+      <a href="#" class="cat cat-blue reveal">
+        <div class="cat-count">42 강의</div>
+        <div>
+          <div class="cat-title">디자인</div>
+          <div style="font-size:13px;opacity:.8;margin-top:4px">UX · UI · 브랜드 · 그래픽</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-ink reveal reveal-delay-1">
+        <div class="cat-count">38 강의</div>
+        <div>
+          <div class="cat-title">개발</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px">프론트 · 백엔드 · 데이터</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-mint reveal reveal-delay-2">
+        <div class="cat-count">24 강의</div>
+        <div>
+          <div class="cat-title">프로덕트<br>매니지먼트</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px">기획 · 전략 · 리서치</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-peach reveal reveal-delay-3">
+        <div class="cat-count">31 강의</div>
+        <div>
+          <div class="cat-title">마케팅<br>그로스</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px">퍼포먼스 · 브랜드 · CRM</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-cream reveal">
+        <div class="cat-count">18 강의</div>
+        <div>
+          <div class="cat-title">비즈니스</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px">창업 · 파이낸스 · 운영</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-sky reveal reveal-delay-1">
+        <div class="cat-count">22 강의</div>
+        <div>
+          <div class="cat-title">글쓰기<br>커뮤니케이션</div>
+          <div style="font-size:13px;opacity:.7;margin-top:4px">기획서 · 카피 · 발표</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-ink2 reveal reveal-delay-2">
+        <div class="cat-count">14 강의</div>
+        <div>
+          <div class="cat-title">영상<br>모션</div>
+          <div style="font-size:13px;opacity:.65;margin-top:4px">편집 · 모션 · 컬러</div>
+        </div>
+      </a>
+      <a href="#" class="cat cat-strong reveal reveal-delay-3">
+        <div class="cat-count">16 강의</div>
+        <div>
+          <div class="cat-title">생산성<br>커리어</div>
+          <div style="font-size:13px;color:var(--color-muted);margin-top:4px">노션 · AI도구 · 이직</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 INSTRUCTORS ============ -->
+<section class="ins" id="instructors" data-screen-label="05 Instructors">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">강사진</span>
+      <h2>현장의 베스트가, 어제까지 쓰던 방식으로.</h2>
+      <p>업계 평균 8.4년의 실무자 60+ 명. 책에서 배운 게 아니라 일에서 배운 것만 전해드려요.</p>
+    </div>
+    <div class="ins-grid">
+      <div class="ins-card reveal">
+        <div class="ins-photo">박<span class="tag">디자인</span></div>
+        <div>
+          <div class="ins-name">박지윤</div>
+          <div class="ins-role">前 토스 시니어 디자이너 · 12년차</div>
+        </div>
+        <div class="ins-stats"><span><b>3</b> 강의</span><span><b>4.9</b> 평점</span></div>
+      </div>
+      <div class="ins-card reveal reveal-delay-1">
+        <div class="ins-photo p2">이<span class="tag">개발</span></div>
+        <div>
+          <div class="ins-name">이정환</div>
+          <div class="ins-role">前 우아한형제들 백엔드 · 9년차</div>
+        </div>
+        <div class="ins-stats"><span><b>4</b> 강의</span><span><b>4.8</b> 평점</span></div>
+      </div>
+      <div class="ins-card reveal reveal-delay-2">
+        <div class="ins-photo p3">김<span class="tag">PM</span></div>
+        <div>
+          <div class="ins-name">김민서</div>
+          <div class="ins-role">前 카카오 PM · 8년차</div>
+        </div>
+        <div class="ins-stats"><span><b>2</b> 강의</span><span><b>5.0</b> 평점</span></div>
+      </div>
+      <div class="ins-card reveal reveal-delay-3">
+        <div class="ins-photo p4">정<span class="tag">마케팅</span></div>
+        <div>
+          <div class="ins-name">정수아</div>
+          <div class="ins-role">前 쿠팡 그로스 리드 · 10년차</div>
+        </div>
+        <div class="ins-stats"><span><b>3</b> 강의</span><span><b>4.9</b> 평점</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px" class="reveal">
+      <a href="#" class="btn btn-outline-light">강사 60+ 명 모두 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 FEATURED COURSES (dark) ============ -->
+<section class="feat" id="courses" data-screen-label="06 Featured courses">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="label">에디터스 픽</span>
+      <h2>오픈 첫 주, 이 강의부터 시작해 보세요.</h2>
+      <p>에디터가 직접 듣고 추천하는 베스트 6개 강의. 사전예약자에게는 첫 강의 25% 할인 코드가 함께 발송됩니다.</p>
+    </div>
+    <div class="feat-grid">
+      <article class="feat-card reveal">
+        <div class="feat-thumb t1">
+          <span class="chip">디자인</span>
+          <span class="play"><svg width="16" height="16" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="feat-body">
+          <div class="ftitle">실무로 배우는 브랜드 시스템</div>
+          <div class="fsub">박지윤 · 12강 · 4시간 30분</div>
+          <div class="feat-foot">
+            <div class="feat-rating"><span class="star">★</span> 4.9 <span style="color:var(--color-on-dark-soft)">(248)</span></div>
+            <div class="feat-price"><s>₩89,000</s>₩66,750</div>
+          </div>
+        </div>
+      </article>
+      <article class="feat-card reveal reveal-delay-1">
+        <div class="feat-thumb t2">
+          <span class="chip">개발</span>
+          <span class="play"><svg width="16" height="16" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="feat-body">
+          <div class="ftitle">현업자가 만든 백엔드 설계</div>
+          <div class="fsub">이정환 · 18강 · 7시간 10분</div>
+          <div class="feat-foot">
+            <div class="feat-rating"><span class="star">★</span> 4.8 <span style="color:var(--color-on-dark-soft)">(412)</span></div>
+            <div class="feat-price"><s>₩129,000</s>₩96,750</div>
+          </div>
+        </div>
+      </article>
+      <article class="feat-card reveal reveal-delay-2">
+        <div class="feat-thumb t3">
+          <span class="chip">PM</span>
+          <span class="play"><svg width="16" height="16" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="feat-body">
+          <div class="ftitle">데이터 기반의 제품 결정</div>
+          <div class="fsub">김민서 · 10강 · 3시간 50분</div>
+          <div class="feat-foot">
+            <div class="feat-rating"><span class="star">★</span> 5.0 <span style="color:var(--color-on-dark-soft)">(186)</span></div>
+            <div class="feat-price"><s>₩79,000</s>₩59,250</div>
+          </div>
+        </div>
+      </article>
+      <article class="feat-card reveal">
+        <div class="feat-thumb t4">
+          <span class="chip">마케팅</span>
+          <span class="play"><svg width="16" height="16" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="feat-body">
+          <div class="ftitle">퍼포먼스 마케팅 A부터 Z까지</div>
+          <div class="fsub">정수아 · 16강 · 6시간 20분</div>
+          <div class="feat-foot">
+            <div class="feat-rating"><span class="star">★</span> 4.9 <span style="color:var(--color-on-dark-soft)">(321)</span></div>
+            <div class="feat-price"><s>₩119,000</s>₩89,250</div>
+          </div>
+        </div>
+      </article>
+      <article class="feat-card reveal reveal-delay-1">
+        <div class="feat-thumb t5">
+          <span class="chip">생산성</span>
+          <span class="play"><svg width="16" height="16" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="feat-body">
+          <div class="ftitle">AI 도구로 일하는 법</div>
+          <div class="fsub">최유진 · 8강 · 2시간 50분</div>
+          <div class="feat-foot">
+            <div class="feat-rating"><span class="star">★</span> 4.7 <span style="color:var(--color-on-dark-soft)">(154)</span></div>
+            <div class="feat-price"><s>₩59,000</s>₩44,250</div>
+          </div>
+        </div>
+      </article>
+      <article class="feat-card reveal reveal-delay-2">
+        <div class="feat-thumb t6">
+          <span class="chip">글쓰기</span>
+          <span class="play"><svg width="16" height="16" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></svg></span>
+        </div>
+        <div class="feat-body">
+          <div class="ftitle">잘 읽히는 기획서 쓰는 법</div>
+          <div class="fsub">한지연 · 9강 · 3시간 10분</div>
+          <div class="feat-foot">
+            <div class="feat-rating"><span class="star">★</span> 4.9 <span style="color:var(--color-on-dark-soft)">(208)</span></div>
+            <div class="feat-price"><s>₩69,000</s>₩51,750</div>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="feat-cta-wrap reveal">
+      <a href="#final-cta" class="btn btn-outline-dark" style="height:48px;font-size:15px">사전예약하고 전체 강의 보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 STATS ============ -->
+<section class="trust" data-screen-label="07 Stats">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">사전예약 현황</span>
+      <h2>이미 12,840명이 런온을 기다리고 있어요.</h2>
+    </div>
+    <div class="stats-row">
+      <div class="stat-block reveal">
+        <span class="label">누적 사전예약자</span>
+        <div class="num"><span data-counter="12840">0</span><span class="unit">명</span></div>
+        <div class="delta">+1,204 어제 대비</div>
+        <p class="sub">매일 늘어나고 있어요.</p>
+      </div>
+      <div class="stat-block reveal reveal-delay-1">
+        <span class="label">런칭 강의 수</span>
+        <div class="num"><span data-counter="200">0</span><span class="unit">+</span></div>
+        <p class="sub">12개 카테고리에서 엄선.</p>
+      </div>
+      <div class="stat-block reveal reveal-delay-2">
+        <span class="label">검증된 강사</span>
+        <div class="num"><span data-counter="64">0</span><span class="unit">명</span></div>
+        <p class="sub">업계 평균 8.4년 실무자.</p>
+      </div>
+      <div class="stat-block reveal reveal-delay-3">
+        <span class="label">베타 만족도</span>
+        <div class="num"><span data-counter="4.9" data-decimals="1">0</span><span class="unit">/5.0</span></div>
+        <p class="sub">2,481명의 평점 평균.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 HOW IT WORKS ============ -->
+<section class="how" data-screen-label="08 How it works">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">이용 방법</span>
+      <h2>3단계로 시작하는 런온.</h2>
+      <p>이메일 한 줄이면 충분해요. 비밀번호도, 결제 정보도 지금은 필요 없습니다.</p>
+    </div>
+    <div class="how-grid">
+      <div class="step reveal">
+        <span class="stepnum">01</span>
+        <h4>이메일로 사전예약</h4>
+        <p>이메일 한 줄이면 가입 완료. 지금 단계에서는 어떤 결제 정보도 받지 않습니다.</p>
+        <svg class="step-art" width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect x="10" y="22" width="60" height="40" rx="6" stroke="#5b616e" stroke-width="1.5"/>
+          <path d="M10 28l30 18 30-18" stroke="#5b616e" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <span class="stepnum">02</span>
+        <h4>관심 분야 선택</h4>
+        <p>관심 카테고리를 알려주시면 비공개 추천 리스트를 가장 먼저 보내드려요.</p>
+        <svg class="step-art" width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect x="10" y="12" width="26" height="26" rx="4" stroke="#5b616e" stroke-width="1.5"/>
+          <rect x="44" y="12" width="26" height="26" rx="4" fill="#0052ff"/>
+          <rect x="10" y="46" width="26" height="26" rx="4" fill="#0052ff"/>
+          <rect x="44" y="46" width="26" height="26" rx="4" stroke="#5b616e" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="step accent reveal reveal-delay-2">
+        <span class="stepnum">03</span>
+        <h4>오픈 당일 25% 할인</h4>
+        <p>정식 오픈일, 사전예약자 전용 코드로 첫 강의를 25% 할인된 가격에 시작하세요.</p>
+        <svg class="step-art" width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="28" stroke="#fff" stroke-width="1.5"/>
+          <path d="M28 40l8 8 16-16" stroke="#0052ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 COMPARISON ============ -->
+<section class="cmp" data-screen-label="09 Comparison">
+  <div class="cmp-wrap">
+    <div class="section-head center reveal">
+      <span class="label">왜 런온인가</span>
+      <h2>가볍게, 그러나 단단하게.</h2>
+      <p>일반 강의 플랫폼과 런온은 무엇이 다른가요?</p>
+    </div>
+    <div class="cmp-table reveal">
+      <div class="cmp-row cmp-head">
+        <div class="cmp-cell">기준</div>
+        <div class="cmp-cell brand-col">런온</div>
+        <div class="cmp-cell center">일반 강의 플랫폼</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-cell feat-name">강의 큐레이션</div>
+        <div class="cmp-cell brand-col">
+          <span class="check-y"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <div class="cmp-val" style="margin-top:6px;color:var(--color-body)">에디터 검수 통과 강의만</div>
+        </div>
+        <div class="cmp-cell center">
+          <span class="check-n"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <div class="cmp-val" style="margin-top:6px">누구나 업로드</div>
+        </div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-cell feat-name">강사 실무 경력</div>
+        <div class="cmp-cell brand-col">
+          <span class="cmp-val" style="color:var(--color-ink);font-weight:600;font-family:var(--font-mono)">평균 8.4년</span>
+        </div>
+        <div class="cmp-cell center"><span class="cmp-val">제한 없음</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-cell feat-name">평생 소장</div>
+        <div class="cmp-cell brand-col">
+          <span class="check-y"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+        </div>
+        <div class="cmp-cell center"><span class="cmp-val">구독 종료 시 접근 불가</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-cell feat-name">강의 업데이트</div>
+        <div class="cmp-cell brand-col">
+          <span class="cmp-val" style="color:var(--color-ink);font-weight:600">무료 평생 업데이트</span>
+        </div>
+        <div class="cmp-cell center"><span class="cmp-val">신규 버전 별도 결제</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-cell feat-name">학습 자료 · 코드</div>
+        <div class="cmp-cell brand-col">
+          <span class="check-y"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+          <div class="cmp-val" style="margin-top:6px;color:var(--color-body)">전 강의 제공</div>
+        </div>
+        <div class="cmp-cell center"><span class="cmp-val">강의별 상이</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-cell feat-name">환불 정책</div>
+        <div class="cmp-cell brand-col">
+          <span class="cmp-val" style="color:var(--color-ink);font-weight:600">7일 · 20% 미수강</span>
+        </div>
+        <div class="cmp-cell center"><span class="cmp-val">통상 24시간 이내</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 TESTIMONIALS ============ -->
+<section class="testi" id="testimonials" data-screen-label="10 Testimonials">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">베타 사용자 후기</span>
+      <h2>먼저 써본 분들이 남긴 한 줄.</h2>
+      <p>2,481명의 베타 사용자 평균 평점 4.9/5.0. 그중 몇 줄을 소개해요.</p>
+    </div>
+    <div class="reviews">
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"강의 고르는 데만 일주일씩 걸리던 게 한 시간이면 끝났어요. 큐레이션이 진짜 다릅니다."</blockquote>
+        <div class="who">
+          <div class="avatar a1">김</div>
+          <div>
+            <div class="name">김민서</div>
+            <div class="meta">프로덕트 디자이너 · 베타 사용자</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <blockquote>"강사가 어제까지 쓰던 도구로 가르치는 느낌. 책에서 배운 게 아니라 일에서 배운 거예요."</blockquote>
+        <div class="who">
+          <div class="avatar a2">이</div>
+          <div>
+            <div class="name">이정환</div>
+            <div class="meta">백엔드 엔지니어 · 베타 사용자</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <blockquote>"평생 소장이 진짜 의미가 있더라고요. 6개월 뒤 강의가 업데이트됐는데 추가 결제 없이 그냥 받았어요."</blockquote>
+        <div class="who">
+          <div class="avatar a3">박</div>
+          <div>
+            <div class="name">박지윤</div>
+            <div class="meta">콘텐츠 마케터 · 베타 사용자</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"광고로 도배된 다른 사이트와 달라요. 들어가면 진짜 강의가 보이고, 다른 잡음이 없어요."</blockquote>
+        <div class="who">
+          <div class="avatar a4">정</div>
+          <div>
+            <div class="name">정수아</div>
+            <div class="meta">그로스 매니저 · 베타 사용자</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <blockquote>"3년차 주니어인데 시니어가 옆에서 일을 보여주는 것 같았어요. 코드 리뷰 챕터가 특히 좋았습니다."</blockquote>
+        <div class="who">
+          <div class="avatar a5">최</div>
+          <div>
+            <div class="name">최유진</div>
+            <div class="meta">프론트엔드 개발자 · 베타 사용자</div>
+          </div>
+        </div>
+      </div>
+      <div class="review reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <blockquote>"환불 안 받았어요. 한 강의를 다 보고 나니까 다음 강의가 자연스럽게 보이더라고요."</blockquote>
+        <div class="who">
+          <div class="avatar a6">한</div>
+          <div>
+            <div class="name">한지연</div>
+            <div class="meta">기획자 · 베타 사용자</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 FAQ ============ -->
+<section class="faq-section" id="faq" data-screen-label="11 FAQ">
+  <div class="faq-wrap">
+    <div class="faq-head reveal">
+      <span class="label">자주 묻는 질문</span>
+      <h2 style="margin-top:12px">궁금증을 미리 풀어드릴게요.</h2>
+    </div>
+    <div class="faq-list" id="faq-list">
+      <div class="faq open reveal">
+        <button class="faq-q" type="button">
+          <span>사전예약을 하면 정말 무료인가요?</span>
+          <span class="qcaret"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">네, 사전예약은 무료입니다. 결제 정보는 정식 오픈일에 강의를 직접 구매하실 때만 받습니다. 사전예약만 하고 강의를 구매하지 않으셔도 어떠한 비용도 청구되지 않아요.</div></div>
+      </div>
+      <div class="faq reveal reveal-delay-1">
+        <button class="faq-q" type="button">
+          <span>정식 오픈은 언제인가요?</span>
+          <span class="qcaret"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">2026년 6월 17일 정식 오픈 예정입니다. 사전예약자에게는 오픈 24시간 전 이메일로 우선 입장 링크와 25% 할인 코드를 발송해드려요.</div></div>
+      </div>
+      <div class="faq reveal reveal-delay-2">
+        <button class="faq-q" type="button">
+          <span>25% 할인은 어떤 강의에 적용되나요?</span>
+          <span class="qcaret"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">정식 오픈일에 공개되는 200여 개 강의 중 처음 구매하시는 한 개 강의에 적용됩니다. 신규 강의를 포함한 전 카테고리에서 자유롭게 선택하실 수 있어요. 할인 코드는 오픈 후 7일간 유효합니다.</div></div>
+      </div>
+      <div class="faq reveal">
+        <button class="faq-q" type="button">
+          <span>강의는 평생 소장이라고 하셨는데, 정말 평생인가요?</span>
+          <span class="qcaret"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">네, 한 번 구매한 강의는 계정이 유지되는 한 무기한 다시 보실 수 있습니다. 강사가 콘텐츠를 업데이트해도 추가 결제 없이 새 버전이 라이브러리에 자동으로 추가됩니다.</div></div>
+      </div>
+      <div class="faq reveal reveal-delay-1">
+        <button class="faq-q" type="button">
+          <span>환불 정책은 어떻게 되나요?</span>
+          <span class="qcaret"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">구매 후 7일 이내, 강의 진도율 20% 미만인 경우 100% 환불해드립니다. 사전예약 단계에서는 결제가 발생하지 않으므로 환불 대상이 아닙니다.</div></div>
+      </div>
+      <div class="faq reveal reveal-delay-2">
+        <button class="faq-q" type="button">
+          <span>모바일에서도 들을 수 있나요?</span>
+          <span class="qcaret"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">웹 · iOS · Android 모두 지원합니다. 정식 오픈과 동시에 iOS와 Android 앱이 함께 공개되며, 어디서든 이어듣기가 가능합니다.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 FINAL CTA ============ -->
+<section class="final-cta" id="final-cta" data-screen-label="12 Final CTA">
+  <div class="final-cta-inner">
+    <span class="eyebrow"><span class="pulse"></span>사전예약 마감까지</span>
+    <h2 style="margin-top:24px">지금 줄을 서고,<br>오픈 당일 25% 할인으로 시작하세요.</h2>
+    <p class="lead lead-on-dark">이메일 한 줄이면 충분해요. 정식 오픈일에 가장 먼저 입장 링크를 보내드릴게요.</p>
+
+    <div class="countdown" id="countdown">
+      <span class="cd-label">남은 시간</span>
+      <span class="cd-time" id="cd-time">06일 23:59:59</span>
+    </div>
+
+    <form class="signup-form" id="cta-form" onsubmit="return handleSignup(event,'cta')">
+      <input type="email" name="email" placeholder="이메일 주소를 입력해 주세요" required autocomplete="email">
+      <button type="submit">사전예약 하기</button>
+    </form>
+    <div class="form-micro">
+      <span><span class="check">✓</span> 무료</span>
+      <span><span class="check">✓</span> 30초</span>
+      <span><span class="check">✓</span> 스팸 없음</span>
+    </div>
+    <div class="form-success" id="cta-success">신청이 완료되었어요. 입력하신 이메일로 안내를 보내드릴게요.</div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer data-screen-label="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="wordmark" style="color:var(--color-ink)"><span class="dot"></span>LearnOn</a>
+        <p>필요한 강의만 골라 듣는 큐레이션 학습 플랫폼. 매일의 배움을 가볍게.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M10.5 2h2.6L8.9 6.8 14 14H10l-3.4-4.4L2.7 14H.1l4.6-5.2L0 2h4.2l3 4 3.3-4z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="12" height="12" rx="3"/><circle cx="8" cy="8" r="2.6"/><circle cx="11.5" cy="4.5" r="0.6" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M14 4.5c-.2-.7-.7-1.2-1.4-1.4C11.5 3 8 3 8 3s-3.5 0-4.6.1c-.7.2-1.2.7-1.4 1.4C2 5.5 2 8 2 8s0 2.5.1 3.5c.2.7.7 1.2 1.4 1.4 1.1.1 4.6.1 4.6.1s3.5 0 4.6-.1c.7-.2 1.2-.7 1.4-1.4.1-1 .1-3.5.1-3.5s0-2.5-.1-3.5zM6.6 10.2V5.8L10.4 8l-3.8 2.2z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>서비스</h5>
+        <ul>
+          <li><a href="#why">왜 런온인가</a></li>
+          <li><a href="#categories">카테고리</a></li>
+          <li><a href="#instructors">강사진</a></li>
+          <li><a href="#courses">추천 강의</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>회사</h5>
+        <ul>
+          <li><a href="#">회사 소개</a></li>
+          <li><a href="#">채용</a></li>
+          <li><a href="#">보도자료</a></li>
+          <li><a href="#">크리에이터 모집</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>고객지원</h5>
+        <ul>
+          <li><a href="#faq">자주 묻는 질문</a></li>
+          <li><a href="#">고객센터</a></li>
+          <li><a href="#">공지사항</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#543c3138383b14383135263a3b3a7a3f26"><span class="__cf_email__" data-cfemail="d2bab7bebebd92beb7b3a0bcbdbcfcb9a0">[email&#160;protected]</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>정책</h5>
+        <ul>
+          <li><a href="#">이용약관</a></li>
+          <li><a href="#">개인정보처리방침</a></li>
+          <li><a href="#">환불 정책</a></li>
+          <li><a href="#">쿠키 설정</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <div class="footer-biz">
+        (주)런온 · 대표 김현우 · 사업자등록번호 123-45-67890 · 통신판매업신고 2026-서울강남-01234<br>
+        서울특별시 강남구 테헤란로 123, 9층 · 고객센터 1588-0000 (평일 10:00–18:00)<br>
+        © 2026 LearnOn, Inc. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="#">사이트맵</a>
+        <a href="#">접근성</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // -------- Smooth scroll for nav + active section highlight ----------
+  (function() {
+    const navLinks = document.querySelectorAll('#nav-menu a');
+    const targets = [];
+    navLinks.forEach(a => {
+      const id = a.dataset.target;
+      const el = document.getElementById(id);
+      if (el) targets.push({ link: a, el });
+    });
+
+    // active section observer
+    const setActive = (id) => {
+      navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+    };
+    if ('IntersectionObserver' in window && targets.length) {
+      const io = new IntersectionObserver((entries) => {
+        // pick the one with largest intersection ratio that is intersecting
+        let best = null;
+        entries.forEach(e => {
+          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
+            best = e;
+          }
+        });
+        if (best) setActive(best.target.id);
+      }, { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.2, 0.5, 1] });
+      targets.forEach(t => io.observe(t.el));
+    }
+  })();
+
+  // -------- Scroll-reveal ----------
+  (function() {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(e => e.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+    els.forEach(e => io.observe(e));
+  })();
+
+  // -------- Number counter ----------
+  (function() {
+    const els = document.querySelectorAll('[data-counter]');
+    const animate = (el) => {
+      const target = parseFloat(el.dataset.counter);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const duration = 1400;
+      const start = performance.now();
+      const startVal = 0;
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = startVal + (target - startVal) * eased;
+        if (decimals) {
+          el.textContent = val.toFixed(decimals);
+        } else {
+          el.textContent = Math.round(val).toLocaleString('ko-KR');
+        }
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = decimals ? target.toFixed(decimals) : target.toLocaleString('ko-KR');
+      };
+      requestAnimationFrame(step);
+    };
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(animate);
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          animate(en.target);
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    els.forEach(e => io.observe(e));
+  })();
+
+  // -------- FAQ accordion ----------
+  document.querySelectorAll('#faq-list .faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const faq = btn.closest('.faq');
+      const wasOpen = faq.classList.contains('open');
+      document.querySelectorAll('#faq-list .faq').forEach(f => f.classList.remove('open'));
+      if (!wasOpen) faq.classList.add('open');
+    });
+  });
+
+  // -------- Countdown (front-end mock) ----------
+  (function() {
+    const el = document.getElementById('cd-time');
+    if (!el) return;
+    // 7 days from now, persisted to keep stable across refresh
+    let end = parseInt(localStorage.getItem('lo_cd_end') || '0', 10);
+    if (!end || end < Date.now()) {
+      end = Date.now() + 7 * 24 * 60 * 60 * 1000;
+      localStorage.setItem('lo_cd_end', String(end));
+    }
+    const pad = (n) => String(n).padStart(2, '0');
+    const tick = () => {
+      const diff = Math.max(0, end - Date.now());
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      el.textContent = `${pad(d)}일 ${pad(h)}:${pad(m)}:${pad(s)}`;
+    };
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // -------- Lead form ----------
+  function handleSignup(e, which) {
+    e.preventDefault();
+    const form = e.target;
+    const success = document.getElementById(which + '-success');
+    form.style.display = 'none';
+    if (success) success.classList.add('show');
+    return false;
+  }
+</script>
+
+</body>
+</html>

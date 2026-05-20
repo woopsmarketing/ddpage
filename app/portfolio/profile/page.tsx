@@ -1,4 +1,6 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+import { headers } from 'next/headers'
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,6 +14,23 @@ import {
   Mic,
   Rss,
 } from 'lucide-react'
+import { buildPageMetadata } from '@/lib/seo/helpers'
+import { loadClient } from '@/lib/seo/loader'
+import { getPortfolio } from '@/lib/portfolios'
+import JsonLd from '@/components/JsonLd'
+import { breadcrumbSchema, faqSchema } from '@/lib/seo/schemas'
+
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    slug: 'ddpage',
+    pathname: '/portfolio/profile',
+    fallback: {
+      title: '1인 프로필형',
+      description:
+        '작가·크리에이터·강연자의 소개와 채널 링크를 한 페이지에 모은 Link-in-Bio 대체 프로필 카드 샘플.',
+    },
+  })
+}
 
 function InstagramGlyph({ className }: { className?: string }) {
   return (
@@ -244,10 +263,26 @@ const SOCIALS = [
 ]
 
 /* ---------- Page ---------- */
-export default function Page() {
+export default async function Page() {
+  const h = await headers()
+  const host = h.get('host') ?? 'ddpage.kr'
+  const config = await loadClient('ddpage')
+  const entry = getPortfolio('profile')
+
   return (
-    <main className="ddpage-profile">
-      <style dangerouslySetInnerHTML={{ __html: SCOPED_CSS }} />
+    <>
+      <JsonLd
+        data={[
+          breadcrumbSchema(host, [
+            { name: '홈', pathname: '/' },
+            { name: '포트폴리오', pathname: '/portfolio' },
+            { name: entry?.title ?? '1인 프로필형', pathname: '/portfolio/profile' },
+          ]),
+          faqSchema(config),
+        ].filter(Boolean)}
+      />
+      <main className="ddpage-profile">
+        <style dangerouslySetInnerHTML={{ __html: SCOPED_CSS }} />
 
       <div className="mx-auto w-full max-w-md px-4 pt-10 pb-16 sm:pt-14">
         {/* 1. PROFILE CARD */}
@@ -507,6 +542,7 @@ export default function Page() {
           </p>
         </footer>
       </div>
-    </main>
+      </main>
+    </>
   )
 }
