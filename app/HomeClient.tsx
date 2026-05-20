@@ -111,18 +111,24 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
       </section>
 
       {/* ============================================================
-           1.5 Early-bird banner — Hero 직후, urgency 강조
+           1.5 Early-bird card — Hero 직후, urgency 강조
+           (원래 pricing 섹션 안에 있던 카드를 그대로 옮김)
            ============================================================ */}
-      <section className="earlybird-banner">
-        <div className="earlybird-banner__inner">
-          <span className="earlybird-banner__badge">출시 기념</span>
-          <p className="earlybird-banner__text break-keep">
-            <b>선착순 50명만</b> <b>14,900원</b>에 시작 — 이후 정가는 별도 안내
-          </p>
-          <Link href="/order" className="btn btn--primary btn--sm earlybird-banner__cta">
-            지금 시작
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7" /></svg>
-          </Link>
+      <section className="earlybird-section">
+        <div className="earlybird-section__inner">
+          <div className="earlybird">
+            <div className="earlybird__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 5-5" /><path d="M17 9h4v4" /></svg>
+            </div>
+            <div className="earlybird__copy">
+              <h3 className="break-keep">출시 기념 선착순 50명 <s style={{ color: 'rgba(255,255,255,.4)', fontWeight: 500, marginRight: 6 }}>19,900원</s> <b>14,900원</b></h3>
+              <p className="break-keep">지금 신청하시면 정가 19,900원 → 14,900원으로 시작하실 수 있습니다.</p>
+            </div>
+            <div className="earlybird__progress">
+              <div className="earlybird__bar"></div>
+              <div className="earlybird__count">남은 자리 <b>18</b> / 50</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -611,21 +617,6 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
               <Link href="/order" className="btn btn--ghost">견적 상담받기</Link>
             </div>
           </article>
-        </div>
-
-        {/* Early bird */}
-        <div className="earlybird">
-          <div className="earlybird__icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="M7 14l4-4 4 4 5-5" /><path d="M17 9h4v4" /></svg>
-          </div>
-          <div className="earlybird__copy">
-            <h3 className="break-keep">출시 기념 선착순 50명 <s style={{ color: 'rgba(255,255,255,.4)', fontWeight: 500, marginRight: 6 }}>19,900원</s> <b>14,900원</b></h3>
-            <p className="break-keep">지금 신청하시면 정가 19,900원 → 14,900원으로 시작하실 수 있습니다.</p>
-          </div>
-          <div className="earlybird__progress">
-            <div className="earlybird__bar"></div>
-            <div className="earlybird__count">남은 자리 <b>18</b> / 50</div>
-          </div>
         </div>
 
         <p
