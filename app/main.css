@@ -1648,50 +1648,56 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* ---------- Compare 테이블 — 모바일 카드형 (행 단위 라벨 prefix) ---------- */
+/* ---------- Compare 테이블 — 모바일: 표 구조 유지, 폰트/패딩 축소만 ---------- */
 @media (max-width: 900px) {
-  /* 헤더 컬럼 모두 숨김 — 각 row 가 자체 라벨로 충분 */
-  .compare__col--head { display: none; }
+  /* line 1542 의 grid-template-columns: 1fr 을 무효화하고 PC 비율 유지 */
+  .compare { grid-template-columns: 1.2fr 0.9fr 0.9fr; }
+  /* 모바일 border 다시 활성화 (line 1543 무효화) */
+  .compare__col--mid {
+    border-left: 1px solid var(--color-cloud-mist);
+    border-right: 1px solid var(--color-cloud-mist);
+  }
+  .compare__col--us { border-left: 0; }
+  .compare__col--head { display: flex; border-bottom: 1px solid var(--color-cloud-mist); }
 
-  /* 각 row 를 카드처럼: label 위, 비교 두 줄 (기존: / 뚝딱페이지:) */
-  .compare__row {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 18px 22px;
-    border-bottom: 1px solid var(--color-cloud-mist);
-    background: var(--color-canvas-white);
-  }
-  .compare__row > div {
-    padding: 4px 0;
-    background: transparent !important;
-    color: var(--fg-2) !important;
-  }
-  .compare__row--label {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--color-rich-violet) !important;
-    margin-bottom: 2px;
-  }
-  .compare__row .mid {
-    color: var(--fg-3) !important;
-    font-weight: 500;
-  }
+  /* 헤더 행 폰트 축소 */
+  .compare__col { padding: 18px 12px; }
+  .compare__col--head { padding-top: 20px; padding-bottom: 16px; }
+  .compare__title { font-size: 15px; }
+  .compare__subtitle { font-size: 11px; margin-top: 2px; }
+
+  /* 데이터 행 폰트/패딩 축소, 체크 아이콘 작게 다시 표시 */
+  .compare__row > div { padding: 12px 12px; font-size: 12.5px; }
+  .compare__row .us::before,
   .compare__row .mid::before {
-    content: "기존 솔루션 · ";
-    display: inline;
-    color: var(--fg-3);
-    font-weight: 600;
-    margin-right: 2px;
+    display: block !important;
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    content: "";
   }
-  .compare__row .us {
-    color: var(--color-rich-violet) !important;
-    font-weight: 700;
+  .compare__row.is-total > div {
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
-  .compare__row .us::before {
-    content: "뚝딱페이지 · ";
-    display: inline !important;
-    color: var(--color-action-violet);
-    font-weight: 700;
-    margin-right: 2px;
+  .compare__row.is-total .compare__row--label { font-size: 13px; }
+  .compare__row.is-total .mid { font-size: 16px; }
+  .compare__row.is-total .us { font-size: 18px; }
+}
+
+@media (max-width: 560px) {
+  .compare__col { padding: 12px 6px; }
+  .compare__col--head { padding-top: 14px; padding-bottom: 12px; }
+  .compare__title { font-size: 13px; line-height: 1.2; }
+  .compare__subtitle { font-size: 10px; }
+  .compare__row > div { padding: 10px 6px; font-size: 11.5px; line-height: 1.35; }
+  .compare__row .us::before,
+  .compare__row .mid::before {
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
   }
+  .compare__row.is-total .compare__row--label { font-size: 12px; }
+  .compare__row.is-total .mid { font-size: 14px; }
+  .compare__row.is-total .us { font-size: 15px; }
 }
