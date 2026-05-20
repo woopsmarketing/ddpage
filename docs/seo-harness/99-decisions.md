@@ -27,6 +27,9 @@
 | D-16 | 2026-05-19 | 명세 산출물 형식 | **`docs/seo-harness/` 디렉토리에 분리 `.md` 파일** | 단일 파일 / 미작성 | 세션 간 영속성. 6개월 뒤 추적 가능. 다른 협업자 자산 |
 | D-17 | 2026-05-19 | 에이전트 명세 위치 | **`.claude/agents/` 및 `.claude/commands/`에 직접 작성** (명세 = 런타임 실행 파일) | 명세는 `docs/`에, 런타임은 `.claude/`에 분리 / 단일화 안 함 | 단일 출처 (한 곳만 관리). 결정 근거는 99-decisions.md에 분리 보관. 사용자 멘탈 모델 단순 |
 | D-18 | 2026-05-20 | FAQPage schema 주입 방식 | **page-owns-data 패턴** — schema-agent 자동 주입 제거. 페이지가 자기 FAQ 데이터를 `faqSchema(faq)`로 직접 박음. faqSchema 시그니처도 `(faq: FAQ[])`로 단순화. Speakable cssSelector 도 함께 제거. | 자동 주입 유지 + `config.faq=[]`로 비우기 / Speakable cssSelector 변경 | 라이브에서 발견된 위반: ddpage.json 의 8개 FAQ 가 모든 페이지에 박혔는데 페이지 본문엔 그 FAQ 없음 → Google 가이드라인 위반(Spammy structured data). 데이터 소스를 페이지로 옮기면 화면 + schema 동기화 자동 보장. Speakable cssSelector 도 페이지 DOM 매치 안 되는 경고 발생 → 함께 제거. |
+| D-19 | 2026-05-20 | 클라이언트 사이트 라우트 구조 | **`app/(client)/<slug>/page.tsx`** — Route Group `(client)` 사용해 URL에 영향 없이 그룹화. `/client-integrate <slug>` 가 매 클라이언트마다 정적 폴더 생성. 동적 `[slug]` 미사용 (D-01과 동일 철학: 동일 디자인 강요 안 함). | `app/(client)/[slug]/page.tsx` 단일 동적 라우트 / `app/<slug>/page.tsx` 그룹 없음 | 각 클라이언트가 독립 디자인 (포트폴리오 8개와 같은 철학). Route Group `(client)`로 메인 사이트 라우트(`/portfolio`, `/order` 등)와 시각적 분리. 메인 도메인에서 `ddpage.kr/<slug>`로 직접 접근도 동시에 가능 (개발/미리보기 편리). |
+| D-20 | 2026-05-20 | 호스트 → 라우트 라우팅 | **신규 `proxy.ts`** (Next.js 16에서 middleware → proxy 명칭 변경) — host 헤더 → `hostnameToSlug()` → rewrite to `/<slug>/*`. 메인 도메인(`ddpage.kr` / `www.ddpage.kr`)은 rewrite 없이 통과. | 기존 lib/seo/loader.ts의 `resolveClient(headers)` 패턴만으로 처리 / Next.config rewrites 사용 | `resolveClient`는 ClientConfig만 로드 — 라우트 자체를 다른 폴더(`app/(client)/<slug>/`)로 보내려면 rewrite 필요. proxy.ts가 정석. `next.config.ts` rewrites는 동적 host 매칭이 약함 (정적 host만 매핑 가능). |
+| D-21 | 2026-05-20 | 클라이언트 통합 워크플로우 | **`/client-integrate <slug> <source-folder>` 슬래시커맨드** — 신규. 6단계 (사전검증/페이지변환/에셋이동/ClientConfig생성/seo-apply자동호출/검증보고). 신규 에이전트는 `client-intake` 1개만 작성, 기존 7개 SEO 에이전트 + `page-converter`(Mode D 추가) + `validator` 적극 활용. | 매 클라이언트마다 수동 통합 / `/portfolio-integrate` 재사용 | `/portfolio-integrate`는 포트폴리오용(`app/portfolio/<slug>/`)이라 출력 경로/메타/JSON-LD 자리 모두 다름. 분리가 정석. 신규 작성은 client-intake 1개로 최소화 — 기존 라우트 무관 원칙(D-01) 덕분에 SEO 에이전트는 코드 한 줄도 안 건드림. |
 
 ---
 
@@ -40,8 +43,8 @@
 | P-04 | CTA `cta_strength` 4단계 분기 | v2 (블로그/콘텐츠 페이지 추가 시) |
 | P-05 | Google Indexing API 자동 핑 | v2 (콘텐츠 빈발 갱신 발생 시) |
 | P-06 | 페이지별 OG의 클라이언트별 테마 | 일단 `ClientConfig.ogImage.theme` 한 가지 사용 |
-| P-07 | `/client-integrate` 슬래시커맨드 — 클라이언트 사이트 통합 + ClientConfig JSON 자동 생성 + `/seo-apply` 자동 실행 | 첫 실제 클라이언트 받기 직전 v2 작업. `/portfolio-integrate`(마케팅 샘플용)와 분리. |
-| P-08 | 클라이언트 사이트 라우트 구조 + 미들웨어 host 라우팅 | `app/(client)/[slug]/` 또는 다른 패턴. 첫 클라이언트 요구사항 보면서 결정. |
+| ~~P-07~~ | ~~`/client-integrate` 슬래시커맨드~~ | **해제 (D-21)** |
+| ~~P-08~~ | ~~클라이언트 사이트 라우트 구조 + 미들웨어 host 라우팅~~ | **해제 (D-19, D-20)** |
 | P-09 | FAQPage Speakable 재활성화 (page-owns-data 패턴으로) | 음성 비서 인용이 비즈니스에 의미 있을 때. 페이지가 직접 SpeakableSpecification 박음. |
 | P-10 | `/order` 폼 자동 전송 — Brevo (또는 Resend/Formspree) 연동 | 현재는 `mailto:vnfm0580@gmail.com` 방식 (사용자가 메일 앱 직접 send). 운영 시 불편하면 API route + 자동 전송으로 업그레이드. 파일 첨부도 그때 지원. |
 
@@ -50,3 +53,4 @@
 ## 변경 이력
 
 - 2026-05-19: 본 문서 생성. D-01 ~ D-16 기록. P-01 ~ P-06 보류 사항 기록.
+- 2026-05-20: D-18 (FAQPage page-owns-data), D-19 (`app/(client)/<slug>/`), D-20 (proxy.ts host 라우팅), D-21 (`/client-integrate` 워크플로우) 추가. P-07/P-08 해제.
