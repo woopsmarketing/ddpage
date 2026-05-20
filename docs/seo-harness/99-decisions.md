@@ -43,6 +43,7 @@
 | P-07 | `/client-integrate` 슬래시커맨드 — 클라이언트 사이트 통합 + ClientConfig JSON 자동 생성 + `/seo-apply` 자동 실행 | 첫 실제 클라이언트 받기 직전 v2 작업. `/portfolio-integrate`(마케팅 샘플용)와 분리. |
 | P-08 | 클라이언트 사이트 라우트 구조 + 미들웨어 host 라우팅 | `app/(client)/[slug]/` 또는 다른 패턴. 첫 클라이언트 요구사항 보면서 결정. |
 | P-09 | FAQPage Speakable 재활성화 (page-owns-data 패턴으로) | 음성 비서 인용이 비즈니스에 의미 있을 때. 페이지가 직접 SpeakableSpecification 박음. |
+| P-10 | `/order` 폼 자동 전송 — Brevo (또는 Resend/Formspree) 연동 | 현재는 `mailto:vnfm0580@gmail.com` 방식 (사용자가 메일 앱 직접 send). 운영 시 불편하면 API route + 자동 전송으로 업그레이드. 파일 첨부도 그때 지원. |
 
 ---
 

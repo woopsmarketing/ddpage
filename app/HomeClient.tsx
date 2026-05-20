@@ -302,7 +302,7 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
           </div>
 
           <div className="pgrid">
-            <article className="pcard">
+            <Link href="/portfolio/lead" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/lead.png" alt="리드 수집형 샘플 — 강의·컨설팅" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 01</span>
@@ -312,9 +312,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">리드 수집형</h3>
                 <p className="pcard__for break-keep">강의, 컨설팅 · 이메일·연락처 수집</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/inquiry" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/inquiry.png" alt="상담 문의형 샘플 — 헬스, 요가, 코칭" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 02</span>
@@ -324,9 +324,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">상담 문의형</h3>
                 <p className="pcard__for break-keep">헬스·요가, 1:1 코칭 · 카톡 상담</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/product" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/product.png" alt="상품 소개형 샘플 — SaaS, 디지털 상품" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 03</span>
@@ -336,9 +336,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">상품 소개형</h3>
                 <p className="pcard__for break-keep">SaaS, 디지털 상품 · 가격 + 기능</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/brand" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/brand.png" alt="브랜드 포트폴리오 샘플 — 작가, 디자이너" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 04</span>
@@ -348,9 +348,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">브랜드 · 포트폴리오</h3>
                 <p className="pcard__for break-keep">작가, 디자이너 · 작품 갤러리</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/event" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/event.png" alt="이벤트 예약형 샘플 — 컨퍼런스, 워크숍" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 05</span>
@@ -360,9 +360,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">이벤트 · 예약형</h3>
                 <p className="pcard__for break-keep">컨퍼런스, 워크숍 · 예약 + 카운트다운</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/sales" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/sales.png" alt="세일즈 롱폼 샘플 — 강의, 고가 상품" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 06</span>
@@ -372,9 +372,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">세일즈 롱폼</h3>
                 <p className="pcard__for break-keep">강의, 고가 상품 · 전환 위주</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/teaser" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/teaser.png" alt="사전예약 티저 샘플 — 신제품 런칭" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 07</span>
@@ -384,9 +384,9 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">사전예약 · 티저</h3>
                 <p className="pcard__for break-keep">신제품 런칭 · 이메일 캡처</p>
               </div>
-            </article>
+            </Link>
 
-            <article className="pcard">
+            <Link href="/portfolio/profile" className="pcard" style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="pcard__preview">
                 <Image src="/main/portfolios/profile.png" alt="1인 프로필 샘플 — 작가, 크리에이터" width={640} height={400} loading="lazy" />
                 <span className="pcard__badge"><i></i>TYPE 08</span>
@@ -396,7 +396,7 @@ export default function HomeClient({ faqItems }: { faqItems: FaqItem[] }) {
                 <h3 className="pcard__name">1인 프로필</h3>
                 <p className="pcard__for break-keep">작가, 크리에이터 · Link in Bio</p>
               </div>
-            </article>
+            </Link>
           </div>
 
           <div className="portfolio__cta">

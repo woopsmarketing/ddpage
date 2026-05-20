@@ -44,7 +44,6 @@ export function localBusinessSchema(config: ClientConfig, host: string) {
     name: config.name,
     url: base,
     description: config.description,
-    inLanguage: "ko-KR",
     image: ogImageUrl(host, {
       title: config.name,
       theme: config.ogImage.theme,

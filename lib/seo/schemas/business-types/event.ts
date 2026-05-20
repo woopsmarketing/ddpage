@@ -46,7 +46,6 @@ export function eventSchema(config: ClientConfig, host: string) {
     name: config.name,
     url: base,
     description: config.description,
-    inLanguage: "ko-KR",
     startDate: meta.startDate,
     endDate: meta.endDate,
     eventAttendanceMode: meta.location.isOnline

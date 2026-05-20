@@ -28,7 +28,6 @@ export function digitalProductSchema(config: ClientConfig, host: string) {
         name: config.name,
         url: base,
         description: config.description,
-        inLanguage: "ko-KR",
         provider: { "@id": `${base}#organization` },
         hasOfferCatalog: {
           "@type": "OfferCatalog",
@@ -45,7 +44,6 @@ export function digitalProductSchema(config: ClientConfig, host: string) {
         name: config.name,
         url: base,
         description: config.description,
-        inLanguage: "ko-KR",
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
         ...(offers.length > 0 && {
@@ -62,7 +60,6 @@ export function digitalProductSchema(config: ClientConfig, host: string) {
         name: config.name,
         url: base,
         description: config.description,
-        inLanguage: "ko-KR",
         brand: { "@id": `${base}#organization` },
         ...(offers.length > 0 && {
           offers: offers.length === 1 ? offers[0] : offers,

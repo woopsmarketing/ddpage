@@ -39,7 +39,6 @@ export function professionalSchema(config: ClientConfig, host: string) {
     name: config.name,
     url: base,
     description: config.description,
-    inLanguage: "ko-KR",
     ...(meta.servesAreas.length > 0 && { areaServed: meta.servesAreas }),
     provider,
   };

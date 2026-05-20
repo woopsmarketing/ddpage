@@ -37,7 +37,6 @@ export function brandSchema(config: ClientConfig, host: string) {
     name: config.name,
     url: base,
     description: config.description,
-    inLanguage: "ko-KR",
     creator,
     ...(workExample && { workExample }),
   };

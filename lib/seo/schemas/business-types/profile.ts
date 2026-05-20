@@ -22,7 +22,6 @@ export function profileSchema(config: ClientConfig, host: string) {
     "@type": "ProfilePage",
     "@id": `${base}#business`,
     url: base,
-    inLanguage: "ko-KR",
     name: `${config.name} 프로필`,
     mainEntity: {
       "@type": "Person",
