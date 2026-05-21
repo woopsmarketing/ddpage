@@ -30,6 +30,8 @@
 | D-19 | 2026-05-20 | 클라이언트 사이트 라우트 구조 | **`app/(client)/<slug>/page.tsx`** — Route Group `(client)` 사용해 URL에 영향 없이 그룹화. `/client-integrate <slug>` 가 매 클라이언트마다 정적 폴더 생성. 동적 `[slug]` 미사용 (D-01과 동일 철학: 동일 디자인 강요 안 함). | `app/(client)/[slug]/page.tsx` 단일 동적 라우트 / `app/<slug>/page.tsx` 그룹 없음 | 각 클라이언트가 독립 디자인 (포트폴리오 8개와 같은 철학). Route Group `(client)`로 메인 사이트 라우트(`/portfolio`, `/order` 등)와 시각적 분리. 메인 도메인에서 `ddpage.kr/<slug>`로 직접 접근도 동시에 가능 (개발/미리보기 편리). |
 | D-20 | 2026-05-20 | 호스트 → 라우트 라우팅 | **신규 `proxy.ts`** (Next.js 16에서 middleware → proxy 명칭 변경) — host 헤더 → `hostnameToSlug()` → rewrite to `/<slug>/*`. 메인 도메인(`ddpage.kr` / `www.ddpage.kr`)은 rewrite 없이 통과. | 기존 lib/seo/loader.ts의 `resolveClient(headers)` 패턴만으로 처리 / Next.config rewrites 사용 | `resolveClient`는 ClientConfig만 로드 — 라우트 자체를 다른 폴더(`app/(client)/<slug>/`)로 보내려면 rewrite 필요. proxy.ts가 정석. `next.config.ts` rewrites는 동적 host 매칭이 약함 (정적 host만 매핑 가능). |
 | D-21 | 2026-05-20 | 클라이언트 통합 워크플로우 | **`/client-integrate <slug> <source-folder>` 슬래시커맨드** — 신규. 6단계 (사전검증/페이지변환/에셋이동/ClientConfig생성/seo-apply자동호출/검증보고). 신규 에이전트는 `client-intake` 1개만 작성, 기존 7개 SEO 에이전트 + `page-converter`(Mode D 추가) + `validator` 적극 활용. | 매 클라이언트마다 수동 통합 / `/portfolio-integrate` 재사용 | `/portfolio-integrate`는 포트폴리오용(`app/portfolio/<slug>/`)이라 출력 경로/메타/JSON-LD 자리 모두 다름. 분리가 정석. 신규 작성은 client-intake 1개로 최소화 — 기존 라우트 무관 원칙(D-01) 덕분에 SEO 에이전트는 코드 한 줄도 안 건드림. |
+| D-22 | 2026-05-21 | sitemap.ts 호스트 필터링 | **`discoverRoutes(slug)`** — 메인 호스트(ddpage)는 `app/(client)/*` 제외, 클라이언트 호스트는 본인 `app/(client)/<slug>/*` 만 포함하고 URL 에서 슬러그 prefix 제거 (proxy.ts rewrite 와 일치). | 모든 호스트가 동일 평탄 라우트 출력 / robots.txt 로 클라이언트 라우트 차단 | testclient dry-run 에서 발견: 메인 sitemap 에 `/testclient` 가 누출되고 testclient sitemap 에 ddpage 메인 라우트가 박힘 → 중복 색인 위험. SEO 측면에서 호스트별 sitemap 격리가 정석. |
+| D-23 | 2026-05-21 | layout.tsx 호스트 분기 | **`resolveClient(await headers())`** 사용 (sitemap.ts 와 동일 패턴). `ROOT_SLUG="ddpage"` 하드코딩 제거. `export const dynamic = "force-dynamic"` 추가. | `ROOT_SLUG` 유지하고 클라이언트 도메인은 layout 별도 분기 / static rendering 우선 | testclient dry-run 에서 발견: 클라이언트 호스트 접속 시 `<html>` 루트 metadata + WebSite/Organization JSON-LD 가 ddpage 브랜드로 박힘 → 페이지 단 메타와 split. 멀티테넌트 핵심 결함. |
 
 ---
 
@@ -54,3 +56,4 @@
 
 - 2026-05-19: 본 문서 생성. D-01 ~ D-16 기록. P-01 ~ P-06 보류 사항 기록.
 - 2026-05-20: D-18 (FAQPage page-owns-data), D-19 (`app/(client)/<slug>/`), D-20 (proxy.ts host 라우팅), D-21 (`/client-integrate` 워크플로우) 추가. P-07/P-08 해제.
+- 2026-05-21: testclient dry-run 검증 후 v2 인프라 v1.1 패치 — D-22 (sitemap host 필터링), D-23 (layout host 분기) 추가. D-19/D-20 설계 의도와 실제 구현의 갭 보완.

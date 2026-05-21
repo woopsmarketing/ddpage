@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import "./main.css";
-import { loadClient } from "@/lib/seo/loader";
+import { resolveClient } from "@/lib/seo/loader";
 import {
   canonicalUrl,
   clientHost,
@@ -17,6 +18,9 @@ import {
 import JsonLd from "@/components/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schemas";
 
+// headers() 사용 → 동적 렌더링 (멀티테넌트 host 분기)
+export const dynamic = "force-dynamic";
+
 const notoSansKr = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
   weight: ["400", "500", "700"],
@@ -24,10 +28,9 @@ const notoSansKr = Noto_Sans_KR({
   display: "swap",
 });
 
-const ROOT_SLUG = "ddpage";
-
 export async function generateMetadata(): Promise<Metadata> {
-  const config = await loadClient(ROOT_SLUG);
+  const h = await headers();
+  const config = await resolveClient(h);
   const host = clientHost(config);
 
   const defaultTitle = `${config.name} — ${config.tagline}`;
@@ -97,7 +100,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const config = await loadClient(ROOT_SLUG);
+  const h = await headers();
+  const config = await resolveClient(h);
   const host = clientHost(config);
 
   return (
