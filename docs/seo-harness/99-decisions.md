@@ -32,6 +32,7 @@
 | D-21 | 2026-05-20 | 클라이언트 통합 워크플로우 | **`/client-integrate <slug> <source-folder>` 슬래시커맨드** — 신규. 6단계 (사전검증/페이지변환/에셋이동/ClientConfig생성/seo-apply자동호출/검증보고). 신규 에이전트는 `client-intake` 1개만 작성, 기존 7개 SEO 에이전트 + `page-converter`(Mode D 추가) + `validator` 적극 활용. | 매 클라이언트마다 수동 통합 / `/portfolio-integrate` 재사용 | `/portfolio-integrate`는 포트폴리오용(`app/portfolio/<slug>/`)이라 출력 경로/메타/JSON-LD 자리 모두 다름. 분리가 정석. 신규 작성은 client-intake 1개로 최소화 — 기존 라우트 무관 원칙(D-01) 덕분에 SEO 에이전트는 코드 한 줄도 안 건드림. |
 | D-22 | 2026-05-21 | sitemap.ts 호스트 필터링 | **`discoverRoutes(slug)`** — 메인 호스트(ddpage)는 `app/(client)/*` 제외, 클라이언트 호스트는 본인 `app/(client)/<slug>/*` 만 포함하고 URL 에서 슬러그 prefix 제거 (proxy.ts rewrite 와 일치). | 모든 호스트가 동일 평탄 라우트 출력 / robots.txt 로 클라이언트 라우트 차단 | testclient dry-run 에서 발견: 메인 sitemap 에 `/testclient` 가 누출되고 testclient sitemap 에 ddpage 메인 라우트가 박힘 → 중복 색인 위험. SEO 측면에서 호스트별 sitemap 격리가 정석. |
 | D-23 | 2026-05-21 | layout.tsx 호스트 분기 | **`resolveClient(await headers())`** 사용 (sitemap.ts 와 동일 패턴). `ROOT_SLUG="ddpage"` 하드코딩 제거. `export const dynamic = "force-dynamic"` 추가. | `ROOT_SLUG` 유지하고 클라이언트 도메인은 layout 별도 분기 / static rendering 우선 | testclient dry-run 에서 발견: 클라이언트 호스트 접속 시 `<html>` 루트 metadata + WebSite/Organization JSON-LD 가 ddpage 브랜드로 박힘 → 페이지 단 메타와 split. 멀티테넌트 핵심 결함. |
+| D-24 | 2026-05-21 | proxy.ts 글로벌 라우트 보호 | **`RESERVED_GLOBAL_ROUTES`** 명시 목록 (sitemap.xml, robots.txt, llms.txt, llms-full.txt, og, icon, apple-icon, favicon.ico) → proxy 가 첫 번째로 체크하고 통과시킴. | matcher 정규식에 모두 추가 / og 같은 query 파라미터 라우트는 정규식 매칭 까다로움 | testclient.ddpage.kr 라이브 검증에서 발견: `<slug>.ddpage.kr/sitemap.xml` 이 `/<slug>/sitemap.xml` 로 rewrite 되어 404. 이 라우트들은 모두 host header 로 자체 분기하므로 proxy 가 건드리면 안 됨. matcher 보다 본문 명시 체크가 디버깅 쉽고 query 파라미터 라우트(`/og?title=...`) 도 안전. |
 
 ---
 
@@ -57,3 +58,4 @@
 - 2026-05-19: 본 문서 생성. D-01 ~ D-16 기록. P-01 ~ P-06 보류 사항 기록.
 - 2026-05-20: D-18 (FAQPage page-owns-data), D-19 (`app/(client)/<slug>/`), D-20 (proxy.ts host 라우팅), D-21 (`/client-integrate` 워크플로우) 추가. P-07/P-08 해제.
 - 2026-05-21: testclient dry-run 검증 후 v2 인프라 v1.1 패치 — D-22 (sitemap host 필터링), D-23 (layout host 분기) 추가. D-19/D-20 설계 의도와 실제 구현의 갭 보완.
+- 2026-05-21: testclient.ddpage.kr 라이브 검증 후 v1.2 — D-24 (proxy.ts 글로벌 SEO 라우트 보호). `<slug>.ddpage.kr/sitemap.xml` 등 404 버그 fix.
