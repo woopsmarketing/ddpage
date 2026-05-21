@@ -104,6 +104,24 @@ Claude Design 이 만든 클라이언트 시안(`<source>/page.tsx` + `<source>/
    - className, 자기닫힘, onClick 변환 (Mode B 와 동일 규칙)
    - 한글 텍스트 컨테이너 `break-keep` 필요 시 추가
    - 이미지 경로: 오케스트레이터가 Step 2(에셋 복사)에서 처리하므로 일단 그대로 두되, 절대 경로 패턴(`/clients/<slug>/...`)으로 통일되어 있다고 가정
+   - **모든 `<img>` 는 `<Image>` (`next/image`) 로 변환** (D-26 perf):
+     ```tsx
+     import Image from "next/image";
+
+     <Image
+       src="/clients/<slug>/foo.png"
+       alt="설명"
+       width={1000}     // 원본/표시 비율 기준 추정 (또는 사전 압축 후 실제 size)
+       height={750}     // 4:3 카드면 width * 0.75
+       sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 320px"
+       loading="lazy"   // hero 같은 above-the-fold 는 priority 로
+     />
+     ```
+   - **hero 영역 / above-the-fold 의 LCP 이미지** 는 `priority` 속성 추가 (lazy 대신):
+     ```tsx
+     <Image src="..." width={...} height={...} priority />
+     ```
+   - 일반 `<img>` 또는 `style={{ backgroundImage: 'url(...)' }}` 패턴은 모두 `<Image>` 로 교체 (`backgroundImage` 의 경우 `<Image fill style={{ objectFit: 'cover' }} />` 패턴)
 
 3. *(선택)* **`app/(client)/<slug>/styles.css`**
    - inline `<style>` 또는 별도 CSS 가 필요한 경우만 생성
@@ -113,8 +131,9 @@ Claude Design 이 만든 클라이언트 시안(`<source>/page.tsx` + `<source>/
 
 **검증**:
 - [ ] TypeScript 타입 에러 없음 (`npx tsc --noEmit` Step 5 에서 오케스트레이터가 검증)
-- [ ] `import` 누락 없음 (lucide-react, next/link 등)
+- [ ] `import` 누락 없음 (lucide-react, next/link, **next/image** 등)
 - [ ] `<a href="/...">` 내부 라우팅 → `<Link href="/...">`
+- [ ] **`<img>` 가 한 개도 남아있지 않음 — 전부 `<Image>` 로 변환**
 - [ ] 이미지 경로 `/clients/<slug>/...` 패턴 사용 (또는 추후 Step 2 가 교체할 임시 경로 사용)
 - [ ] `lib/seo/helpers.ts`, `lib/seo/loader.ts`, `lib/seo/schemas`, `@/components/JsonLd` 임포트 정상
 
@@ -123,6 +142,8 @@ Claude Design 이 만든 클라이언트 시안(`<source>/page.tsx` + `<source>/
 - `metadata` 또는 `generateMetadata` 의 실제 값을 추측해서 채우기 — 위의 fallback 만 채우고 실제 값은 후속 `seo-meta-agent` 가 ClientConfig 기반으로 갱신
 - `app/layout.tsx`, `app/page.tsx`, `app/portfolio/` 수정
 - `lib/seo/*` 수정
+- **일반 `<img>` 태그 유지** — 반드시 `<Image>` 로 변환 (D-26)
+- 외부 폰트 CDN `@import` 사용 (D-25 — `next/font/local` 또는 `next/font/google` 만)
 
 ## Universal rules (all modes)
 

@@ -129,20 +129,83 @@ Task(
 
 실패 시: 즉시 중단 + 보고. 다음 단계 진행 안 함.
 
-### Stage 2 — 에셋 복사 + 경로 치환 (인라인)
+### Stage 2 — 에셋 복사 + 자동 압축 + 경로 치환 (인라인, D-26)
 
-이미지·폰트·기타 정적 자산을 `public/clients/<slug>/` 로 이주.
+이미지·폰트·기타 정적 자산을 `public/clients/<slug>/` 로 이주하고, **이미지는 자동 압축** (sharp).
 
 ```bash
 mkdir -p "public/clients/<slug>"
 
-# 이미지 + 폰트 복사 (다양한 폴더 구조에 대응)
+# 1. 이미지 + 폰트 복사 (다양한 폴더 구조에 대응)
 find "<source-folder>" -type f \( \
   -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" \
   -o -iname "*.webp" -o -iname "*.avif" -o -iname "*.svg" \
   -o -iname "*.gif" -o -iname "*.woff" -o -iname "*.woff2" \
 \) ! -path "*/node_modules/*" -exec cp {} "public/clients/<slug>/" \;
 ```
+
+**2. 자동 이미지 압축** (D-26 — 클라이언트가 PNG 그대로 줘도 자동 처리):
+
+```bash
+node << 'EOF'
+const sharp = require('sharp');
+const fs = require('fs');
+const path = require('path');
+
+const SLUG = '<slug>';
+const dir = `public/clients/${SLUG}`;
+const TARGET_WIDTH = 1000;       // retina 2x 카드 미리보기에 충분 (실제 표시 ~400-500px)
+const PNG_OPTS = { compressionLevel: 9, palette: true, quality: 90 };
+const JPEG_OPTS = { quality: 82, mozjpeg: true };
+const SIZE_THRESHOLD = 200 * 1024; // 200KB 초과 이미지만 압축
+
+(async () => {
+  const files = fs.readdirSync(dir).filter(f => /\.(png|jpg|jpeg)$/i.test(f));
+  let totalBefore = 0, totalAfter = 0;
+
+  for (const f of files) {
+    const src = path.join(dir, f);
+    const before = fs.statSync(src).size;
+    totalBefore += before;
+
+    if (before < SIZE_THRESHOLD) {
+      totalAfter += before;
+      console.log(`SKIP ${f.padEnd(30)} ${(before/1024).toFixed(0)}KB (under threshold)`);
+      continue;
+    }
+
+    const ext = path.extname(f).toLowerCase();
+    const isPng = ext === '.png';
+    const tmpDst = src + '.tmp';
+
+    let pipeline = sharp(src).resize({ width: TARGET_WIDTH, withoutEnlargement: true });
+    pipeline = isPng ? pipeline.png(PNG_OPTS) : pipeline.jpeg(JPEG_OPTS);
+    await pipeline.toFile(tmpDst);
+
+    const after = fs.statSync(tmpDst).size;
+    fs.renameSync(tmpDst, src);
+    totalAfter += after;
+
+    const reduction = ((1 - after/before) * 100).toFixed(0);
+    console.log(`OK   ${f.padEnd(30)} ${(before/1024).toFixed(0)}KB → ${(after/1024).toFixed(0)}KB (-${reduction}%)`);
+  }
+
+  const totalReduction = totalBefore > 0
+    ? ((1 - totalAfter/totalBefore) * 100).toFixed(0)
+    : 0;
+  console.log(`\nTotal: ${(totalBefore/1024/1024).toFixed(2)}MB → ${(totalAfter/1024/1024).toFixed(2)}MB (-${totalReduction}%)`);
+})();
+EOF
+```
+
+압축 정책:
+- **폭 1000px 로 resize** (높이 비율 유지, `withoutEnlargement` 로 작은 이미지는 건드리지 않음)
+- **PNG**: `compressionLevel: 9` + `palette: true` (256색 indexed) — 약 70% 절감
+- **JPEG**: `quality: 82` + `mozjpeg: true` — 약 50% 절감
+- **200KB 미만은 skip** — 이미 충분히 작으면 건드리지 않음
+- **SVG / GIF / WebP / AVIF 는 건드리지 않음** — 이미 최적화된 포맷
+
+이 단계가 끝나면 클라이언트가 PNG 1~5MB 짜리를 줘도 자동으로 100~500KB 로 압축됨.
 
 **경로 치환**: page.tsx / Client.tsx 안의 이미지 경로를 일괄 변환.
 

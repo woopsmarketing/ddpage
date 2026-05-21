@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import "./styles.css";
 
@@ -484,8 +485,14 @@ export default function TestclientClient() {
             {PORTFOLIO_CARDS.map((card) => (
               <article key={card.tag} className="pcard">
                 <div className="pcard__preview">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={card.img} alt={card.alt} loading="lazy" />
+                  <Image
+                    src={card.img}
+                    alt={card.alt}
+                    width={1000}
+                    height={750}
+                    sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 320px"
+                    loading="lazy"
+                  />
                   <span className="pcard__badge">
                     <i />
                     {card.type}
