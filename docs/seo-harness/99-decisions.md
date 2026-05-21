@@ -33,6 +33,7 @@
 | D-22 | 2026-05-21 | sitemap.ts 호스트 필터링 | **`discoverRoutes(slug)`** — 메인 호스트(ddpage)는 `app/(client)/*` 제외, 클라이언트 호스트는 본인 `app/(client)/<slug>/*` 만 포함하고 URL 에서 슬러그 prefix 제거 (proxy.ts rewrite 와 일치). | 모든 호스트가 동일 평탄 라우트 출력 / robots.txt 로 클라이언트 라우트 차단 | testclient dry-run 에서 발견: 메인 sitemap 에 `/testclient` 가 누출되고 testclient sitemap 에 ddpage 메인 라우트가 박힘 → 중복 색인 위험. SEO 측면에서 호스트별 sitemap 격리가 정석. |
 | D-23 | 2026-05-21 | layout.tsx 호스트 분기 | **`resolveClient(await headers())`** 사용 (sitemap.ts 와 동일 패턴). `ROOT_SLUG="ddpage"` 하드코딩 제거. `export const dynamic = "force-dynamic"` 추가. | `ROOT_SLUG` 유지하고 클라이언트 도메인은 layout 별도 분기 / static rendering 우선 | testclient dry-run 에서 발견: 클라이언트 호스트 접속 시 `<html>` 루트 metadata + WebSite/Organization JSON-LD 가 ddpage 브랜드로 박힘 → 페이지 단 메타와 split. 멀티테넌트 핵심 결함. |
 | D-24 | 2026-05-21 | proxy.ts 글로벌 라우트 보호 | **`RESERVED_GLOBAL_ROUTES`** 명시 목록 (sitemap.xml, robots.txt, llms.txt, llms-full.txt, og, icon, apple-icon, favicon.ico) → proxy 가 첫 번째로 체크하고 통과시킴. | matcher 정규식에 모두 추가 / og 같은 query 파라미터 라우트는 정규식 매칭 까다로움 | testclient.ddpage.kr 라이브 검증에서 발견: `<slug>.ddpage.kr/sitemap.xml` 이 `/<slug>/sitemap.xml` 로 rewrite 되어 404. 이 라우트들은 모두 host header 로 자체 분기하므로 proxy 가 건드리면 안 됨. matcher 보다 본문 명시 체크가 디버깅 쉽고 query 파라미터 라우트(`/og?title=...`) 도 안전. |
+| D-25 | 2026-05-21 | Pretendard 폰트 self-host | **`next/font/local` + `public/fonts/PretendardVariable.woff2` (2MB Variable)** — `app/layout.tsx` 에서 `--font-pretendard` 로 노출. `app/main.css` 와 `app/(client)/*/styles.css` 의 jsDelivr CDN `@import` 제거. Montserrat / Plus Jakarta CDN 도 함께 제거 (시스템 폰트 fallback). | Pretendard Regular+Bold 2개 static 폰트 (~300KB) / CDN 유지 / Pretendard 제거 + Noto Sans KR 만 | testclient 라이브 PageSpeed 측정에서 LCP 26초 발견 → 원인: Pretendard 9개 weight 5MB 다운로드 (메인 ddpage.kr 도 동일). Variable 1개 = 2MB, 디자인 100% 유지, Vercel CDN 캐싱, 라이트하우스 점수 55 → 90+ 회복 기대. Self-host = 외부 CDN 의존 제거 + 브라우저 캐시 최적화. |
 
 ---
 
@@ -59,3 +60,4 @@
 - 2026-05-20: D-18 (FAQPage page-owns-data), D-19 (`app/(client)/<slug>/`), D-20 (proxy.ts host 라우팅), D-21 (`/client-integrate` 워크플로우) 추가. P-07/P-08 해제.
 - 2026-05-21: testclient dry-run 검증 후 v2 인프라 v1.1 패치 — D-22 (sitemap host 필터링), D-23 (layout host 분기) 추가. D-19/D-20 설계 의도와 실제 구현의 갭 보완.
 - 2026-05-21: testclient.ddpage.kr 라이브 검증 후 v1.2 — D-24 (proxy.ts 글로벌 SEO 라우트 보호). `<slug>.ddpage.kr/sitemap.xml` 등 404 버그 fix.
+- 2026-05-21: testclient.ddpage.kr PageSpeed 55점 진단 후 v1.3 — D-25 (Pretendard self-host via next/font/local). CDN @import 5MB 9 weight → public/fonts/PretendardVariable.woff2 2MB 1 file. LCP 26s → 목표 2.5s.

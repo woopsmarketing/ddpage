@@ -3,8 +3,9 @@
    Source: mainpage1/adora.css + mainpage1/page.css
    ============================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+/* CDN 폰트 @import 제거 (D-25 perf fix).
+   Pretendard 는 layout.tsx 의 next/font/local → var(--font-pretendard).
+   Montserrat / Plus Jakarta 는 시스템 폰트로 fallback. */
 
 /* ---------- Adora tokens (kept global on :root) ---------- */
 :root {
@@ -55,9 +56,9 @@
   --surface-soft-gray-fill: #eeeeee;
   --surface-card-white:     #ffffff;
 
-  /* Type families — Korean-first */
-  --font-display: "Pretendard Variable", "Pretendard", "Montserrat", "PolySans", system-ui, sans-serif;
-  --font-body:    "Pretendard Variable", "Pretendard", "Plus Jakarta Sans", system-ui, sans-serif;
+  /* Type families — Korean-first (self-hosted via next/font/local — D-25) */
+  --font-display: var(--font-pretendard), var(--font-noto-sans-kr), system-ui, sans-serif;
+  --font-body:    var(--font-pretendard), var(--font-noto-sans-kr), system-ui, sans-serif;
   --font-ui:      var(--font-body);
 
   /* Type scale */

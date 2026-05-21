@@ -4,8 +4,9 @@
    energy on key actions.
    ========================================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+/* CDN 폰트 @import 제거 (D-25 perf fix).
+   Pretendard 는 layout.tsx 의 next/font/local → var(--font-pretendard) 로 self-host.
+   Montserrat / Plus Jakarta Sans 는 시스템 폰트로 fallback. */
 
 :root {
   /* ---------- Brand palette ---------------------------------------------- */
@@ -276,14 +277,12 @@ body, .a-text {
 .a-card--accent-pink   { background: var(--color-sunset-pink); }
 /* =============================================================
    뚝딱페이지 상세 페이지 — Adora DS 기반
-   (Pretendard @import 는 파일 상단으로 이동 — CSS 스펙상 모든 @import 는
-   다른 규칙 앞에 와야 한다)
    ============================================================= */
 
 :root {
-  /* Korean-first display + body. PolySans/Plus Jakarta as Latin co-stars. */
-  --font-display: "Pretendard Variable", "Pretendard", "Montserrat", "PolySans", system-ui, sans-serif;
-  --font-body:    "Pretendard Variable", "Pretendard", "Plus Jakarta Sans", system-ui, sans-serif;
+  /* Korean-first. Pretendard (self-hosted via next/font/local) + Noto Sans KR + system. */
+  --font-display: var(--font-pretendard), var(--font-noto-sans-kr), system-ui, sans-serif;
+  --font-body:    var(--font-pretendard), var(--font-noto-sans-kr), system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
